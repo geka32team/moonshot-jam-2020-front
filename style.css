@@ -1,0 +1,111 @@
+body {
+  background-color: rgb(217, 234, 241);
+  margin: 0;
+  padding: 0;
+  font-family: itim;
+  font-weight: 700;
+}
+header {
+  font-size: 46px;
+  text-align: center;
+  background-color: yellowgreen;
+  height: 80px;
+  line-height: 80px;
+}
+.container {
+  width: 1180px;
+  margin: 0 auto;
+  background-color: yellow;
+}
+.champs-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.character {
+  width: 300px;
+  height: 400px;
+  text-align: center;
+}
+.character .icon{
+  width: 200px;
+  height: 300px;
+  background: url("./img/hero.jpeg") no-repeat;
+  background-size: cover;
+}
+.char-middle {
+  display: flex;
+}
+.char-left, .char-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.char-bottom {
+  display: flex;
+}
+.char-item {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(88, 219, 88);
+}
+.exp {
+  background-color: blue;
+  height: 150px;
+  border: 2px solid black;
+}
+.hp {
+  background-color: red;
+  height: 150px;
+  border: 2px solid black;
+}
+.weapon {
+  height: 100px;
+  background-color: rgb(124, 53, 92);
+  flex: 1;
+  /* width: 150px; */
+}
+.stats {
+  height: 100px;
+  background-color: rgb(197, 219, 74);
+  flex: 1;
+}
+.stats>div {
+  height: 25px;
+}
+.moon {
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+  background: url("./img/moon.png");
+}
+
+
+
+.enemy {
+  text-align: center;  
+  height: 400px;
+  background-color: rgb(122, 110, 235);
+  margin-left: auto;
+}
+.enemy .bot {
+  display: inline-block;
+  width: 150px;
+  background-size: cover;
+  margin-left: 20px;
+  overflow: hidden;
+}
+.enemy img {
+  width: 180px;
+  height: 150px;
+  object-fit: cover;
+  object-position: -11px -31px;
+}
+.attack {
+  background-color: brown;
+  width: 80px;
+  height: 20px;
+  color: yellow;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+}
