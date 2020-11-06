@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(217, 234, 241);
+  background-color: rgb(240, 250, 255);
   margin: 0;
   padding: 0;
   font-family: itim;
@@ -17,7 +17,7 @@ header {
 .container {
   width: 1180px;
   margin: 0 auto;
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 
 .champs-wrapper {
@@ -57,15 +57,20 @@ header {
   width: 50px;
   height: 50px;
   background-color: rgb(88, 219, 88);
+  border-radius: 5px;
 }
 
 .exp {
+  font-weight: normal;
   background-color: blue;
   height: 150px;
   border: 2px solid black;
+  color: white;
 }
 
 .hp {
+  font-weight: normal;
+  color: white;
   background-color: red;
   height: 150px;
   border: 2px solid black;
@@ -75,7 +80,7 @@ header {
   height: 100px;
   background-color: rgb(124, 53, 92);
   flex: 1;
-  /* width: 150px; */
+  border-radius: 5px;
 }
 
 .stats {
@@ -97,6 +102,13 @@ header {
   background-position: -26px;
   width: 30px;
   height: 30px;
+  transition: 0.2s;
+  border-radius: 5px;
+}
+
+.bag:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .moon {
@@ -108,9 +120,7 @@ header {
 
 .enemy {
   text-align: center;
-  height: 400px;
-  background-color: rgb(122, 110, 235);
-  margin-left: auto;
+  /* background-color: rgb(122, 110, 235); */
 }
 
 .enemy .bot {
@@ -118,7 +128,36 @@ header {
   width: 150px;
   background-size: cover;
   margin-left: 20px;
+}
+
+.bot-img {
+  position: relative;
+  border-radius: 35px;
   overflow: hidden;
+  height: 150px;
+}
+
+.bot-img::after {
+  content: '';
+  display: block;
+  width: 150px;
+  height: 150px;
+  background-color: rgb(76, 255, 22);
+  position: absolute;
+  top: 0;
+  opacity: 0.3;
+}
+
+.bot:nth-child(2) .bot-img::after {
+  background-color: rgb(187, 241, 38);
+}
+
+.bot:nth-child(3) .bot-img::after {
+  background-color: rgb(241, 109, 109);
+}
+
+.bot:nth-child(4) .bot-img::after {
+  background-color: rgb(197, 11, 172);
 }
 
 .enemy img {
@@ -129,11 +168,41 @@ header {
 }
 
 .attack {
-  background-color: brown;
+  background-color: rgb(63, 62, 62);
   width: 80px;
   height: 20px;
   color: yellow;
   outline: none;
   border: none;
   border-radius: 2px;
+  margin: 10px 0;
+  transition: 0.2s;
+  box-shadow: -3px 3px 6px black;
+}
+
+.attack:hover {
+  color: rgb(57, 223, 57);
+  cursor: pointer;
+  box-shadow: -1px 1px 3px black;
+  background-color: rgb(7, 7, 7);
+}
+
+.duel {
+  text-align: center;
+  height: 80px;
+}
+
+.duel img {
+  border: 3px solid rgb(252, 77, 77);
+  border-radius: 5px;
+  height: 80px;
+  width: 80px;
+  transition: 0.2s;
+  color: black;
+}
+
+.duel img:hover {
+  border: 3px solid rgb(45, 211, 45);
+  cursor: pointer;
+  transform: scale(1.05);
 }
