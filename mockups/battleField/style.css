@@ -125,7 +125,7 @@ header {
 
 .enemy .bot {
   display: inline-block;
-  width: 150px;
+  width: 250px;
   background-size: cover;
   margin-left: 20px;
 }
@@ -134,41 +134,42 @@ header {
   position: relative;
   border-radius: 35px;
   overflow: hidden;
-  height: 150px;
+  height: 400px;
+  position: relative;
 }
 
 .bot-img::after {
   content: '';
   display: block;
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 400px;
   background-color: rgb(76, 255, 22);
   position: absolute;
   top: 0;
   opacity: 0.3;
 }
 
-.bot:nth-child(2) .bot-img::after {
-  background-color: rgb(187, 241, 38);
-}
-
-.bot:nth-child(3) .bot-img::after {
-  background-color: rgb(241, 109, 109);
-}
-
-.bot:nth-child(4) .bot-img::after {
-  background-color: rgb(197, 11, 172);
-}
-
 .enemy img {
-  width: 180px;
-  height: 150px;
+  width: 250px;
+  height: 400px;
   object-fit: cover;
-  object-position: -11px -31px;
+}
+
+.enemy-hp {
+  display: block;
+  background: red;
+  width: 200px;
+  height: 20px;
+  position: absolute;
+  top: 370px;
+  left: 25px;
+  z-index: 1;
+  border-radius: 3px;
 }
 
 .attack {
-  background-color: rgb(63, 62, 62);
+  background-color: rgb(62, 62, 62);
+  text-align: center;
   width: 80px;
   height: 20px;
   color: yellow;
@@ -177,32 +178,53 @@ header {
   border-radius: 2px;
   margin: 10px 0;
   transition: 0.2s;
-  box-shadow: -3px 3px 6px black;
+  box-shadow: -3px 3px 6px rgb(107, 107, 107);
+  padding: 3px 6px;
+  display: inline-block;
 }
 
 .attack:hover {
   color: rgb(57, 223, 57);
   cursor: pointer;
-  box-shadow: -1px 1px 3px black;
+  box-shadow: -1px 1px 3px rgb(62, 62, 62);
   background-color: rgb(7, 7, 7);
 }
 
-.duel {
+.task-field {
   text-align: center;
-  height: 80px;
 }
 
-.duel img {
-  border: 3px solid rgb(252, 77, 77);
-  border-radius: 5px;
-  height: 80px;
-  width: 80px;
-  transition: 0.2s;
-  color: black;
+.ask-answer {
+  font-size: 28px;
+  color: brown;
 }
 
-.duel img:hover {
-  border: 3px solid rgb(45, 211, 45);
+.answer {
+  font-size: 36px;
+  color: limegreen;
+  height: 36px;
+}
+
+.task {
+  height: 170px;
+  visibility: hidden;
+}
+
+.keyboard {
+  width: 200px;
+}
+
+.keyboard span {
+  font-size: 38px;
+  margin: 5px;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(245, 205, 166);
   cursor: pointer;
+}
+
+.keyboard span:active {
+  color: rgb(0, 146, 73);
   transform: scale(1.05);
 }
