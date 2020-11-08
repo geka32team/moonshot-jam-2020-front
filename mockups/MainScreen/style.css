@@ -112,10 +112,15 @@ header {
 }
 
 .moon {
+  position: relative;
   margin: 0 auto;
   width: 500px;
   height: 500px;
   background: url("./img/moon.png");
+  background-size: 540px 540px;
+  background-position: center;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .enemy {
@@ -205,4 +210,122 @@ header {
   border: 3px solid rgb(45, 211, 45);
   cursor: pointer;
   transform: scale(1.05);
+}
+
+.moon div {
+  position: absolute;
+  cursor: pointer;
+  transition: 0.4s;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.moon img {
+  cursor: pointer;
+}
+
+.moon div:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.moon .area1 {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  transform: rotate(30deg);
+  height: 50%;
+  width: 50%;
+  top: -10px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.moon .area2 {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  transform: rotate(-7deg);
+  height: 50%;
+  width: 50%;
+  top: -107px;
+  left: 190px;
+}
+
+.moon .area3 {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  transform: rotate(-17deg);
+  height: 70%;
+  width: 50%;
+  top: 167px;
+  left: -100px;
+}
+
+.moon .area4 {
+  clip-path: polygon(50% 0%, 100% 28%, 85% 83%, 14% 49%, 3% 35%);
+  transform: rotate(-33deg);
+  height: 139%;
+  width: 97%;
+  top: 10px;
+  left: 369px;
+}
+
+.moon .area5 {
+  clip-path: polygon(0 0, 0% 100%, 100% 74%);
+  transform: rotate(-5.3deg);
+  height: 70%;
+  width: 75%;
+  top: 248px;
+  left: 149px;
+}
+
+.moon .area6 {
+  clip-path: polygon(41% 16%, 93.5% 10%, 78% 96%, 2% 53%);
+  transform: rotate(0deg);
+  height: 60%;
+  width: 60%;
+  top: 105px;
+  left: 128px;
+}
+
+.boss1 {
+  width: 70px;
+  height: 140px;
+  position: absolute;
+  top: 70px;
+  left: 100px;
+}
+
+.boss2 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 30px;
+  left: 280px;
+}
+
+.boss3 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 270px;
+  left: 50px;
+}
+
+.boss4 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 190px;
+  left: 420px;
+}
+
+.boss5 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 370px;
+  left: 200px;
+}
+
+.boss6 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 200px;
+  left: 260px;
 }
