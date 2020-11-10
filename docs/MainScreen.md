@@ -1,3 +1,5 @@
+Hello World!
+
 On the left side we have a map of the mercenary, on the right - the boots are divided by levels of difficulty. Between them the button 'Duel' - for the possibility of fighting with live players. The character has by default a weapon, the simplest and weakest, it can never fall out of his hands in battle.
 Below is a map of the month on which the bosses will be located (5-10 pieces), the active boss can be only one, ie you can beat them clearly in order.
 
@@ -55,3 +57,4 @@ You need to create an exp table for each level
 After the character raises the level, he has 5 free points for pumping, he scatters them at will.
 
 With each level the tasks become more difficult, they depend on the level of mobs with which you compete. If it is a duel then the task is chosen randomly between your level and the opponent's level.
+
