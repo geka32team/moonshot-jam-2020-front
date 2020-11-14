@@ -13,100 +13,100 @@ import weapon1_img from "./img/weapon1.png"
 import main2_img from "./img/main2.png"
 
 export default function BattlePage() {
-    return (
-        <StyledField>
-            <div className="game">
-                <div className="champs-wrapper">
-                    <div className="character">
+  return (
+    <StyledField>
+      <div className="game">
+        <div className="champs-wrapper">
+          <div className="character">
 
-                        <div className="char-middle">
-                            <div className="char-left">
-                                <div className="helm char-item"></div>
-                                <div className="boots char-item"></div>
-                                <div className="exp">exp</div>
-                            </div>
+            <div className="char-middle">
+              <div className="char-left">
+                <div className="helm char-item"></div>
+                <div className="boots char-item"></div>
+                <div className="exp">exp</div>
+              </div>
 
-                            <div className="icon"></div>
+              <div className="icon"></div>
 
-                            <div className="char-right">
-                                <div className="armor char-item"></div>
-                                <div className="gloves char-item"></div>
-                                <div className="hp">80</div>
-                            </div>
-                        </div>
-
-                        <div className="char-bottom">
-                            <div className="weapon"></div>
-
-                            <div className="stats">
-                                <div>strength: 10</div>
-                                <div>vitality: 12</div>
-                                <div>dextirity: 8</div>
-                                <div>accuracy: 7</div>
-                                <div>weapon dmg: 10</div>
-                            </div>
-                        </div>
-
-                        <div className="bag"></div>
-
-                    </div>
-
-                    <div className="task-field">
-                        <div className="is-ready">Are you ready to questions?</div>
-                        <div className="task">
-                            <p>12 - x + 6 = 5</p>
-                            <p className="ask-answer">x = ?</p>
-                            <p className="answer"></p>
-                            <div className="keyboard">
-                                <span>1</span>
-                                <span>2</span>
-                                <span>3</span>
-                                <span>4</span>
-                                <span>5</span>
-                                <span>6</span>
-                                <span>7</span>
-                                <span>8</span>
-                                <span>9</span>
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div className="attack">Start Fight</div>
-                    </div>
-                    <div className="character">
-
-                        <div className="char-middle">
-                            <div className="char-left">
-                                <div className="helm char-item"></div>
-                                <div className="boots char-item"></div>
-                                <div className="hp">80</div>
-                            </div>
-
-                            <div className="icon enemy"></div>
-
-                            <div className="char-right">
-                                <div className="armor char-item"></div>
-                                <div className="gloves char-item"></div>
-                                <div className="exp">easy</div>
-                            </div>
-                        </div>
-
-                        <div className="char-bottom">
-                            <div className="weapon enemy"></div>
-
-                            <div className="stats">
-                                <div>strength: 10</div>
-                                <div>vitality: 12</div>
-                                <div>dextirity: 8</div>
-                                <div>accuracy: 7</div>
-                                <div>weapon dmg: 10</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+              <div className="char-right">
+                <div className="armor char-item"></div>
+                <div className="gloves char-item"></div>
+                <div className="hp">80</div>
+              </div>
             </div>
-        </StyledField>
-    )
+
+            <div className="char-bottom">
+              <div className="weapon"></div>
+
+              <div className="stats">
+                <div>strength: 10</div>
+                <div>vitality: 12</div>
+                <div>dextirity: 8</div>
+                <div>accuracy: 7</div>
+                <div>weapon dmg: 10</div>
+              </div>
+            </div>
+
+            <div className="bag"></div>
+
+          </div>
+
+          <div className="task-field">
+            <div className="is-ready">Are you ready to questions?</div>
+            <div className="task">
+              <p>12 - x + 6 = 5</p>
+              <p className="ask-answer">x = ?</p>
+              <p className="answer"></p>
+              <div className="keyboard">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>7</span>
+                <span>8</span>
+                <span>9</span>
+                <span>0</span>
+              </div>
+            </div>
+            <div className="attack">Start Fight</div>
+          </div>
+          <div className="character">
+
+            <div className="char-middle">
+              <div className="char-left">
+                <div className="helm char-item"></div>
+                <div className="boots char-item"></div>
+                <div className="hp">80</div>
+              </div>
+
+              <div className="icon enemy"></div>
+
+              <div className="char-right">
+                <div className="armor char-item"></div>
+                <div className="gloves char-item"></div>
+                <div className="exp">easy</div>
+              </div>
+            </div>
+
+            <div className="char-bottom">
+              <div className="weapon enemy"></div>
+
+              <div className="stats">
+                <div>strength: 10</div>
+                <div>vitality: 12</div>
+                <div>dextirity: 8</div>
+                <div>accuracy: 7</div>
+                <div>weapon dmg: 10</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </StyledField>
+  )
 }
 
 

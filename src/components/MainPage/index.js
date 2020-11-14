@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import useSound from 'use-sound'
+import React from 'react'
 import styled from 'styled-components'
 
-import boopSfx from './audio/moon_sound.wav'
 import duel_img from "./img/duel.png"
 import bot_img from "./img/bot.jpeg"
 import boss_img from "./img/boss.jpeg"
@@ -16,17 +14,9 @@ import main_img from "./img/main.png"
 import weapon_img from "./img/weapon.png"
 
 export default function MainPage(props) {
-  
-  const [play] = useSound(boopSfx)
-  
-  useEffect(() => {
-    console.log('start')
-    play()
-  }, [play])
 
   return (
     <StyledField>
-
       <div className="game">
         <div className="champs-wrapper">
           <div className="character">
