@@ -20,9 +20,9 @@ export default function MainPage(props) {
   const [play] = useSound(boopSfx)
   
   useEffect(() => {
-    console.log('props', props)
+    console.log('start')
     play()
-  }, [props])
+  }, [play])
 
   return (
     <StyledField>
