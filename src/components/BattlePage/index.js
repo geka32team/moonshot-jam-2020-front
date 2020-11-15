@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import useSound from 'use-sound';
 
+import shot from './audio/shot.mp3';
 import moon_img from "./img/moon.png"
 import armor_img from "./img/armor.png"
 import bag_img from "./img/bag.png"
@@ -13,9 +15,56 @@ import weapon1_img from "./img/weapon1.png"
 import main2_img from "./img/main2.png"
 
 export default function BattlePage() {
+
+  const [isAttack, setIsAttack] = useState(false)
+  const [answer, setAnswer] = useState('')
+  const [bagOpen, setBagOpen] = useState(false)
+
+  const [playShot] = useSound(shot)
+
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+
+  const changeAnswer = event => {
+    setAnswer(answer + event.target.innerText)
+  }
+
+  useEffect(() => {
+    if (answer.length > 1) {
+      window.onkeyup = null
+      setIsAttack(false)
+      setAnswer('')
+      playShot()
+    }
+  }, [answer, playShot])    
+  
+  const onStartFight = () => {
+    setIsAttack(true)
+    window.onkeyup = writeAnswer
+  }
+
+  const writeAnswer = e => {
+    if (e.key.match(/[0-9]/)) {
+      setAnswer(a => a + e.key)
+    }
+}
+
   return (
     <StyledField>
       <div className="game">
+        {
+          bagOpen ?
+            <div className="bag-window">
+              <div className="bag-name">Choose items
+          <span className="close-btn" onClick={() => setBagOpen(false)}>X</span>
+              </div>
+              {
+                items.map(item => <div key={item} className="bag-item">{item}</div>)
+              }
+            </div>
+            :
+            null
+        }
         <div className="champs-wrapper">
           <div className="character">
 
@@ -31,7 +80,7 @@ export default function BattlePage() {
               <div className="char-right">
                 <div className="armor char-item"></div>
                 <div className="gloves char-item"></div>
-                <div className="hp">80</div>
+                <div className="hp">100</div>
               </div>
             </div>
 
@@ -47,30 +96,30 @@ export default function BattlePage() {
               </div>
             </div>
 
-            <div className="bag"></div>
+            <div className="bag" onClick={() => setBagOpen(true)}></div>
 
           </div>
 
           <div className="task-field">
-            <div className="is-ready">Are you ready to questions?</div>
-            <div className="task">
-              <p>12 - x + 6 = 5</p>
-              <p className="ask-answer">x = ?</p>
-              <p className="answer"></p>
-              <div className="keyboard">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>0</span>
-              </div>
-            </div>
-            <div className="attack">Start Fight</div>
+            {
+              isAttack ?
+                (<div className="task">
+                  <p>12 - x + 6 = 5</p>
+                  <p className="ask-answer">x = ?</p>
+                  <p className="answer">{answer}</p>
+                  <div className="keyboard">
+                    {
+                      digits.map(digit => <span key={digit} onClick={changeAnswer}>{digit}</span>)
+                    }
+                  </div>
+                </div>)
+                :
+                (<div>
+                  <div className="is-ready">Are you ready to questions?</div>
+                  <div onClick={onStartFight} className="attack">Start Fight</div>
+                </div>)
+
+            }
           </div>
           <div className="character">
 
@@ -112,6 +161,10 @@ export default function BattlePage() {
 
 
 const StyledField = styled.div`
+
+.game {
+  position: relative;
+}
 
 .champs-wrapper {
     display: flex;
@@ -293,8 +346,8 @@ const StyledField = styled.div`
   .attack {
     background-color: rgb(62, 62, 62);
     text-align: center;
-    width: 80px;
-    height: 20px;
+    width: 120px;
+    height: 30px;
     color: yellow;
     outline: none;
     border: none;
@@ -304,6 +357,8 @@ const StyledField = styled.div`
     box-shadow: -3px 3px 6px rgb(107, 107, 107);
     padding: 3px 6px;
     display: inline-block;
+    font-size: 20px;
+    margin-top: 100px;
   }
   
   .attack:hover {
@@ -315,11 +370,13 @@ const StyledField = styled.div`
   
   .task-field {
     text-align: center;
+    font-weight: 400;
+    font-size:32px;
+    color: yellow;
   }
   
   .ask-answer {
-    font-size: 28px;
-    color: brown;
+    color: limegreen;
   }
   
   .answer {
@@ -329,8 +386,8 @@ const StyledField = styled.div`
   }
   
   .task {
-    height: 170px;
-    visibility: hidden;
+    height: 210px;
+    background-color: rgba(0,0,0,0.6)
   }
   
   .keyboard {
@@ -343,11 +400,60 @@ const StyledField = styled.div`
     display: inline-block;
     width: 50px;
     height: 50px;
-    background-color: rgb(245, 205, 166);
+    background-color: rgb(138, 162, 80);
     cursor: pointer;
   }
   
   .keyboard span:active {
-    color: rgb(0, 146, 73);
+    color: limegreen;
     transform: scale(1.05);
-  }`
+  }
+
+  .bag-window {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6);
+    width: 310px;
+    height: 200px;
+    z-index: 1;
+    overflow-y: auto;
+    font-weight: normal;
+    color: yellow;
+  }
+
+  .bag-item {
+    font-size: 40px;
+    text-align: center;
+    border: 2px solid yellow;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    cursor: pointer;
+  }
+
+  .bag-name {
+    width: 300px;
+    height: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .close-btn {
+    color: red;
+    border: 1px solid red;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    
+  }
+
+  `
