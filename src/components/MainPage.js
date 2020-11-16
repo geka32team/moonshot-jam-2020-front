@@ -8,13 +8,8 @@ import duel_img from "../assets/img/duel.png"
 import bot_img from "../assets/img/bot.jpeg"
 import boss_img from "../assets/img/boss.jpeg"
 import moon_img from "../assets/img/moon.png"
-import armor_img from "../assets/img/armor.png"
 import bag_img from "../assets/img/bag.png"
-import boots_img from "../assets/img/boots.png"
-import helm_img from "../assets/img/helm.png"
-import gloves_img from "../assets/img/gloves.png"
-import main_img from "../assets/img/main.png"
-import weapon_img from "../assets/img/weapon.png"
+
 import BattlePage from './BattlePage'
 
 export default function MainPage() {
@@ -22,8 +17,143 @@ export default function MainPage() {
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
   
+  const enemyData = {
+    hp: 120,
+    lvl: 3,
+    str: 9,
+    vit: 10,
+    dex: 12,
+    acc: 13,
+    dmg: 84,
+    items: {
+      weapon: {
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
+        hp: 10,
+        str: 1,
+        vit: 0,
+        dex: 2,
+        acc: 1,
+        dmg: 8,
+        time: 0.7,
+        damage: 76,
+        isWear: true,
+        set_bonus: [
+          [
+            'dmg: 12',
+            'vit: 3'
+        ],
+          [
+            'dmg: 25',
+            'vit:6',
+            'str:5'
+          ]
+        ]
+      },
+      helm: {
+        url: 'serafim_h',
+        type: 'helm',
+        name: 'serafim',
+        str: 1,
+        vit: 0,
+        dex: 2,
+        occ: 1,
+        dmg: 8,
+        time: 0.7,
+        damage: 76,
+        isWear: true,
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit:6,
+            str:5
+          }
+        ]
+      },
+      gloves: {
+        url: 'serafim_g',
+        type: 'helm',
+        name: 'serafim',
+        str: 1,
+        vit: 0,
+        dex: 2,
+        occ: 1,
+        dmg: 8,
+        time: 0.7,
+        damage: 76,
+        isWear: true,
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit:6,
+            str:5
+          }
+        ]
+      },
+      armor: {
+        url: 'serafim_a',
+        type: 'armor',
+        name: 'serafim',
+        str: 1,
+        vit: 0,
+        dex: 2,
+        occ: 1,
+        dmg: 8,
+        time: 0.7,
+        damage: 76,
+        isWear: true,
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit:6,
+            str:5
+          }
+        ]
+      },
+      boots: {
+        url: 'serafim_b',
+        type: 'boots',
+        name: 'serafim',
+        str: 1,
+        vit: 0,
+        dex: 2,
+        occ: 1,
+        dmg: 8,
+        time: 0.7,
+        damage: 76,
+        isWear: true,
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit:6,
+            str:5
+          }
+        ]
+      },
+    }
+  }
+
   const onBagClick = e => {
-    setBagOpen(e)    
+    setBagOpen(e)
   }
 
   return (
@@ -33,9 +163,9 @@ export default function MainPage() {
         aria-haspopup="true"
         delayShow={200}
       />
-      <div className="game">        
+      <div className="game">
 
-      {
+        {
           bagOpen ?
             <Inventory onBagClose={onBagClick} />
             :
@@ -45,54 +175,54 @@ export default function MainPage() {
           <CharCard onBagClick={onBagClick} />
 
           {
-            isBattle ? 
-            <BattlePage />
-            :
-<div className="battles">
-          <div className="duel">
-            <p>Duel</p>
-            <span onClick={() => setIsBattle(true)}><img src={duel_img} alt="fight" /></span>
-          </div>
+            isBattle ?
+              <BattlePage enemyData={enemyData} />
+              :
+              <div className="battles">
+                <div className="duel">
+                  <p>Duel</p>
+                  <span onClick={() => setIsBattle(true)}><img src={duel_img} alt="fight" /></span>
+                </div>
 
-          <div className="enemy">
-            <div className="bot easy">
-              <p>Easy</p>
-              <div className="bot-img">
-                <img src={bot_img} alt="Bot" />
-              </div>
-              <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-            </div>
+                <div className="enemy">
+                  <div className="bot easy">
+                    <p>Easy</p>
+                    <div className="bot-img">
+                      <img src={bot_img} alt="Bot" />
+                    </div>
+                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                  </div>
 
-            <div className="bot normal">
-              <p>Normal</p>
-              <div className="bot-img">
-                <img src={bot_img} alt="Bot" />
-              </div>
-              <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-            </div>
+                  <div className="bot normal">
+                    <p>Normal</p>
+                    <div className="bot-img">
+                      <img src={bot_img} alt="Bot" />
+                    </div>
+                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                  </div>
 
-            <div className="bot hard">
-              <p>Hard</p>
-              <div className="bot-img">
-                <img src={bot_img} alt="Bot" />
-              </div>
-              <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-            </div>
+                  <div className="bot hard">
+                    <p>Hard</p>
+                    <div className="bot-img">
+                      <img src={bot_img} alt="Bot" />
+                    </div>
+                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                  </div>
 
-            <div className="bot extremal">
-              <p>Hell</p>
-              <div className="bot-img">
-                <img src={bot_img} alt="Bot" />
+                  <div className="bot extremal">
+                    <p>Hell</p>
+                    <div className="bot-img">
+                      <img src={bot_img} alt="Bot" />
+                    </div>
+                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                  </div>
+                </div>
               </div>
-              <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-            </div>            
-          </div>
-          </div>
 
           }
 
         </div>
-        <div className="moon"  onClick={() => setIsBattle(false)}>
+        <div className="moon" onClick={() => setIsBattle(false)}>
           <img className="boss2" src={boss_img} alt="boss" />
           <img className="boss3" src={boss_img} alt="boss" />
           <img className="boss4" src={boss_img} alt="boss" />
@@ -134,7 +264,7 @@ const StyledField = styled.div`
 .character .icon {
   width: 200px;
   height: 300px;
-  background: url(${main_img});
+  background: #dcdd90;
   background-size: cover;
   border: 1px solid black;
 }
@@ -158,24 +288,9 @@ const StyledField = styled.div`
   height: 50px;
 }
 
-.helm {
-  background: url(${helm_img});
-  background-size: cover;
-}
-
-.armor {
-  background: url(${armor_img});
-  background-size: cover;
-}
-
-.boots {
-  background: url(${boots_img});
-  background-size: cover;
-}
-
-.gloves {
-  background: url(${gloves_img});
-  background-size: cover;
+.char-item img {
+  width: 50px;
+  height: 50px;
 }
 
 .exp {
@@ -196,10 +311,14 @@ const StyledField = styled.div`
 
 .weapon {
   height: 100px;
-  background: url(${weapon_img});
   background-size: contain;
   flex: 1;
   border-right: black 1px solid;
+}
+
+.weapon>img {
+  width: 150px;
+  height: 100px;
 }
 
 .stats {
@@ -263,6 +382,13 @@ const StyledField = styled.div`
   margin-left: 20px;
 }
 
+.bot-img img {
+  width: 180px;
+  height: 150px;
+  object-fit: cover;
+  object-position: -11px -31px;
+}
+
 .bot-img {
   position: relative;
   border-radius: 35px;
@@ -291,13 +417,6 @@ const StyledField = styled.div`
 
 .bot:nth-child(4) .bot-img::after {
   background-color: rgb(197, 11, 172);
-}
-
-.enemy img {
-  width: 180px;
-  height: 150px;
-  object-fit: cover;
-  object-position: -11px -31px;
 }
 
 .attack {

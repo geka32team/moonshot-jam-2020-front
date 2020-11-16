@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import useSound from 'use-sound'
 
 import shot from '../assets/audio/shot.mp3';
-import weapon1_img from "../assets/img/weapon1.png"
-import main2_img from "../assets/img/main2.png"
 import EnemyCard from './EnemyCard';
 
-export default function BattlePage() {
+export default function BattlePage(props) {
 
   const [isAttack, setIsAttack] = useState(false)
   const [answer, setAnswer] = useState('')
@@ -43,28 +41,28 @@ export default function BattlePage() {
   return (
     <StyledField>
 
-          <div className="task-field">
-            {
-              isAttack ?
-                (<div className="task">
-                  <p>12 - x + 6 = 5</p>
-                  <p className="ask-answer">x = ?</p>
-                  <p className="answer">{answer}</p>
-                  <div className="keyboard">
-                    {
-                      digits.map(digit => <span key={digit} onClick={changeAnswer}>{digit}</span>)
-                    }
-                  </div>
-                </div>)
-                :
-                (<div>
-                  <div className="is-ready">Are you ready to questions?</div>
-                  <div onClick={onStartFight} className="start-fight">Start Fight</div>
-                </div>)
+      <div className="task-field">
+        {
+          isAttack ?
+            (<div className="task">
+              <p>12 - x + 6 = 5</p>
+              <p className="ask-answer">x = ?</p>
+              <p className="answer">{answer}</p>
+              <div className="keyboard">
+                {
+                  digits.map(digit => <span key={digit} onClick={changeAnswer}>{digit}</span>)
+                }
+              </div>
+            </div>)
+            :
+            (<div>
+              <div className="is-ready">Are you ready to questions?</div>
+              <div onClick={onStartFight} className="start-fight">Start Fight</div>
+            </div>)
 
-            }
-          </div>
-          <EnemyCard />
+        }
+      </div>
+      <EnemyCard enemyData={props.enemyData} />
 
     </StyledField>
   )
@@ -73,58 +71,6 @@ export default function BattlePage() {
 
 
 const StyledField = styled.div`
-
-.enemy_task_wrapper {
-  display: flex;
-  width: 750px;
-}
-  
-.character .icon.enemy {
-  background: url(${main2_img}) no-repeat;
-  background-size: cover;
-}
-
-.weapon.enemy {
-  background: url(${weapon1_img});
-  background-size: contain;
-}
-
-.bot-img {
-  position: relative;
-  border-radius: 35px;
-  overflow: hidden;
-  height: 400px;
-  position: relative;
-}
-
-.bot-img::after {
-  content: '';
-  display: block;
-  width: 250px;
-  height: 400px;
-  background-color: rgb(76, 255, 22);
-  position: absolute;
-  top: 0;
-  opacity: 0.3;
-}
-
-.enemy img {
-  width: 250px;
-  height: 400px;
-  object-fit: cover;
-}
-
-.enemy-hp {
-  display: block;
-  background: red;
-  width: 200px;
-  height: 20px;
-  position: absolute;
-  top: 370px;
-  left: 25px;
-  z-index: 1;
-  border-radius: 3px;
-}
 
 .start-fight {
   background-color: rgb(62, 62, 62);
