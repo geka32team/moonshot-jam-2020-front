@@ -48,7 +48,7 @@ export default function BattlePage(props) {
         delayShow={200}
         className="tooltip"
         id="battleField"
-      ></ReactTooltip>
+      />
       <div className="task-field">
         {
           isAttack ?
