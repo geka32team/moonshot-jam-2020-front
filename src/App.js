@@ -15,7 +15,6 @@ function App() {
 
         <Route path="/" exact component={Registration} />
         <Route path="/game" exact component={MainPage} />
-        <Route path="/battle" exact component={BattlePage} />
       </div>
 
     </Router>
