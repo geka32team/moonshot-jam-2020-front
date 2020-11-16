@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import useSound from 'use-sound'
+import ReactTooltip from 'react-tooltip'
+
 
 import shot from '../assets/audio/shot.mp3';
 import EnemyCard from './EnemyCard';
@@ -40,7 +42,13 @@ export default function BattlePage(props) {
 
   return (
     <StyledField>
-
+      <ReactTooltip
+        multiline={true}
+        aria-haspopup="true"
+        delayShow={200}
+        className="tooltip"
+        id="battleField"
+      ></ReactTooltip>
       <div className="task-field">
         {
           isAttack ?
