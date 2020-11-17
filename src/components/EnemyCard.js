@@ -1,65 +1,61 @@
 import React from 'react'
 import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip'
-
-import weapon1_img from "../assets/img/weapon1.png"
-import enemy_img from "../assets/img/main2.png"
-import armor_img from "../assets/img/armor.png"
-import boots_img from "../assets/img/boots.png"
-import helm_img from "../assets/img/helm.png"
-import gloves_img from "../assets/img/gloves.png"
+import Images from './Images'
 
 export default function EnemyCard(props) {
   const data = props.enemyData
   const weap = data.items.weapon
+  const arm = data.items.armor
+  const helm = data.items.helm
+  const boots = data.items.boots
+  const glo = data.items.gloves
+
+  const itemsDescription = item => {
+    return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Empty slot"
+  }
+
   return (
     <StyledField>
 
       <div className="character">
-        <ReactTooltip
-          multiline={true}
-          aria-haspopup="true"
-          delayShow={200}
-          textColor='yellow'
-        />
 
         <div className="char-middle">
           <div className="char-left">
-            <div data-tip="Enemy Helm" data-type="info" className="helm char-item">
-              <img src={helm_img} alt='img' />
+            <div data-tip={itemsDescription(helm)} data-type="info" data-for="battleField" className="helm char-item">
+              <img src={helm ? Images.serafim_h : Images.default_helm} alt='img' />
             </div>
-            <div data-tip="Enemy Boots" data-type="info" className="boots char-item">
-              <img src={boots_img} alt='img' />
+            <div data-tip={itemsDescription(boots)} data-type="info" data-for="battleField" className="boots char-item">
+              <img src={boots ? Images.serafim_b : Images.default_boots} alt='img' />
             </div>
-            <div data-tip="Enemy HP" data-type="info" className="hp">{data.hp}</div>
+            <div data-tip="Enemy HP" data-type="info" data-for="battleField" className="hp">{data.hp}</div>
           </div>
 
-          <div data-tip="Enemy FACE" data-type="info" className="icon enemy_char">
-            <img src={enemy_img} alt='img' />
+          <div data-tip="Enemy FACE" data-type="info" data-for="battleField" className="icon enemy_char">
+            <img src={Images.enemy} alt='img' />
           </div>
 
           <div className="char-right">
-            <div data-tip="Enemy Armor" data-type="info" className="armor char-item">
-              <img src={armor_img} alt='img' />
+            <div data-tip={itemsDescription(arm)} data-type="info" data-for="battleField" className="armor char-item">
+              <img src={arm ? Images.serafim_a : Images.default_armor} alt='img' />
             </div>
-            <div data-tip="Enemy Gloves" data-type="info" className="gloves char-item">
-              <img src={gloves_img} alt='img' />
+            <div data-tip={itemsDescription(glo)} data-type="info" data-for="battleField" className="gloves char-item">
+              <img src={glo ? Images.serafim_g : Images.default_gloves} alt='img' />
             </div>
-            <div data-tip="Enemy Difficulty" data-type="info" className="exp">easy</div>
+            <div data-tip="Enemy Difficulty" data-type="info" data-for="battleField" className="exp">easy</div>
           </div>
         </div>
 
         <div className="char-bottom">
-  <div data-tip={`${weap.name}<br />Set: ${weap.set_name}<br />Rarity: ${weap.rar}<br />Damage: ${weap.damage}<br />Hp: ${weap.hp}<br />Str: ${weap.str}<br />Vit: ${weap.vit}<br />Dex: ${weap.dex}<br />Acc: ${weap.acc}<br />Bonus Dmg: ${weap.dmg}<br />Bonus Time: ${weap.time}<br />Bonus for 2 items: ${weap.set_bonus[0].map(item => item)}<br />Bonus for 5 items: ${weap.set_bonus[1].map(item => item)}`} data-type="info" className="weapon">
-            <img src={weapon1_img} alt='img' />
+          <div data-tip={itemsDescription(weap)} data-type="info" data-for="battleField" className="weapon">
+            <img src={Images.weapon_alt} alt='img' />
           </div>
 
           <div className="stats">
-            <div data-tip="Enemy Strength" data-type="info">strength: {data.str}</div>
-            <div data-tip="Enemy Vetality" data-type="info">vitality: {data.vit}</div>
-            <div data-tip="Enemy Dextirity" data-type="info">dextirity: {data.dex}</div>
-            <div data-tip="Enemy Accuracy" data-type="info">accuracy: {data.acc}</div>
-            <div data-tip="Enemy Damage" data-type="info">weapon dmg: {data.dmg}</div>
+            <div data-tip="Enemy Strength" data-type="info" data-for="battleField">strength: {data.str}</div>
+            <div data-tip="Enemy Vetality" data-type="info" data-for="battleField">vitality: {data.vit}</div>
+            <div data-tip="Enemy Dextirity" data-type="info" data-for="battleField">dextirity: {data.dex}</div>
+            <div data-tip="Enemy Accuracy" data-type="info" data-for="battleField">accuracy: {data.acc}</div>
+            <div data-tip="Enemy Damage" data-type="info" data-for="battleField">weapon dmg: {data.dmg}</div>
           </div>
         </div>
 
@@ -94,6 +90,5 @@ const StyledField = styled.div`
   z-index: 1;
   border-radius: 3px;
 }
-
 
 `

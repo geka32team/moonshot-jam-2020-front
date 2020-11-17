@@ -16,7 +16,7 @@ export default function MainPage() {
 
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
-  
+
   const enemyData = {
     hp: 120,
     lvl: 3,
@@ -32,39 +32,14 @@ export default function MainPage() {
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        hp: 10,
-        str: 1,
-        vit: 0,
-        dex: 2,
-        acc: 1,
-        dmg: 8,
-        time: 0.7,
-        damage: 76,
         isWear: true,
-        set_bonus: [
-          [
-            'dmg: 12',
-            'vit: 3'
-        ],
-          [
-            'dmg: 25',
-            'vit:6',
-            'str:5'
-          ]
-        ]
-      },
-      helm: {
-        url: 'serafim_h',
-        type: 'helm',
-        name: 'serafim',
-        str: 1,
-        vit: 0,
-        dex: 2,
-        occ: 1,
-        dmg: 8,
-        time: 0.7,
-        damage: 76,
-        isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
         set_bonus: [
           {
             dmg: 12,
@@ -72,23 +47,25 @@ export default function MainPage() {
           },
           {
             dmg: 25,
-            vit:6,
-            str:5
+            vit: 6,
+            str: 5
           }
         ]
       },
-      gloves: {
-        url: 'serafim_g',
-        type: 'helm',
-        name: 'serafim',
-        str: 1,
-        vit: 0,
-        dex: 2,
-        occ: 1,
-        dmg: 8,
-        time: 0.7,
-        damage: 76,
+      helm: {
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
         isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
         set_bonus: [
           {
             dmg: 12,
@@ -96,23 +73,25 @@ export default function MainPage() {
           },
           {
             dmg: 25,
-            vit:6,
-            str:5
+            vit: 6,
+            str: 5
           }
         ]
       },
       armor: {
-        url: 'serafim_a',
-        type: 'armor',
-        name: 'serafim',
-        str: 1,
-        vit: 0,
-        dex: 2,
-        occ: 1,
-        dmg: 8,
-        time: 0.7,
-        damage: 76,
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
         isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
         set_bonus: [
           {
             dmg: 12,
@@ -120,23 +99,25 @@ export default function MainPage() {
           },
           {
             dmg: 25,
-            vit:6,
-            str:5
+            vit: 6,
+            str: 5
           }
         ]
       },
       boots: {
-        url: 'serafim_b',
-        type: 'boots',
-        name: 'serafim',
-        str: 1,
-        vit: 0,
-        dex: 2,
-        occ: 1,
-        dmg: 8,
-        time: 0.7,
-        damage: 76,
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
         isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
         set_bonus: [
           {
             dmg: 12,
@@ -144,12 +125,78 @@ export default function MainPage() {
           },
           {
             dmg: 25,
-            vit:6,
-            str:5
+            vit: 6,
+            str: 5
           }
         ]
       },
+      gloves: {
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
+        isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit: 6,
+            str: 5
+          }
+        ]
+      }
     }
+  }
+
+  const charData = {
+    hp: 90,
+    lvl: 3,
+    str: 9,
+    vit: 10,
+    dex: 12,
+    acc: 13,
+    dmg: 84,
+    exp: 175,
+    items:
+      [{
+        url: 'serafim_w',
+        type: 'weapon',
+        name: 'Pistol of Serafim',
+        set_name: 'serafim',
+        rar: 'epic',
+        isWear: true,
+        main_bonus: {
+          hp: 10,
+          str: 1,
+          dex: 2,
+          time: 0.7,
+          damage: 76,
+        },
+        set_bonus: [
+          {
+            dmg: 12,
+            vit: 3
+          },
+          {
+            dmg: 25,
+            vit: 6,
+            str: 5
+          }
+        ]
+      },
+      ]
+
   }
 
   const onBagClick = e => {
@@ -162,7 +209,8 @@ export default function MainPage() {
         multiline={true}
         aria-haspopup="true"
         delayShow={200}
-      />
+        className="tooltip"
+      ></ReactTooltip>
       <div className="game">
 
         {
@@ -172,7 +220,7 @@ export default function MainPage() {
             null
         }
         <div className="champs-wrapper">
-          <CharCard onBagClick={onBagClick} />
+          <CharCard onBagClick={onBagClick} charData={charData} />
 
           {
             isBattle ?
@@ -575,4 +623,11 @@ const StyledField = styled.div`
   position: absolute;
   top: 200px;
   left: 260px;
-}`
+}
+
+.tooltip {
+  font-weight: 400;
+  color: yellow;
+}
+
+`
