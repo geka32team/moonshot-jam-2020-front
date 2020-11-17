@@ -3,14 +3,10 @@ import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 import CharCard from './CharCard'
 import Inventory from './Inventory'
-
-import duel_img from "../assets/img/duel.png"
-import bot_img from "../assets/img/bot.jpeg"
-import boss_img from "../assets/img/boss.jpeg"
-import moon_img from "../assets/img/moon.png"
-import bag_img from "../assets/img/bag.png"
-
 import BattlePage from './BattlePage'
+
+import Images from './Images'
+
 
 export default function MainPage() {
 
@@ -19,20 +15,21 @@ export default function MainPage() {
 
   const enemyData = {
     hp: 120,
+    current_hp: 85,
     lvl: 3,
     str: 9,
     vit: 10,
     dex: 12,
     acc: 13,
     dmg: 84,
-    items: {
-      weapon: {
+    items: [
+      {
         url: 'serafim_w',
         type: 'weapon',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        isWear: true,
+        is_weared: true,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -52,13 +49,13 @@ export default function MainPage() {
           }
         ]
       },
-      helm: {
-        url: 'serafim_w',
-        type: 'weapon',
+      {
+        url: 'serafim_h',
+        type: 'helm',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        isWear: true,
+        is_weared: true,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -78,13 +75,13 @@ export default function MainPage() {
           }
         ]
       },
-      armor: {
-        url: 'serafim_w',
-        type: 'weapon',
+      {
+        url: 'serafim_a',
+        type: 'armor',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        isWear: true,
+        is_weared: true,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -104,13 +101,13 @@ export default function MainPage() {
           }
         ]
       },
-      boots: {
-        url: 'serafim_w',
-        type: 'weapon',
+      {
+        url: 'serafim_b',
+        type: 'boots',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        isWear: true,
+        is_weared: true,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -130,13 +127,13 @@ export default function MainPage() {
           }
         ]
       },
-      gloves: {
-        url: 'serafim_w',
-        type: 'weapon',
+      {
+        url: 'serafim_g',
+        type: 'gloves',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        isWear: true,
+        is_weared: true,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -156,51 +153,163 @@ export default function MainPage() {
           }
         ]
       }
-    }
+    ]
   }
 
   const charData = {
     hp: 90,
+    current_hp: 64,
     lvl: 3,
     str: 9,
     vit: 10,
     dex: 12,
     acc: 13,
     dmg: 84,
-    exp: 175,
+    exp: 250,
+    current_exp: 175,
+    freeStats: 5,
     items:
-      [{
-        url: 'serafim_w',
-        type: 'weapon',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        isWear: true,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          damage: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
+      [
+        {
+          url: 'weapon_alt',
+          type: 'weapon',
+          name: 'Pistol of Serafim',
+          set_name: 'serafim',
+          rar: 'epic',
+          is_weared: true,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            damage: 76,
           },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
+        {
+          url: 'serafim_a',
+          type: 'armor',
+          name: 'Pistol of Serafim',
+          set_name: 'serafim',
+          rar: 'epic',
+          is_weared: false,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            damage: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
+        {
+          url: 'serafim_b',
+          type: 'boots',
+          name: 'Pistol of Serafim',
+          set_name: 'serafim',
+          rar: 'epic',
+          is_weared: true,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            damage: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
+        {
+          url: 'serafim_g',
+          type: 'gloves',
+          name: 'Pistol of Serafim',
+          set_name: 'serafim',
+          rar: 'epic',
+          is_weared: true,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            damage: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
+        {
+          url: 'serafim_h',
+          type: 'helm',
+          name: 'Pistol of Serafim',
+          set_name: 'serafim',
+          rar: 'epic',
+          is_weared: false,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            damage: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
       ]
 
   }
 
   const onBagClick = e => {
     setBagOpen(e)
+  }
+
+  const itemsDescription = (item, description) => {
+    return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Find " + description
   }
 
   return (
@@ -210,17 +319,17 @@ export default function MainPage() {
         aria-haspopup="true"
         delayShow={200}
         className="tooltip"
-      ></ReactTooltip>
+      />
       <div className="game">
 
         {
           bagOpen ?
-            <Inventory onBagClose={onBagClick} />
+            <Inventory onBagClose={onBagClick} itemsDescription={itemsDescription} charData={charData} />
             :
             null
         }
         <div className="champs-wrapper">
-          <CharCard onBagClick={onBagClick} charData={charData} />
+          <CharCard onBagClick={onBagClick} itemsDescription={itemsDescription} charData={charData} />
 
           {
             isBattle ?
@@ -229,14 +338,14 @@ export default function MainPage() {
               <div className="battles">
                 <div className="duel">
                   <p>Duel</p>
-                  <span onClick={() => setIsBattle(true)}><img src={duel_img} alt="fight" /></span>
+                  <span onClick={() => setIsBattle(true)}><img src={Images.duel} alt="fight" /></span>
                 </div>
 
                 <div className="enemy">
                   <div className="bot easy">
                     <p>Easy</p>
                     <div className="bot-img">
-                      <img src={bot_img} alt="Bot" />
+                      <img src={Images.bot} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -244,7 +353,7 @@ export default function MainPage() {
                   <div className="bot normal">
                     <p>Normal</p>
                     <div className="bot-img">
-                      <img src={bot_img} alt="Bot" />
+                      <img src={Images.bot} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -252,7 +361,7 @@ export default function MainPage() {
                   <div className="bot hard">
                     <p>Hard</p>
                     <div className="bot-img">
-                      <img src={bot_img} alt="Bot" />
+                      <img src={Images.bot} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -260,7 +369,7 @@ export default function MainPage() {
                   <div className="bot extremal">
                     <p>Hell</p>
                     <div className="bot-img">
-                      <img src={bot_img} alt="Bot" />
+                      <img src={Images.bot} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -271,18 +380,18 @@ export default function MainPage() {
 
         </div>
         <div className="moon" onClick={() => setIsBattle(false)}>
-          <img className="boss2" src={boss_img} alt="boss" />
-          <img className="boss3" src={boss_img} alt="boss" />
-          <img className="boss4" src={boss_img} alt="boss" />
-          <img className="boss5" src={boss_img} alt="boss" />
-          <img className="boss6" src={boss_img} alt="boss" />
+          <img className="boss2" src={Images.boss} alt="boss" />
+          <img className="boss3" src={Images.boss} alt="boss" />
+          <img className="boss4" src={Images.boss} alt="boss" />
+          <img className="boss5" src={Images.boss} alt="boss" />
+          <img className="boss6" src={Images.boss} alt="boss" />
           <div className="area1"></div>
           <div className="area2"></div>
           <div className="area3"></div>
           <div className="area4"></div>
           <div className="area5"></div>
           <div className="area6"></div>
-          <img className="boss1" src={boss_img} alt="boss" />
+          <img className="boss1" src={Images.boss} alt="boss" />
         </div>
       </div>
     </StyledField>
@@ -342,19 +451,36 @@ const StyledField = styled.div`
 }
 
 .exp {
+  position: relative;
   font-weight: normal;
-  background-color: blue;
+  background-color: #555;
   height: 150px;
   border: 1px solid black;
   color: white;
 }
 
 .hp {
+  position: relative;
   font-weight: normal;
   color: white;
-  background-color: red;
+  background-color: black;
   height: 150px;
   border: 1px solid black;
+  color: yellow;
+}
+
+.hp>div {
+  background-color: red;
+  position: absolute;
+  bottom: 0px;
+  width: 48px;
+}
+
+.exp>div {
+  background-color: blue;
+  position: absolute;
+  bottom: 0px;
+  width: 48px;
 }
 
 .weapon {
@@ -383,7 +509,7 @@ const StyledField = styled.div`
   position: absolute;
   right: 60px;
   top: 10px;
-  background: url(${bag_img}) no-repeat;
+  background: url(${Images.bag}) no-repeat;
   background-size: 80px 40px;
   background-position: -26px;
   width: 30px;
@@ -402,7 +528,7 @@ const StyledField = styled.div`
   margin: 0 auto;
   width: 500px;
   height: 500px;
-  background: url(${moon_img});
+  background: url(${Images.moon});
   background-size: 540px 540px;
   background-position: center;
   border-radius: 50%;

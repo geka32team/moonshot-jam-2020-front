@@ -1,29 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import main_img from "../assets/img/main.png"
-import weapon_img from "../assets/img/weapon.png"
-import armor_img from "../assets/img/armor.png"
-import boots_img from "../assets/img/boots.png"
-import helm_img from "../assets/img/helm.png"
-import gloves_img from "../assets/img/gloves.png"
-import default_armor_img from "../assets/img/default_armor.png"
-import default_weapon_img from "../assets/img/default_weapon.png"
-import default_gloves_img from "../assets/img/default_gloves.png"
-import default_helm_img from "../assets/img/default_helm.png"
-import default_boots_img from "../assets/img/default_boots.png"
+import Images from './Images'
 
 export default function CharCard(props) {
 
   const data = props.charData
-  const weap = data.items.filter(item => item.type === 'weapon' && item.isWear)[0]
-  const arm = data.items.filter(item => item.type === 'armor' && item.isWear)[0]
-  const helm = data.items.filter(item => item.type === 'helm' && item.isWear)[0]
-  const boots = data.items.filter(item => item.type === 'boots' && item.isWear)[0]
-  const glo = data.items.filter(item => item.type === 'gloves' && item.isWear)[0]
+  const weapon = data.items.filter(item => item.type === 'weapon' && item.is_weared)[0]
+  const armor = data.items.filter(item => item.type === 'armor' && item.is_weared)[0]
+  const helm = data.items.filter(item => item.type === 'helm' && item.is_weared)[0]
+  const boots = data.items.filter(item => item.type === 'boots' && item.is_weared)[0]
+  const gloves = data.items.filter(item => item.type === 'gloves' && item.is_weared)[0]
 
-  const itemsDescription = (item, description) => {
-    return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Find " + description
+  const returnItem = (item, description) => {
+    return (<div data-tip={props.itemsDescription(item, description)} data-type="info" className={description + " char-item"}>
+      <img src={item ? Images[item.url] : Images['default_' + description]} alt={description} />
+    </div>)
   }
 
   return (
@@ -33,41 +25,34 @@ export default function CharCard(props) {
 
         <div className="char-middle">
           <div className="char-left">
-            <div data-tip={itemsDescription(helm, "Helm")} data-type="info" className="helm char-item">
-              <img src={helm ? helm_img : default_helm_img} alt='img' />
+            {returnItem(helm, "helm")}
+            {returnItem(boots, "boots")}
+            <div data-tip="Your Exp" data-type="info" className="exp">{data.current_exp}
+              <div style={{ height: `${data.current_exp / data.exp * 150}px` }}></div>
             </div>
-            <div data-tip={itemsDescription(boots, "Boots")} data-type="info" className="boots char-item">
-              <img src={boots ? boots_img : default_boots_img} alt='img' />
-            </div>
-            <div data-tip="Your Exp" data-type="info" className="exp">{data.exp}</div>
           </div>
 
           <div data-tip="Its you - a handsome UFO )))" data-type="info" className="icon char">
-            <img src={main_img} alt='img' />
+            <img src={Images.char} alt='img' />
           </div>
 
           <div className="char-right">
-                <div data-tip={itemsDescription(arm, "Armor")} data-type="info" className="armor char-item">
-                  <img src={arm ? armor_img : default_armor_img} alt='img' />
-                </div>
-            <div data-tip={itemsDescription(glo, "Gloves")} data-type="info" className="gloves char-item">
-              <img src={glo ? gloves_img : default_gloves_img} alt='img' />
+            {returnItem(armor, "armor")}
+            {returnItem(gloves, "gloves")}
+            <div data-tip="Char HP" data-type="info" className="hp">{data.current_hp}
+              <div style={{ height: `${data.current_hp / data.hp * 150}px` }}></div>
             </div>
-            <div data-tip="Char HP" data-type="info" className="hp">{data.hp}</div>
           </div>
         </div>
 
         <div className="char-bottom">
-
-              <div data-tip={itemsDescription(weap, 'Weapon')} data-type="info" className="weapon">
-                <img src={weap ? weapon_img : default_weapon_img} alt='img' />
-              </div>
+          {returnItem(weapon, "weapon")}
 
           <div className="stats">
-            <div data-tip="Your Strenght" data-type="info">strength: {data.str}</div>
-            <div data-tip="Your Vitality" data-type="info">vitality: {data.vit}</div>
-            <div data-tip="Your Dextirity" data-type="info">dextirity: {data.dex}</div>
-            <div data-tip="Your Accuracy" data-type="info">accuracy: {data.acc}</div>
+            <div data-tip="Your Strenght" data-type="info">strength: {data.str}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
+            <div data-tip="Your Vitality" data-type="info">vitality: {data.vit}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
+            <div data-tip="Your Dextirity" data-type="info">dextirity: {data.dex}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
+            <div data-tip="Your Accuracy" data-type="info">accuracy: {data.acc}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
             <div data-tip="Your Dmg" data-type="info">weapon dmg: {data.dmg}</div>
           </div>
         </div>
@@ -87,6 +72,13 @@ const StyledField = styled.div`
   width: 200px;
   height: 300px;
   object-fit: cover;
+}
+
+.add_stats {
+  border: 1px solid black;
+  cursor: pointer;
+  display: inline-block;
+  width: 15px;
 }
 
 
