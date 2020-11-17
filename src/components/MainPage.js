@@ -35,7 +35,7 @@ export default function MainPage() {
           str: 1,
           dex: 2,
           time: 0.7,
-          damage: 76,
+          dmg: 76,
         },
         set_bonus: [
           {
@@ -61,7 +61,7 @@ export default function MainPage() {
           str: 1,
           dex: 2,
           time: 0.7,
-          damage: 76,
+          dmg: 76,
         },
         set_bonus: [
           {
@@ -87,7 +87,7 @@ export default function MainPage() {
           str: 1,
           dex: 2,
           time: 0.7,
-          damage: 76,
+          dmg: 76,
         },
         set_bonus: [
           {
@@ -113,7 +113,7 @@ export default function MainPage() {
           str: 1,
           dex: 2,
           time: 0.7,
-          damage: 76,
+          dmg: 76,
         },
         set_bonus: [
           {
@@ -139,7 +139,7 @@ export default function MainPage() {
           str: 1,
           dex: 2,
           time: 0.7,
-          damage: 76,
+          dmg: 76,
         },
         set_bonus: [
           {
@@ -182,7 +182,7 @@ export default function MainPage() {
             str: 1,
             dex: 2,
             time: 0.7,
-            damage: 76,
+            dmg: 76,
           },
           set_bonus: [
             {
@@ -201,14 +201,14 @@ export default function MainPage() {
           type: 'armor',
           name: 'Pistol of Serafim',
           set_name: 'serafim',
-          rar: 'epic',
+          rar: 'legendary',
           is_weared: false,
           main_bonus: {
             hp: 10,
             str: 1,
             dex: 2,
             time: 0.7,
-            damage: 76,
+            dmg: 76,
           },
           set_bonus: [
             {
@@ -227,14 +227,14 @@ export default function MainPage() {
           type: 'boots',
           name: 'Pistol of Serafim',
           set_name: 'serafim',
-          rar: 'epic',
+          rar: 'magic',
           is_weared: true,
           main_bonus: {
             hp: 10,
             str: 1,
             dex: 2,
             time: 0.7,
-            damage: 76,
+            dmg: 76,
           },
           set_bonus: [
             {
@@ -253,14 +253,14 @@ export default function MainPage() {
           type: 'gloves',
           name: 'Pistol of Serafim',
           set_name: 'serafim',
-          rar: 'epic',
+          rar: 'rare',
           is_weared: true,
           main_bonus: {
             hp: 10,
             str: 1,
             dex: 2,
             time: 0.7,
-            damage: 76,
+            dmg: 76,
           },
           set_bonus: [
             {
@@ -279,14 +279,14 @@ export default function MainPage() {
           type: 'helm',
           name: 'Pistol of Serafim',
           set_name: 'serafim',
-          rar: 'epic',
+          rar: 'uncommon',
           is_weared: false,
           main_bonus: {
             hp: 10,
             str: 1,
             dex: 2,
             time: 0.7,
-            damage: 76,
+            dmg: 76,
           },
           set_bonus: [
             {

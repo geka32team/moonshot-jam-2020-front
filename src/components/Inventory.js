@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Images from './Images'
 import ReactTooltip from 'react-tooltip'
+import ApproveModal from './ApproveModal'
 
 export default function Inventory(props) {
 
+  const [question, setQuestion] = useState("")
+  const [isDelete, setIsDelete] = useState(false)
+
   const items = props.charData.items
+
+  const onDel = item => {
+    setQuestion(`Do you really want to delete ${item}?`)
+    setIsDelete(true)
+  }
+
+  const modalHandler = res => {
+    setQuestion('')
+    setIsDelete(false)
+  }
 
   return (
     <StyledField>
@@ -16,14 +30,20 @@ export default function Inventory(props) {
         className="tooltip"
         id="inventory"
       />
+      {
+        isDelete ?
+          <ApproveModal modalHandler={modalHandler} question={question} /> :
+          null
+      }
       <div className="bag-window">
+
         <div className="bag-name">Choose items
           <span className="close-btn" onClick={() => props.onBagClose(false)}>X</span>
         </div>
         {
-          items.map((item, i) => <div data-tip={props.itemsDescription(item, item.type)} data-for='inventory' data-type="info" key={item.name + i} className={item.is_weared ? "weared bag-item" : "not_weared bag-item"}>
+          items.map((item, i) => <div data-tip={props.itemsDescription(item, item.type)} data-for='inventory' data-type="info" key={item.name + i} className={`${item.rar} ${item.is_weared ? "weared bag-item" : "not_weared bag-item"}`}>
             <img src={Images[item.url]} alt={item.name} />
-            <span onClick={() => window.prompt('Do you really want to delete this item ?')}>x</span>
+            <span onClick={() => onDel(item.name)}>x</span>
           </div>)
         }
       </div>
@@ -56,7 +76,6 @@ const StyledField = styled.div`
   position: relative;
   font-size: 40px;
   text-align: center;
-  border: 2px solid #5f0;
   width: 40px;
   height: 40px;
   margin: 2px;
@@ -65,7 +84,6 @@ const StyledField = styled.div`
 
 .not_weared {
   opacity: 0.5;
-  border: 2px solid gray;
 }
 
 .bag-item>img {
@@ -107,6 +125,31 @@ const StyledField = styled.div`
   background-color: red;
   line-height: 16px;
 }
+
+.common {
+  border: 2px solid var(--common);
+}
+
+.uncommon {
+  border: 2px solid var(--uncommon);
+}
+
+.magic {
+  border: 2px solid var(--magic);
+}
+
+.rare {
+  border: 2px solid var(--rare);
+}
+
+.epic {
+  border: 2px solid var(--epic);
+}
+
+.legendary {
+  border: 2px solid var(--legendary);
+}
+
 
 
 `
