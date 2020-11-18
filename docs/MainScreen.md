@@ -1,7 +1,5 @@
-Hello World!
-
-On the left side we have a map of the mercenary, on the right - the boots, divided by levels of difficulty. The button 'Duel' is located in the middle of them - for the possibility of fighting with live players. The weapon character has by default is the simpliest and the weakest, it can never fall out of his hands in a battle.
-Below is a map of the month on which the bosses will be located (5-10 pieces), the active boss can be only one, i.e. you can beat them strictly in order.
+On the left side we have a map of the mercenary, on the right - the boots are divided by levels of difficulty. Between them the button 'Duel' - for the possibility of fighting with live players. The character has by default a weapon, the simplest and weakest, it can never fall out of his hands in battle.
+Below is a map of the month on which the bosses will be located (5-10 pieces), the active boss can be only one, ie you can beat them clearly in order.
 
 On the sides and bottom of the picture of the character are icons for equipment and weapons, which are obtained from mobs, bosses and duels.
 In duels it will be possible to knock out a rag from another player with a chance of 5-35% if the advantage is 1 level then the chance will be 10% and 20%, if the first in 2 levels then the chance will be 8% and 25%, if 3 levels then 5% and 35%). Only wearing clothes and weapons (except for the original (Nubian) weapon) may fall out.
@@ -66,4 +64,5 @@ Levels of challenges:
 3)Plus/minus operations with X
 4)Multiplication/division operations with X(with parantaces)
 5)Plus/minus/multiplication/division operations with X (with parantaces)
+
 
