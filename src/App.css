@@ -70,3 +70,11 @@ form {
   color: rgb(45, 82, 48);
   background-color: yellow;
 }
+
+button:active {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}

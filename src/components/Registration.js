@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Registration(props) {
 
 
-  const [isRegister, setIsRegister] = useState(true)
+  const [isRegister, setIsRegister] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
 
   const registerUrl = 'http://127.0.0.1:5000/api/register'
   const loginUrl = 'http://127.0.0.1:5000/api/signin'
+
+  useEffect(() => {
+    window.onkeypress = onEnter
+  }, [])
 
   const registerHandler = () => {
     if (password === confPassword) {
@@ -33,8 +37,17 @@ function Registration(props) {
       }
     })
       .then(res => {
-        if (res.status === 200) props.history.push("/game")
+        if (res.status === 200) {
+          window.onkeypress = null
+          props.history.push("/game")
+        } 
       })
+  }
+
+  const onEnter = e =>{
+    if(e.key === 'Enter') {
+      isRegister ? registerHandler() : loginHandler()
+    }    
   }
 
   return (

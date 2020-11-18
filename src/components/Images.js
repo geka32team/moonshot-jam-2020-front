@@ -6,11 +6,17 @@ import serafim_a from "../assets/img/armor.png"
 import serafim_b from "../assets/img/boots.png"
 import serafim_h from "../assets/img/helm.png"
 import serafim_g from "../assets/img/gloves.png"
+
 import default_armor from "../assets/img/default_armor.png"
 import default_weapon from "../assets/img/default_weapon.png"
 import default_gloves from "../assets/img/default_gloves.png"
 import default_helm from "../assets/img/default_helm.png"
 import default_boots from "../assets/img/default_boots.png"
+
+import iron_w from "../assets/img/iron-weapon.png"
+import iron_h from "../assets/img/iron-helm.png"
+
+
 import weapon_alt from "../assets/img/weapon.png"
 
 import background from "../assets/img/moon-surface.jpg"
@@ -41,8 +47,9 @@ const Images = {
     bot,
     boss,
     bag,
-    weapon_alt
-
+    weapon_alt,
+    iron_w,
+    iron_h,
 }
 
 

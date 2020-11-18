@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <Header />
+      <Header info={{lvl: 5, name: 'Sodiicc'}} />
       <div className="container">
       
         <Route path="/" exact component={Registration} />
