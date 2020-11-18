@@ -24,7 +24,7 @@ export default function MainPage() {
     dmg: 84,
     items: [
       {
-        url: 'serafim_w',
+        url: 'iron_w',
         type: 'weapon',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
@@ -50,7 +50,7 @@ export default function MainPage() {
         ]
       },
       {
-        url: 'serafim_h',
+        url: 'iron_h',
         type: 'helm',
         name: 'Pistol of Serafim',
         set_name: 'serafim',
@@ -133,7 +133,7 @@ export default function MainPage() {
         name: 'Pistol of Serafim',
         set_name: 'serafim',
         rar: 'epic',
-        is_weared: true,
+        is_weared: false,
         main_bonus: {
           hp: 10,
           str: 1,
@@ -168,6 +168,7 @@ export default function MainPage() {
     exp: 250,
     current_exp: 175,
     freeStats: 5,
+    bosses_defeated: 2,
     items:
       [
         {
@@ -300,8 +301,72 @@ export default function MainPage() {
             }
           ]
         },
+        {
+          url: 'iron_h',
+          type: 'helm',
+          name: 'Iron Helmet',
+          set_name: 'iron',
+          rar: 'epic',
+          is_weared: true,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            dmg: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
+        {
+          url: 'iron_w',
+          type: 'weapon',
+          name: 'Pistol of Iron God',
+          set_name: 'iron',
+          rar: 'rare',
+          is_weared: true,
+          main_bonus: {
+            hp: 10,
+            str: 1,
+            dex: 2,
+            time: 0.7,
+            dmg: 76,
+          },
+          set_bonus: [
+            {
+              dmg: 12,
+              vit: 3
+            },
+            {
+              dmg: 25,
+              vit: 6,
+              str: 5
+            }
+          ]
+        },
       ]
 
+  }
+
+  const bossItem = count => {
+    let elements = []
+    for (let i = 1; i <= count; i++) {
+      elements.push(
+        <React.Fragment key={i}>
+          <img className={`boss_${i} ${charData.bosses_defeated >= i ? 'defeated-boss' : null}`} src={Images.boss} alt={`boss_${i}`} />
+          <div className={`area_${i} ${charData.bosses_defeated >= i ? 'defeated-area' : null}`} src={Images.boss}></div>
+        </React.Fragment>)
+    }
+    return elements
   }
 
   const onBagClick = e => {
@@ -380,18 +445,7 @@ export default function MainPage() {
 
         </div>
         <div className="moon" onClick={() => setIsBattle(false)}>
-          <img className="boss2" src={Images.boss} alt="boss" />
-          <img className="boss3" src={Images.boss} alt="boss" />
-          <img className="boss4" src={Images.boss} alt="boss" />
-          <img className="boss5" src={Images.boss} alt="boss" />
-          <img className="boss6" src={Images.boss} alt="boss" />
-          <div className="area1"></div>
-          <div className="area2"></div>
-          <div className="area3"></div>
-          <div className="area4"></div>
-          <div className="area5"></div>
-          <div className="area6"></div>
-          <img className="boss1" src={Images.boss} alt="boss" />
+          {bossItem(6)}
         </div>
       </div>
     </StyledField>
@@ -648,17 +702,36 @@ const StyledField = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.moon .area1 {
+.moon .available-area {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.moon .defeated-area {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.moon .available-boss {
+  z-index: 1;
+  width: 60px;
+  height: 120px;
+}
+
+.moon .defeated-boss {
+  z-index: 1;
+  width: 60px;
+  height: 120px;
+}
+
+.moon .area_1 {
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
   transform: rotate(30deg);
   height: 50%;
   width: 50%;
   top: -10px;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.moon .area2 {
+.moon .area_2 {
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
   transform: rotate(-7deg);
   height: 50%;
@@ -667,7 +740,7 @@ const StyledField = styled.div`
   left: 190px;
 }
 
-.moon .area3 {
+.moon .area_3 {
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
   transform: rotate(-17deg);
   height: 70%;
@@ -676,7 +749,7 @@ const StyledField = styled.div`
   left: -100px;
 }
 
-.moon .area4 {
+.moon .area_4 {
   clip-path: polygon(50% 0%, 100% 28%, 85% 83%, 14% 49%, 3% 35%);
   transform: rotate(-33deg);
   height: 139%;
@@ -685,7 +758,7 @@ const StyledField = styled.div`
   left: 369px;
 }
 
-.moon .area5 {
+.moon .area_5 {
   clip-path: polygon(0 0, 0% 100%, 100% 74%);
   transform: rotate(-5.3deg);
   height: 70%;
@@ -694,7 +767,7 @@ const StyledField = styled.div`
   left: 149px;
 }
 
-.moon .area6 {
+.moon .area_6 {
   clip-path: polygon(41% 16%, 93.5% 10%, 78% 96%, 2% 53%);
   transform: rotate(0deg);
   height: 60%;
@@ -703,23 +776,24 @@ const StyledField = styled.div`
   left: 128px;
 }
 
-.boss1 {
-  width: 70px;
-  height: 140px;
-  position: absolute;
-  top: 70px;
-  left: 100px;
-}
-
-.boss2 {
+.boss_1 {
   width: 50px;
   height: 100px;
   position: absolute;
-  top: 30px;
+  top: 70px;
+  left: 100px;
+  z-index: 1;
+}
+
+.boss_2 {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 20px;
   left: 280px;
 }
 
-.boss3 {
+.boss_3 {
   width: 50px;
   height: 100px;
   position: absolute;
@@ -727,7 +801,7 @@ const StyledField = styled.div`
   left: 50px;
 }
 
-.boss4 {
+.boss_4 {
   width: 50px;
   height: 100px;
   position: absolute;
@@ -735,7 +809,7 @@ const StyledField = styled.div`
   left: 420px;
 }
 
-.boss5 {
+.boss_5 {
   width: 50px;
   height: 100px;
   position: absolute;
@@ -743,7 +817,7 @@ const StyledField = styled.div`
   left: 200px;
 }
 
-.boss6 {
+.boss_6 {
   width: 50px;
   height: 100px;
   position: absolute;
