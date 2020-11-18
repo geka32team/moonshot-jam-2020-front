@@ -55,3 +55,11 @@ You need to create an exp table for each level
 After the character raises the level, he has 5 free points for pumping, he scatters them at will.
 
 With each level the tasks become more difficult, they depend on the level of mobs with which you compete. If it is a duel then the task is chosen randomly between your level and the opponent's level.
+
+Levels of challenges:
+
+1)Simple plus/minus operations
+2)Simple multiplication/division operations
+3)Plus/minus operations with X
+4)Multiplication/division operations with X(with parantaces)
+5)Plus/minus/multiplication/division operations with X (with parantaces)
