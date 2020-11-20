@@ -16,7 +16,7 @@ if sign == '-' and abs(b) > a :
     a, b = b, a
 
 
-x = a+b
+x = abs(a+b)
 
 answer = int(input(" {} {} {} = ?\n".format(abs(a),sign,abs(b))))
 
@@ -24,3 +24,4 @@ if answer == x :
     print("Well Done")
 else :
     print("Answer not correct")
+
