@@ -12,9 +12,13 @@ if b < 0 :
 else :
     sign = '+'
 
+if sign == '-' and abs(b) > a :
+    a, b = b, a
+
+
 x = a+b
 
-answer = int(input(" {} {} {} = ?\n".format(a,sign,abs(b))))
+answer = int(input(" {} {} {} = ?\n".format(abs(a),sign,abs(b))))
 
 if answer == x :
     print("Well Done")
