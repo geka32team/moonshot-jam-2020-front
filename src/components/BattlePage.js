@@ -23,6 +23,7 @@ export default function BattlePage(props) {
   useEffect(() => {
     if (answer.length > 1) {
       window.onkeyup = null
+      props.onDrop(true)
       setIsAttack(false)
       setAnswer('')
       playShot()
@@ -53,7 +54,7 @@ export default function BattlePage(props) {
         {
           isAttack ?
             (<div className="task">
-              <p>12 - x + 6 = 5</p>
+              <p>12 - x + 6 -4 +7 = 5</p>
               <p className="ask-answer">x = ?</p>
               <p className="answer">{answer}</p>
               <div className="keyboard">

@@ -24,6 +24,7 @@ import moon from "../assets/img/moon.png"
 
 import duel from "../assets/img/duel.png"
 import bot from "../assets/img/bot.jpeg"
+import bot_1 from "../assets/img/bot_1.jpg"
 import boss from "../assets/img/boss.jpeg"
 import bag from "../assets/img/bag.png"
 
@@ -50,6 +51,7 @@ const Images = {
     weapon_alt,
     iron_w,
     iron_h,
+    bot_1,
 }
 
 

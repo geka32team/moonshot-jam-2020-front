@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 import CharCard from './CharCard'
@@ -6,12 +6,31 @@ import Inventory from './Inventory'
 import BattlePage from './BattlePage'
 
 import Images from './Images'
+import DropPage from './DropPage'
 
+import io from 'socket.io-client'
+const url = 'http://127.0.0.1:5000/api'
 
 export default function MainPage() {
 
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
+  const [drop, setDrop] = useState(false)
+
+  
+  useEffect(() => {
+    // debugger;
+    const socket = io(url);
+    console.log('socket', socket)
+  
+    // socket.on('connect', () => {
+    //   console.log(socket.id); // 'G5p5...'
+    // });
+  
+    socket.emit("echo", {msg: 'hello'},  data => {
+      console.log('data', data)
+    });
+  }, []);
 
   const enemyData = {
     hp: 120,
@@ -167,7 +186,9 @@ export default function MainPage() {
     dmg: 84,
     exp: 250,
     current_exp: 175,
+    basic_dmg: 30,
     freeStats: 5,
+    nickname: "Sodiicc",
     bosses_defeated: 2,
     items:
       [
@@ -357,6 +378,11 @@ export default function MainPage() {
 
   }
 
+  const handleData = data => {
+    let result = JSON.parse(data)
+    console.log('result', result)
+  }
+
   const bossItem = count => {
     let elements = []
     for (let i = 1; i <= count; i++) {
@@ -371,6 +397,10 @@ export default function MainPage() {
 
   const onBagClick = e => {
     setBagOpen(e)
+  }
+
+  const onDrop = e => {
+    setDrop(e)
   }
 
   const itemsDescription = (item, description) => {
@@ -398,7 +428,7 @@ export default function MainPage() {
 
           {
             isBattle ?
-              <BattlePage enemyData={enemyData} />
+              <BattlePage onDrop={onDrop} enemyData={enemyData} />
               :
               <div className="battles">
                 <div className="duel">
@@ -410,7 +440,7 @@ export default function MainPage() {
                   <div className="bot easy">
                     <p>Easy</p>
                     <div className="bot-img">
-                      <img src={Images.bot} alt="Bot" />
+                      <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -418,7 +448,7 @@ export default function MainPage() {
                   <div className="bot normal">
                     <p>Normal</p>
                     <div className="bot-img">
-                      <img src={Images.bot} alt="Bot" />
+                      <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -426,7 +456,7 @@ export default function MainPage() {
                   <div className="bot hard">
                     <p>Hard</p>
                     <div className="bot-img">
-                      <img src={Images.bot} alt="Bot" />
+                      <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -434,7 +464,7 @@ export default function MainPage() {
                   <div className="bot extremal">
                     <p>Hell</p>
                     <div className="bot-img">
-                      <img src={Images.bot} alt="Bot" />
+                      <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
                   </div>
@@ -448,6 +478,12 @@ export default function MainPage() {
           {bossItem(6)}
         </div>
       </div>
+      {
+        drop ?
+        <DropPage onDrop={onDrop} characterInfo={charData} itemsDescription={itemsDescription} />
+        :
+        null
+      }
     </StyledField>
 
   )
@@ -611,24 +647,24 @@ const StyledField = styled.div`
 }
 
 .bot-img img {
-  width: 180px;
-  height: 150px;
+  width: 150px;
+  height: 250px;
   object-fit: cover;
-  object-position: -11px -31px;
+  /* object-position: -11px -31px; */
 }
 
 .bot-img {
   position: relative;
   border-radius: 35px;
   overflow: hidden;
-  height: 150px;
+  height: 250px;
 }
 
 .bot-img::after {
   content: '';
   display: block;
   width: 150px;
-  height: 150px;
+  height: 250px;
   background-color: rgb(76, 255, 22);
   position: absolute;
   top: 0;
