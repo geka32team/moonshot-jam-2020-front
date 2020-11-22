@@ -34,7 +34,8 @@ function Registration(props) {
       body: JSON.stringify({ username, password }),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: "include"
     })
       .then(res => {
         if (res.status === 200) {
