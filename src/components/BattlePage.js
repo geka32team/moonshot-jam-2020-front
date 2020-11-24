@@ -11,6 +11,8 @@ export default function BattlePage(props) {
 
   const [isAttack, setIsAttack] = useState(false)
   const [answer, setAnswer] = useState('')
+  const [timeWidth, setTimeWidth] = useState(100)
+  const [timer, setTimer] = useState(null)
 
   const [playShot] = useSound(shot)
 
@@ -29,6 +31,22 @@ export default function BattlePage(props) {
       playShot()
     }
   }, [answer, playShot])
+
+  useEffect(() => {
+    if(isAttack) {
+      startTime(10)
+    }else{
+      clearInterval(timer)
+      setTimeWidth(100)
+    }
+  }, [isAttack])
+
+  const startTime = time => {
+    console.log('time', time)
+    setTimer(setInterval(() => {
+      if(timeWidth > 0) setTimeWidth(t => t - 0.5)
+    }, time/200 * 1000))
+  }
 
   const onStartFight = () => {
     setIsAttack(true)
@@ -57,6 +75,7 @@ export default function BattlePage(props) {
               <p>12 - x + 6 -4 +7 = 5</p>
               <p className="ask-answer">x = ?</p>
               <p className="answer">{answer}</p>
+              <div className="timelane"><div style={{width: `${timeWidth}%`, backgroundColor: `rgb(${155+(100 - timeWidth)}, ${255*timeWidth/100}, 0)`}}></div></div>
               <div className="keyboard">
                 {
                   digits.map(digit => <span key={digit} onClick={changeAnswer}>{digit}</span>)
@@ -145,6 +164,16 @@ const StyledField = styled.div`
 .keyboard span:active {
   color: limegreen;
   transform: scale(1.05);
+}
+
+.timelane {
+  height: 10px;
+  background-color: gray;
+}
+
+.timelane>div {
+  height:10px;
+  margin-left: auto;
 }
 
 `

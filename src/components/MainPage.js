@@ -4,33 +4,34 @@ import ReactTooltip from 'react-tooltip'
 import CharCard from './CharCard'
 import Inventory from './Inventory'
 import BattlePage from './BattlePage'
+import Header from './Header'
 
 import Images from './Images'
 import DropPage from './DropPage'
 
-import io from 'socket.io-client'
-const url = 'http://127.0.0.1:5000/api'
+// import io from 'socket.io-client'
+// const url = 'http://127.0.0.1:5000/api'
 
 export default function MainPage() {
 
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
   const [drop, setDrop] = useState(false)
+  const [botLvl, setBotlvl] = useState(1)
 
-  
-  useEffect(() => {
-    // debugger;
-    const socket = io(url);
-    console.log('socket', socket)
-  
-    // socket.on('connect', () => {
-    //   console.log(socket.id); // 'G5p5...'
-    // });
-  
-    socket.emit("echo", {msg: 'hello'},  data => {
-      console.log('data', data)
-    });
-  }, []);
+  // const socket = io(url);
+
+  // useEffect(() => {
+
+  //   setBotlvl(charData.bot_lvl)
+  //   socket.on('connect', () => {
+  //     console.log(socket.id);
+  //   });
+
+  //   socket.emit("echo", { msg: 'hello' }, data => {
+  //     console.log('data', data)
+  //   });
+  // }, []);
 
   const enemyData = {
     hp: 120,
@@ -185,6 +186,7 @@ export default function MainPage() {
     acc: 13,
     dmg: 84,
     exp: 250,
+    bot_lvl: 5,
     current_exp: 175,
     basic_dmg: 30,
     freeStats: 5,
@@ -199,6 +201,7 @@ export default function MainPage() {
           set_name: 'serafim',
           rar: 'epic',
           is_weared: true,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -225,6 +228,7 @@ export default function MainPage() {
           set_name: 'serafim',
           rar: 'legendary',
           is_weared: false,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -251,6 +255,7 @@ export default function MainPage() {
           set_name: 'serafim',
           rar: 'magic',
           is_weared: true,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -277,6 +282,7 @@ export default function MainPage() {
           set_name: 'serafim',
           rar: 'rare',
           is_weared: true,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -303,6 +309,7 @@ export default function MainPage() {
           set_name: 'serafim',
           rar: 'uncommon',
           is_weared: false,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -329,6 +336,7 @@ export default function MainPage() {
           set_name: 'iron',
           rar: 'epic',
           is_weared: true,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -355,6 +363,7 @@ export default function MainPage() {
           set_name: 'iron',
           rar: 'rare',
           is_weared: true,
+          lvl: 5,
           main_bonus: {
             hp: 10,
             str: 1,
@@ -378,11 +387,6 @@ export default function MainPage() {
 
   }
 
-  const handleData = data => {
-    let result = JSON.parse(data)
-    console.log('result', result)
-  }
-
   const bossItem = count => {
     let elements = []
     for (let i = 1; i <= count; i++) {
@@ -403,6 +407,12 @@ export default function MainPage() {
     setDrop(e)
   }
 
+  const changeBotLvl = sign => {
+    if (sign === '+' && botLvl < charData.lvl + 5) setBotlvl(b => b + 1)
+    else if(sign === '-' && botLvl > 1) setBotlvl(b => b - 1)
+  }
+
+
   const itemsDescription = (item, description) => {
     return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Find " + description
   }
@@ -415,6 +425,8 @@ export default function MainPage() {
         delayShow={200}
         className="tooltip"
       />
+    <Header info={{lvl: charData.lvl, name: charData.nickname}} />
+    <div className="container">
       <div className="game">
 
         {
@@ -428,7 +440,7 @@ export default function MainPage() {
 
           {
             isBattle ?
-              <BattlePage onDrop={onDrop} enemyData={enemyData} />
+              <BattlePage onDrop={onDrop} enemyData={enemyData} time={10}/>
               :
               <div className="battles">
                 <div className="duel">
@@ -474,6 +486,13 @@ export default function MainPage() {
           }
 
         </div>
+
+        <div className="bot-lvl">
+          <span>Bot level</span>
+          <button onClick={() => changeBotLvl('-')}>-</button>
+          <span>{botLvl}</span>
+          <button onClick={() => changeBotLvl('+')}>+</button>
+        </div>
         <div className="moon" onClick={() => setIsBattle(false)}>
           {bossItem(6)}
         </div>
@@ -484,6 +503,7 @@ export default function MainPage() {
         :
         null
       }
+      </div>
     </StyledField>
 
   )
@@ -864,6 +884,18 @@ const StyledField = styled.div`
 .tooltip {
   font-weight: 400;
   color: yellow;
+}
+
+.bot-lvl {
+  margin-left: auto;
+  width: 300px;
+}
+
+.bot-lvl > span {
+  color: yellow;
+  padding-right: 10px;
+  padding-left: 10px;
+  background-color: #999;
 }
 
 `

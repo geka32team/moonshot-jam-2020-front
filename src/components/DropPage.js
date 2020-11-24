@@ -1,16 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import Images from './Images'
+import ReactTooltip from 'react-tooltip'
 
 export default function DropPage(props) {
   return (
     <StyledField>
+      <ReactTooltip
+        multiline={true}
+        aria-haspopup="true"
+        delayShow={200}
+        className="tooltip"
+        id="drop"
+      />
       <div className="drop-modal">
         <div className="drop">
         <div className="bag-name">Drop List
         </div>
           {
-            props.characterInfo.items.map((item, i) => <div data-tip={props.itemsDescription(item, item.type)} data-type="info" key={item.name + i} className="bag-item">
+            props.characterInfo.items.map((item, i) => <div data-tip={props.itemsDescription(item, item.type)} data-type="info" data-for="drop" key={item.name + i} className="bag-item">
               <img src={Images[item.url]} alt={item.name} />
             </div>)
           }

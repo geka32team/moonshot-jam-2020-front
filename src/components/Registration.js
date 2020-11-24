@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Header from './Header'
 
 function Registration(props) {
 
@@ -52,6 +53,9 @@ function Registration(props) {
   }
 
   return (
+    <>
+    <Header info={{lvl: '', name: ''}} />
+    <div className="container">
     <div className="login-form">
       <div>
         <span className={isRegister ? "active-btn" : "login-btn"} onClick={() => setIsRegister(true)}>Register</span>
@@ -88,6 +92,8 @@ function Registration(props) {
           </form>
       }
     </div>
+    </div>
+    </>
 
   );
 }

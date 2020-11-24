@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: itim;
-  font-weight: 700;
+  font-weight: 400;
   background: url("./moon-surface.jpg") no-repeat;
   background-position: center;
 }
@@ -69,6 +69,12 @@ form {
 .login-btn:hover {
   color: rgb(45, 82, 48);
   background-color: yellow;
+}
+button {
+  background-color: rgb(63,62,62);
+  color: yellow;
+  border: none;
+  cursor: pointer;
 }
 
 button:active {
