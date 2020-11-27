@@ -9,8 +9,8 @@ function Registration(props) {
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
 
-  const registerUrl = 'http://127.0.0.1:5000/api/register'
-  const loginUrl = 'http://127.0.0.1:5000/api/signin'
+  const registerUrl = 'http://moonnymathics-api.herokuapp.com/api/register'
+  const loginUrl = 'http://moonnymathics-api.herokuapp.com/api/signin'
 
   useEffect(() => {
     window.onkeypress = onEnter
