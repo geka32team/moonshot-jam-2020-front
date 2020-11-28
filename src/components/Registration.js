@@ -9,7 +9,7 @@ function Registration(props) {
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
 
-  const registerUrl =  'https://moonnymathics-api.herokuapp.com/api/register'
+  const registerUrl = 'https://moonnymathics-api.herokuapp.com/api/register'
   const loginUrl = 'https://moonnymathics-api.herokuapp.com/api/signin'
 
   useEffect(() => {
