@@ -31,10 +31,12 @@ header {
   border-radius: 10px;
   box-shadow: -8px 8px 15px #ccc;
   background: rgba(21, 24, 17, 0.6);
+  z-index: 10;
 }
 
 form {
   padding: 20px 15px;
+  z-index: 10;
 }
 
 .login, .pass {
@@ -83,4 +85,121 @@ button:active {
 
 button:focus {
   outline: none;
+}
+
+.weapon-motion {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: url(./assets/img/weapon-diamond.png)  no-repeat;
+  background-size: contain;
+  z-index: -1;
+  top: 15vh;
+  left: 70vw;
+  animation: charReverseAnime 42s infinite linear;
+  transform: rotate(0deg);
+}
+.char-motion {
+  position: absolute;
+  top: 15vh;
+  left: 5vw;
+  width: 250px;
+  height: 350px;
+  background: url(./assets/img/char.png)  no-repeat;
+  background-size: contain;
+  z-index: -1;
+  animation: charAnime 55s infinite linear;
+  transform: rotate(0deg);
+}
+
+@keyframes charAnime {
+  25% {
+    top: 20vh;
+    left: calc(100vw - 300px);
+  }
+  40% {
+    transform: rotate(20deg);
+  }
+  50% {
+    top: calc(75vh - 380px);
+    left: calc(5vw);
+  }
+  75% {
+    top: calc(95vh - 380px);
+    left: calc(90vw - 300px);
+  }
+  85% {
+    transform: rotate(-15deg);
+    
+  }
+  100% {
+    transform: rotate(0deg);
+    top: calc(15vh);
+    left: calc(5vw);
+  }
+}
+
+@keyframes charReverseAnime {
+  25% {
+    top: calc(95vh - 380px);
+    left: calc(5vw);
+  }
+  40% {
+    transform: rotate(20deg);
+  }
+  50% {
+    top: calc(40vh);
+    left: calc(100vw - 300px);
+  }
+  75% {
+    top: calc(95vh - 380px);
+    left: calc(25vw);
+  }
+  85% {
+    transform: rotate(-15deg);
+    
+  }
+  100% {
+    transform: rotate(0deg);
+    top: calc(15vh);
+    left: calc(70vw);
+  }
+}
+
+@keyframes hide {
+  0% {
+    font-size: 5px;
+    opacity: 1;
+  }
+  10% {
+    font-size: 34px;
+    opacity: 1;
+  }
+  70% {
+    font-size: 34px;
+    opacity: 0.9;
+  }
+  100% {
+    font-size: 5px;
+    opacity: 0;
+  }
+}
+
+@keyframes hideCrit {
+  0% {
+    font-size: 5px;
+    opacity: 1;
+  }
+  10% {
+    font-size: 60px;
+    opacity: 1;
+  }
+  70% {
+    font-size: 54px;
+    opacity: 0.9;
+  }
+  100% {
+    font-size: 5px;
+    opacity: 0;
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Images from './Images'
@@ -12,6 +12,8 @@ export default function CharCard(props) {
   const boots = data.items.filter(item => item.type === 'boots' && item.is_weared)[0]
   const gloves = data.items.filter(item => item.type === 'gloves' && item.is_weared)[0]
 
+  const [isCrit, setIsCrit] = useState(false)
+
   const returnItem = (item, description) => {
     return (<div data-tip={props.itemsDescription(item, description)} data-type="info" className={description + " char-item"}>
       <img src={item ? Images[item.url] : Images['default_' + description]} alt={description} />
@@ -22,7 +24,11 @@ export default function CharCard(props) {
     <StyledField>
 
       <div className="character">
-
+        {
+          isCrit ?
+            <div className="crit-taken">57</div> :
+            <div className="dmg-taken">26</div>
+        }
         <div className="char-middle">
           <div className="char-left">
             {returnItem(helm, "helm")}
@@ -33,7 +39,7 @@ export default function CharCard(props) {
           </div>
 
           <div data-tip="Its you - a handsome UFO )))" data-type="info" className="icon char">
-            <img src={Images.char} alt='img' />
+            <img onClick={() => setIsCrit(!isCrit)} src={Images.char} alt='img' />
           </div>
 
           <div className="char-right">
@@ -67,6 +73,24 @@ export default function CharCard(props) {
 
 
 const StyledField = styled.div`
+
+.dmg-taken {
+  position: absolute;
+  right: -70px;
+  top: 200px;
+  color: yellow;
+  font-size: 34px;
+  animation: hide 5s forwards;
+}
+
+.crit-taken {
+  position: absolute;
+  right: -70px;
+  top: 200px;
+  color: red;
+  font-size: 34px;
+  animation: hideCrit 5s forwards;
+}
 
 .char img {
   width: 200px;

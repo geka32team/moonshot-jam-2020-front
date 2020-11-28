@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Images from './Images'
 
@@ -9,6 +9,8 @@ export default function EnemyCard(props) {
   const helm = data.items.filter(item => item.type === 'helm' && item.is_weared)[0]
   const boots = data.items.filter(item => item.type === 'boots' && item.is_weared)[0]
   const gloves = data.items.filter(item => item.type === 'gloves' && item.is_weared)[0]
+
+  const [isCrit, setIsCrit] = useState(false)
 
   const itemsDescription = item => {
     return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Empty slot"
@@ -24,7 +26,11 @@ export default function EnemyCard(props) {
     <StyledField>
 
       <div className="character">
-
+      {
+          isCrit ?
+            <div className="crit-taken">63</div> :
+            <div className="dmg-taken">29</div>
+        }
         <div className="char-middle">
           <div className="char-left">
             {returnItem(helm, "helm")}
@@ -36,7 +42,7 @@ export default function EnemyCard(props) {
           </div>
 
           <div data-tip="Enemy FACE" data-type="info" data-for="battleField" className="icon enemy_char">
-            <img src={Images.enemy} alt='img' />
+            <img onClick={() => setIsCrit(!isCrit)} src={Images.enemy} alt='img' />
           </div>
 
           <div className="char-right">
@@ -67,6 +73,24 @@ export default function EnemyCard(props) {
 
 const StyledField = styled.div`
 
+.dmg-taken {
+  position: absolute;
+  left: -70px;
+  top: 200px;
+  color: yellow;
+  font-size: 34px;
+  animation: hide 5s forwards;
+}
+
+.crit-taken {
+  position: absolute;
+  left: -70px;
+  top: 200px;
+  color: red;
+  font-size: 34px;
+  animation: hideCrit 5s forwards;
+}
+
 .enemy_task_wrapper {
   display: flex;
   width: 750px;
@@ -76,6 +100,11 @@ const StyledField = styled.div`
   width: 200px;
   height: 300px;
   object-fit: cover;
+  transform: rotateY(180deg);
+}
+
+.weapon {
+  transform: rotateY(180deg);
 }
 
 .enemy-hp {

@@ -5,388 +5,44 @@ import CharCard from './CharCard'
 import Inventory from './Inventory'
 import BattlePage from './BattlePage'
 import Header from './Header'
+import CharInfo from './_defaultData/CharInfo'
+import EnemyInfo from './_defaultData/EnemyInfo'
 
 import Images from './Images'
 import DropPage from './DropPage'
+import io from 'socket.io-client'
 
-// import io from 'socket.io-client'
-// const url = 'http://127.0.0.1:5000/api'
 
-export default function MainPage() {
+const url = 'https://moonnymathics-api.herokuapp.com/api'
+
+export default function MainPage(props) {
 
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
   const [drop, setDrop] = useState(false)
   const [botLvl, setBotlvl] = useState(1)
+  const [charData, setCharData] = useState(CharInfo)
+  const [enemyData, setEnemyData] = useState(EnemyInfo)
 
   // const socket = io(url);
+
+  useEffect(() => {
+    // setCharData(data)
+  }, [])
 
   // useEffect(() => {
 
   //   setBotlvl(charData.bot_lvl)
-  //   socket.on('connect', () => {
-  //     console.log(socket.id);
-  //   });
+  //     socket.on('connect', () => {
+  //       console.log(socket.id);
+  //     });
 
-  //   socket.emit("echo", { msg: 'hello' }, data => {
-  //     console.log('data', data)
-  //   });
-  // }, []);
+  //     socket.emit("echo", { msg: 'hello' }, data => {
+  //       console.log('data', data)
+  //     });
+  // }, [charData]);
 
-  const enemyData = {
-    hp: 120,
-    current_hp: 85,
-    lvl: 3,
-    str: 9,
-    vit: 10,
-    dex: 12,
-    acc: 13,
-    dmg: 84,
-    items: [
-      {
-        url: 'iron_w',
-        type: 'weapon',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        is_weared: true,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          dmg: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
-          },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      },
-      {
-        url: 'iron_h',
-        type: 'helm',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        is_weared: true,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          dmg: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
-          },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      },
-      {
-        url: 'serafim_a',
-        type: 'armor',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        is_weared: true,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          dmg: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
-          },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      },
-      {
-        url: 'serafim_b',
-        type: 'boots',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        is_weared: true,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          dmg: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
-          },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      },
-      {
-        url: 'serafim_g',
-        type: 'gloves',
-        name: 'Pistol of Serafim',
-        set_name: 'serafim',
-        rar: 'epic',
-        is_weared: false,
-        main_bonus: {
-          hp: 10,
-          str: 1,
-          dex: 2,
-          time: 0.7,
-          dmg: 76,
-        },
-        set_bonus: [
-          {
-            dmg: 12,
-            vit: 3
-          },
-          {
-            dmg: 25,
-            vit: 6,
-            str: 5
-          }
-        ]
-      }
-    ]
-  }
-
-  const charData = {
-    hp: 90,
-    current_hp: 64,
-    lvl: 3,
-    str: 9,
-    vit: 10,
-    dex: 12,
-    acc: 13,
-    dmg: 84,
-    exp: 250,
-    bot_lvl: 5,
-    current_exp: 175,
-    basic_dmg: 30,
-    freeStats: 5,
-    nickname: "Sodiicc",
-    bosses_defeated: 2,
-    items:
-      [
-        {
-          url: 'weapon_alt',
-          type: 'weapon',
-          name: 'Pistol of Serafim',
-          set_name: 'serafim',
-          rar: 'epic',
-          is_weared: true,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'serafim_a',
-          type: 'armor',
-          name: 'Pistol of Serafim',
-          set_name: 'serafim',
-          rar: 'legendary',
-          is_weared: false,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'serafim_b',
-          type: 'boots',
-          name: 'Pistol of Serafim',
-          set_name: 'serafim',
-          rar: 'magic',
-          is_weared: true,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'serafim_g',
-          type: 'gloves',
-          name: 'Pistol of Serafim',
-          set_name: 'serafim',
-          rar: 'rare',
-          is_weared: true,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'serafim_h',
-          type: 'helm',
-          name: 'Pistol of Serafim',
-          set_name: 'serafim',
-          rar: 'uncommon',
-          is_weared: false,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'iron_h',
-          type: 'helm',
-          name: 'Iron Helmet',
-          set_name: 'iron',
-          rar: 'epic',
-          is_weared: true,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-        {
-          url: 'iron_w',
-          type: 'weapon',
-          name: 'Pistol of Iron God',
-          set_name: 'iron',
-          rar: 'rare',
-          is_weared: true,
-          lvl: 5,
-          main_bonus: {
-            hp: 10,
-            str: 1,
-            dex: 2,
-            time: 0.7,
-            dmg: 76,
-          },
-          set_bonus: [
-            {
-              dmg: 12,
-              vit: 3
-            },
-            {
-              dmg: 25,
-              vit: 6,
-              str: 5
-            }
-          ]
-        },
-      ]
-
-  }
-
+  
   const bossItem = count => {
     let elements = []
     for (let i = 1; i <= count; i++) {
@@ -409,7 +65,7 @@ export default function MainPage() {
 
   const changeBotLvl = sign => {
     if (sign === '+' && botLvl < charData.lvl + 5) setBotlvl(b => b + 1)
-    else if(sign === '-' && botLvl > 1) setBotlvl(b => b - 1)
+    else if (sign === '-' && botLvl > 1) setBotlvl(b => b - 1)
   }
 
 
@@ -425,84 +81,88 @@ export default function MainPage() {
         delayShow={200}
         className="tooltip"
       />
-    <Header info={{lvl: charData.lvl, name: charData.nickname}} />
-    <div className="container">
-      <div className="game">
-
-        {
-          bagOpen ?
-            <Inventory onBagClose={onBagClick} itemsDescription={itemsDescription} charData={charData} />
-            :
-            null
-        }
-        <div className="champs-wrapper">
-          <CharCard onBagClick={onBagClick} itemsDescription={itemsDescription} charData={charData} />
+      <Header info={{ lvl: charData.lvl, name: charData.nickname }} />
+      <div className="container">
+        <div className="game">
 
           {
-            isBattle ?
-              <BattlePage onDrop={onDrop} enemyData={enemyData} time={10}/>
+            bagOpen ?
+              <Inventory onBagClose={onBagClick} itemsDescription={itemsDescription} charData={charData} />
               :
-              <div className="battles">
-                <div className="duel">
-                  <p>Duel</p>
-                  <span onClick={() => setIsBattle(true)}><img src={Images.duel} alt="fight" /></span>
+              null
+          }
+          <div className="champs-wrapper">
+            <CharCard onBagClick={onBagClick} itemsDescription={itemsDescription} charData={charData} />
+
+            {
+              isBattle ?
+                <BattlePage onDrop={onDrop} enemyData={enemyData} time={10} />
+                :
+                <div className="battles">
+                  <div className="duel">
+                    <p>Duel</p>
+                    <span onClick={() => setIsBattle(true)}><img src={Images.duel} alt="fight" /></span>
+                  </div>
+
+                  <div className="enemy">
+                    <div className="bot easy">
+                      <p>Easy</p>
+                      <div className="bot-img">
+                        <img src={Images.bot_1} alt="Bot" />
+                      </div>
+                      <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                    </div>
+
+                    <div className="bot normal">
+                      <p>Normal</p>
+                      <div className="bot-img">
+                        <img src={Images.bot_1} alt="Bot" />
+                      </div>
+                      <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                    </div>
+
+                    <div className="bot hard">
+                      <p>Hard</p>
+                      <div className="bot-img">
+                        <img src={Images.bot_1} alt="Bot" />
+                      </div>
+                      <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                    </div>
+
+                    <div className="bot extremal">
+                      <p>Hell</p>
+                      <div className="bot-img">
+                        <img src={Images.bot_1} alt="Bot" />
+                      </div>
+                      <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="enemy">
-                  <div className="bot easy">
-                    <p>Easy</p>
-                    <div className="bot-img">
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-                  </div>
+            }
 
-                  <div className="bot normal">
-                    <p>Normal</p>
-                    <div className="bot-img">
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-                  </div>
+          </div>
 
-                  <div className="bot hard">
-                    <p>Hard</p>
-                    <div className="bot-img">
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-                  </div>
-
-                  <div className="bot extremal">
-                    <p>Hell</p>
-                    <div className="bot-img">
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
-                  </div>
-                </div>
+          {
+            isBattle ? null :
+              <div className="bot-lvl">
+                <span>Bot level</span>
+                <button onClick={() => changeBotLvl('-')}>-</button>
+                <span>{botLvl}</span>
+                <button onClick={() => changeBotLvl('+')}>+</button>
               </div>
 
           }
-
+          <div className="moon" onClick={() => setIsBattle(false)}>
+            {bossItem(6)}
+          </div>
         </div>
-
-        <div className="bot-lvl">
-          <span>Bot level</span>
-          <button onClick={() => changeBotLvl('-')}>-</button>
-          <span>{botLvl}</span>
-          <button onClick={() => changeBotLvl('+')}>+</button>
-        </div>
-        <div className="moon" onClick={() => setIsBattle(false)}>
-          {bossItem(6)}
-        </div>
-      </div>
-      {
-        drop ?
-        <DropPage onDrop={onDrop} characterInfo={charData} itemsDescription={itemsDescription} />
-        :
-        null
-      }
+        {
+          drop ?
+            <DropPage onDrop={onDrop} characterInfo={charData} itemsDescription={itemsDescription} />
+            :
+            null
+        }
       </div>
     </StyledField>
 

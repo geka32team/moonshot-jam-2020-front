@@ -30,6 +30,7 @@ export default function BattlePage(props) {
       setAnswer('')
       playShot()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer, playShot])
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export default function BattlePage(props) {
       clearInterval(timer)
       setTimeWidth(100)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAttack])
 
   const startTime = time => {
@@ -84,7 +86,7 @@ export default function BattlePage(props) {
             </div>)
             :
             (<div>
-              <div className="is-ready">Are you ready to questions?</div>
+              <div className="is-ready">Are you ready for questions?</div>
               <div onClick={onStartFight} className="start-fight">Start Fight</div>
             </div>)
 
