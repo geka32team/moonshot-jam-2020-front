@@ -13,7 +13,7 @@ import DropPage from './DropPage'
 import io from 'socket.io-client'
 
 
-const url = 'https://moonnymathics-api.herokuapp.com/api'
+const url = process.env.REACT_APP_MAIN_URL || 'http://127.0.0.1:5000/api'
 
 export default function MainPage(props) {
 
@@ -73,6 +73,19 @@ export default function MainPage(props) {
     return item ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${item.rar}<br />Main Bonus: ${Object.keys(item.main_bonus).map(key => '<br/>' + key + ': ' + item.main_bonus[key])}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(key => '<br/>' + key + ': ' + item.set_bonus[0][key])}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(key => '<br/>' + key + ': ' + item.set_bonus[1][key])}` : "Find " + description
   }
 
+  const logoutHandler = () => {
+      fetch(url + '/signout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include"
+      })
+        .then(res => {
+          if (res.status === 200) props.history.push("/")
+        })    
+  }
+
   return (
     <StyledField>
       <ReactTooltip
@@ -81,7 +94,7 @@ export default function MainPage(props) {
         delayShow={200}
         className="tooltip"
       />
-      <Header info={{ lvl: charData.lvl, name: charData.nickname }} />
+      <Header logoutHandler={logoutHandler} info={{ lvl: charData.lvl, name: charData.nickname }} />
       <div className="container">
         <div className="game">
 

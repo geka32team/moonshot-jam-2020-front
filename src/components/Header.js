@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import moon_sound from '../assets/audio/moon_sound.wav'
 
 export default function Header(props) {
+
   return (
     <StyledField>
 
@@ -11,7 +12,7 @@ export default function Header(props) {
         <div className="header-wrapper">
           <div className="nick-name"><span className='lvl'>{props.info.lvl}</span>{props.info.name}</div>
           <div className="game-name">MoonnyMathics</div>
-          <div className="logout">{props.info.name ? 'logout' : null}</div>
+          <div onClick={props.logoutHandler} className="logout">{props.info.name ? 'logout' : null}</div>
         </div>
       </header>
     </StyledField>
