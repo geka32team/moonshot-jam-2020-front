@@ -12,9 +12,6 @@ function Registration(props) {
   const [confPassword, setConfPassword] = useState('')
 
   let url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000/api'
-  
-  console.log('process.env.REACT_APP_API_URL', process.env.REACT_APP_API_URL)
-  console.log('process.env.API_URL', process.env.API_URL)
 
   const registerUrl = url + '/register'
   const loginUrl = url + '/signin'
@@ -67,6 +64,8 @@ function Registration(props) {
       <div className="container">
         <div className="char-motion"></div>
         <div className="weapon-motion"></div>
+        <div className="boss-motion"></div>
+        <div className="armor-motion"></div>
         <div className="login-form">
           <div>
             <span className={isRegister ? "active-btn" : "login-btn"} onClick={() => setIsRegister(true)}>Register</span>
@@ -99,7 +98,7 @@ function Registration(props) {
                   <span>Password</span>
                   <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Enter your password" className="password" name="password" />
                 </div>
-                <span className="login-btn" onClick={loginHandler}>Login</span>
+                <span className="login-btn mt-5" onClick={loginHandler}>Login</span>
               </form>
           }
         </div>

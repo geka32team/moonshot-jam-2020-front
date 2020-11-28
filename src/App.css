@@ -26,6 +26,7 @@ header {
 .login-form {
   font-weight: normal;
   width: 300px;
+  height: 200px;
   margin: 100px auto;
   text-align: center;
   border-radius: 10px;
@@ -55,6 +56,11 @@ form {
   padding: 3px 6px;
   border-radius: 3px;
   cursor: pointer;
+  width: 60px;
+}
+
+.mt-5 {
+  margin-top: 42px;
 }
 
 .active-btn {
@@ -66,6 +72,7 @@ form {
   border-radius: 3px;
   cursor: pointer;
   background-color: yellow;
+  width: 60px;
 }
 
 .login-btn:hover {
@@ -87,11 +94,24 @@ button:focus {
   outline: none;
 }
 
+.boss-motion {
+  position: absolute;
+  width: 200px;
+  height: 270px;
+  background: url(./assets/img/boss_1.png)  no-repeat;
+  background-size: contain;
+  z-index: -1;
+  top: 15vh;
+  left: 70vw;
+  animation: charReverseAnime 63s infinite linear;
+  transform: rotate(0deg);
+}
+
 .weapon-motion {
   position: absolute;
   width: 200px;
-  height: 200px;
-  background: url(./assets/img/weapon-diamond.png)  no-repeat;
+  height: 270px;
+  background: url(./assets/img/weapon-gold.png)  no-repeat;
   background-size: contain;
   z-index: -1;
   top: 15vh;
@@ -99,6 +119,7 @@ button:focus {
   animation: charReverseAnime 42s infinite linear;
   transform: rotate(0deg);
 }
+
 .char-motion {
   position: absolute;
   top: 15vh;
@@ -106,6 +127,19 @@ button:focus {
   width: 250px;
   height: 350px;
   background: url(./assets/img/main-animate.png)  no-repeat;
+  background-size: contain;
+  z-index: -1;
+  animation: charAnime 79s infinite linear;
+  transform: rotate(0deg);
+}
+
+.armor-motion {
+  position: absolute;
+  top: 15vh;
+  left: 5vw;
+  width: 150px;
+  height: 230px;
+  background: url(./assets/img/armor-platinum.png)  no-repeat;
   background-size: contain;
   z-index: -1;
   animation: charAnime 55s infinite linear;
