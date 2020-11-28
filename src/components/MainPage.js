@@ -24,23 +24,23 @@ export default function MainPage(props) {
   const [charData, setCharData] = useState(CharInfo)
   const [enemyData, setEnemyData] = useState(EnemyInfo)
 
-  // const socket = io(url);
+  const socket = io(url);
 
   useEffect(() => {
     // setCharData(data)
   }, [])
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   setBotlvl(charData.bot_lvl)
-  //     socket.on('connect', () => {
-  //       console.log(socket.id);
-  //     });
+    // setBotlvl(charData.bot_lvl)
+    //   socket.on('connect', () => {
+    //     console.log(socket.id);
+    //   });
 
-  //     socket.emit("echo", { msg: 'hello' }, data => {
-  //       console.log('data', data)
-  //     });
-  // }, [charData]);
+      socket.emit("echo", { msg: 'hello' }, data => {
+        console.log('data', data)
+      });
+  }, [charData]);
 
   
   const bossItem = count => {
@@ -48,8 +48,8 @@ export default function MainPage(props) {
     for (let i = 1; i <= count; i++) {
       elements.push(
         <React.Fragment key={i}>
-          <img className={`boss_${i} ${charData.bosses_defeated >= i ? 'defeated-boss' : null}`} src={Images.boss} alt={`boss_${i}`} />
-          <div className={`area_${i} ${charData.bosses_defeated >= i ? 'defeated-area' : null}`} src={Images.boss}></div>
+          <img className={`boss_${i} ${charData.bosses_defeated >= i ? 'defeated-boss' : null}`} src={Images[`boss_${i % 2 + 1}`]} alt={`boss_${i}`} />
+          <div className={`area_${i} ${charData.bosses_defeated >= i ? 'defeated-area' : null}`}></div>
         </React.Fragment>)
     }
     return elements
@@ -434,8 +434,8 @@ const StyledField = styled.div`
 
 .moon .defeated-boss {
   z-index: 1;
-  width: 60px;
-  height: 120px;
+  width: 80px;
+  height: 100px;
 }
 
 .moon .area_1 {
@@ -492,51 +492,39 @@ const StyledField = styled.div`
   left: 128px;
 }
 
-.boss_1 {
-  width: 50px;
-  height: 100px;
+.moon img {
+  width: 70px;
+  height: 90px;
   position: absolute;
+}
+
+.boss_1 {
   top: 70px;
   left: 100px;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .boss_2 {
-  width: 50px;
-  height: 100px;
-  position: absolute;
   top: 20px;
   left: 280px;
 }
 
 .boss_3 {
-  width: 50px;
-  height: 100px;
-  position: absolute;
   top: 270px;
   left: 50px;
 }
 
 .boss_4 {
-  width: 50px;
-  height: 100px;
-  position: absolute;
   top: 190px;
   left: 420px;
 }
 
 .boss_5 {
-  width: 50px;
-  height: 100px;
-  position: absolute;
   top: 370px;
   left: 200px;
 }
 
 .boss_6 {
-  width: 50px;
-  height: 100px;
-  position: absolute;
   top: 200px;
   left: 260px;
 }
