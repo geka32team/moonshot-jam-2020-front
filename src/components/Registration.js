@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
 
+require('dotenv').config()
+
 function Registration(props) {
 
 
@@ -9,12 +11,10 @@ function Registration(props) {
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
 
-  let url = process.env.REACT_APP_MAIN_URL || 'http://127.0.0.1:5000/api'
+  let url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000/api'
 
   const registerUrl = url + '/register'
   const loginUrl = url + '/signin'
-  // const registerUrl = 'https://moonnymathics-api.herokuapp.com/api/register'
-  // const loginUrl = 'https://moonnymathics-api.herokuapp.com/api/signin'
 
   useEffect(() => {
     window.onkeypress = onEnter
