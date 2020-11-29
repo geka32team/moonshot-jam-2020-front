@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-
-require('dotenv').config()
+import {post} from './_api/Requests'
 
 function Registration(props) {
 
@@ -11,11 +10,6 @@ function Registration(props) {
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
 
-  let url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000/api'
-
-  const registerUrl = url + '/register'
-  const loginUrl = url + '/signin'
-
   useEffect(() => {
     window.onkeypress = onEnter
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,31 +17,19 @@ function Registration(props) {
 
   const registerHandler = () => {
     if (password === confPassword) {
-      fetch(registerUrl, {
-        method: 'POST',
-        body: JSON.stringify({ username, password }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      post('/register', {username, password})
+      .then(res => {
+        if (res.status === 200) setIsRegister(false)
       })
-        .then(res => {
-          if (res.status === 200) setIsRegister(false)
-        })
     }
   }
-
+  
   const loginHandler = () => {
-    fetch(loginUrl, {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: "include"
-    })
+    post('/signin', {username, password})    
       .then(res => {
         if (res.status === 200) {
           window.onkeypress = null
+          sessionStorage.setItem('user', username)
           props.history.push("/game")
         }
       })

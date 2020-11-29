@@ -11,6 +11,7 @@ import EnemyInfo from './_defaultData/EnemyInfo'
 import Images from './Images'
 import DropPage from './DropPage'
 import io from 'socket.io-client'
+import {postNoData} from './_api/Requests'
 
 require('dotenv').config()
 
@@ -25,10 +26,13 @@ export default function MainPage(props) {
   const [botLvl, setBotlvl] = useState(1)
   const [charData, setCharData] = useState(CharInfo)
   const [enemyData, setEnemyData] = useState(EnemyInfo)
+  const [userName, setUserName] = useState('')
 
   const socket = io(url);
 
   useEffect(() => {
+    if(!sessionStorage.getItem('user')) props.history.push('/')
+    else setUserName(sessionStorage.getItem('user'))
     // setCharData(data)
   }, [])
 
@@ -50,7 +54,7 @@ export default function MainPage(props) {
     for (let i = 1; i <= count; i++) {
       elements.push(
         <React.Fragment key={i}>
-          <img className={`boss_${i} ${charData.bosses_defeated >= i ? 'defeated-boss' : null}`} src={Images[`boss_${i % 2 + 1}`]} alt={`boss_${i}`} />
+          <img data-tip="If you lose the fight vs boss you have a chance 5% to drop a wearing item. Exp and drop increased" className={`boss_${i} ${charData.bosses_defeated >= i ? 'defeated-boss' : null}`} src={Images[`boss_${i % 2 + 1}`]} alt={`boss_${i}`} />
           <div className={`area_${i} ${charData.bosses_defeated >= i ? 'defeated-area' : null}`}></div>
         </React.Fragment>)
     }
@@ -76,16 +80,14 @@ export default function MainPage(props) {
   }
 
   const logoutHandler = () => {
-      fetch(url + '/signout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: "include"
-      })
+      postNoData('/signout')
         .then(res => {
           if (res.status === 200) props.history.push("/")
         })    
+  }
+
+  const upStatsHandler = stat => {
+    fetch()
   }
 
   return (
@@ -96,7 +98,7 @@ export default function MainPage(props) {
         delayShow={200}
         className="tooltip"
       />
-      <Header logoutHandler={logoutHandler} info={{ lvl: charData.lvl, name: charData.nickname }} />
+      <Header logoutHandler={logoutHandler} info={{ lvl: charData.lvl, name: userName }} />
       <div className="container">
         <div className="game">
 
@@ -122,7 +124,7 @@ export default function MainPage(props) {
                   <div className="enemy">
                     <div className="bot easy">
                       <p>Easy</p>
-                      <div className="bot-img">
+                      <div data-tip="exp 100%" className="bot-img">
                         <img src={Images.bot_1} alt="Bot" />
                       </div>
                       <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
@@ -130,7 +132,7 @@ export default function MainPage(props) {
 
                     <div className="bot normal">
                       <p>Normal</p>
-                      <div className="bot-img">
+                      <div data-tip="exp 120%" className="bot-img">
                         <img src={Images.bot_1} alt="Bot" />
                       </div>
                       <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
@@ -138,7 +140,7 @@ export default function MainPage(props) {
 
                     <div className="bot hard">
                       <p>Hard</p>
-                      <div className="bot-img">
+                      <div data-tip="exp 150%" className="bot-img">
                         <img src={Images.bot_1} alt="Bot" />
                       </div>
                       <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
@@ -146,7 +148,7 @@ export default function MainPage(props) {
 
                     <div className="bot extremal">
                       <p>Hell</p>
-                      <div className="bot-img">
+                      <div data-tip="exp 250%" className="bot-img">
                         <img src={Images.bot_1} alt="Bot" />
                       </div>
                       <span onClick={() => setIsBattle(true)}><button className="attack">attack</button></span>
@@ -160,7 +162,7 @@ export default function MainPage(props) {
 
           {
             isBattle ? null :
-              <div className="bot-lvl">
+              <div data-tip="If bot level is lower than your - the expiriance will decreased" className="bot-lvl">
                 <span>Bot level</span>
                 <button onClick={() => changeBotLvl('-')}>-</button>
                 <span>{botLvl}</span>

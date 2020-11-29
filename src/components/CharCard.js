@@ -20,6 +20,10 @@ export default function CharCard(props) {
     </div>)
   }
 
+  const updateStats = stat => {
+    fetch('')
+  }
+
   return (
     <StyledField>
 
@@ -55,10 +59,10 @@ export default function CharCard(props) {
           {returnItem(weapon, "weapon")}
 
           <div className="stats">
-            <div data-tip="Your Strenght" data-type="info">strength: {data.str}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
-            <div data-tip="Your Vitality" data-type="info">vitality: {data.vit}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
-            <div data-tip="Your Dextirity" data-type="info">dextirity: {data.dex}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
-            <div data-tip="Your Accuracy" data-type="info">accuracy: {data.acc}{data.freeStats ? <span className="add_stats">+</span> : null}</div>
+            <div data-tip="Strength affects the chance of crit and damage to you" data-type="info">strength: {data.str}{data.freeStats ? <span onClick={updateStats('srtn')} className="add_stats">+</span> : null}</div>
+            <div data-tip="Vitality affects the power of crit and your HP" data-type="info">vitality: {data.vit}{data.freeStats ? <span onClick={updateStats('vit')} className="add_stats">+</span> : null}</div>
+            <div data-tip="Dextirity affects the power of crit and the chance to dodge a blow" data-type="info">dextirity: {data.dex}{data.freeStats ? <span onClick={updateStats('dex')} className="add_stats">+</span> : null}</div>
+            <div data-tip="Accuracy affects the chance of crit and the chance to hit the enemy" data-type="info">accuracy: {data.acc}{data.freeStats ? <span onClick={updateStats('acc')} className="add_stats">+</span> : null}</div>
             <div data-tip="Your Dmg" data-type="info">weapon dmg: {data.dmg}</div>
           </div>
         </div>
