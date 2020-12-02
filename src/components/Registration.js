@@ -16,7 +16,7 @@ function Registration(props) {
   useEffect(() => {
     window.onkeypress = onEnter
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [username, password, isRegister])
 
   const registerHandler = () => {
     if (password === confPassword) {
