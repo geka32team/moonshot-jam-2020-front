@@ -7,6 +7,7 @@ import BattlePage from './BattlePage'
 import Header from './Header'
 import CharInfo from './_defaultData/CharInfo'
 import EnemyInfo from './_defaultData/EnemyInfo'
+import { useSelector, useDispatch } from "react-redux"
 
 import Images from './Images'
 import DropPage from './DropPage'
@@ -20,6 +21,9 @@ const url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000/api'
 
 export default function MainPage(props) {
 
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
   const [bagOpen, setBagOpen] = useState(false)
   const [isBattle, setIsBattle] = useState(false)
   const [drop, setDrop] = useState(false)
@@ -31,22 +35,20 @@ export default function MainPage(props) {
   const socket = io(url);
 
   useEffect(() => {
-    if(!sessionStorage.getItem('user')) props.history.push('/')
-    else setUserName(sessionStorage.getItem('user'))
+    if(!user.login) props.history.push('/')
+    else setUserName(user.name)
     // setCharData(data)
   }, [])
 
   useEffect(() => {
 
-    // setBotlvl(charData.bot_lvl)
-    //   socket.on('connect', () => {
-    //     console.log(socket.id);
-    //   });
-
       socket.emit("echo", { msg: 'hello' }, data => {
         console.log('data', data)
       });
-  }, [charData]);
+      socket.emit("getCharacterInfo", null, data => {
+        console.log('data', data)
+      });
+  }, []);
 
   
   const bossItem = count => {
@@ -82,7 +84,10 @@ export default function MainPage(props) {
   const logoutHandler = () => {
       postNoData('/signout')
         .then(res => {
-          if (res.status === 200) props.history.push("/")
+          if (res.status === 200) {
+            dispatch({type: "SET_LOGIN", payload: false })
+            props.history.push("/")
+          } 
         })    
   }
 

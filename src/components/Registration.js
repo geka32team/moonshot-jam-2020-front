@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import {post} from './_api/Requests'
+import { useDispatch } from "react-redux"
 
 function Registration(props) {
+
+  const dispatch = useDispatch();
 
 
   const [isRegister, setIsRegister] = useState(false)
@@ -29,7 +32,8 @@ function Registration(props) {
       .then(res => {
         if (res.status === 200) {
           window.onkeypress = null
-          sessionStorage.setItem('user', username)
+          dispatch({ type: "SET_LOGIN", payload: true })
+          dispatch({ type: "SET_NAME", payload: username })
           props.history.push("/game")
         }
       })

@@ -79,6 +79,12 @@ form {
   color: rgb(45, 82, 48);
   background-color: yellow;
 }
+
+input {
+  height: 15px;
+  width: 160px;
+}
+
 button {
   background-color: rgb(63,62,62);
   color: yellow;
