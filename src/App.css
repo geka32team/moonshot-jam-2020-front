@@ -85,6 +85,10 @@ input {
   width: 160px;
 }
 
+::placeholder {
+  font-size: 12px;
+}
+
 button {
   background-color: rgb(63,62,62);
   color: yellow;
