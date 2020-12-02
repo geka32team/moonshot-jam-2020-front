@@ -24,6 +24,7 @@ header {
 }
 
 .login-form {
+  position: relative;
   font-weight: normal;
   width: 300px;
   height: 200px;
@@ -57,6 +58,15 @@ form {
   border-radius: 3px;
   cursor: pointer;
   width: 60px;
+  transition: 0.3s;
+}
+
+.error-login {
+  position: absolute;
+  color: rgb(255 144 144);
+  top: 45px;
+  left: 15px;
+  font-size: 12px;
 }
 
 .mt-5 {

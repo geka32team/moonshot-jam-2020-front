@@ -12,19 +12,29 @@ function Registration(props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
+  const [error, setError] = useState('')
 
   useEffect(() => {
     window.onkeypress = onEnter
+    setError('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, password, isRegister])
 
   const registerHandler = () => {
+    if(username.length < 4) {
+      setError('Username should be at least 4 characters')
+      return
+    } 
+    if(password.length < 8) {
+      setError('Password should be at least 8 characters')
+      return
+    } 
     if (password === confPassword) {
       post('/register', {username, password})
       .then(res => {
         if (res.status === 200) setIsRegister(false)
       })
-    }
+    }else setError('Confirm the password')
   }
   
   const loginHandler = () => {
@@ -35,7 +45,7 @@ function Registration(props) {
           dispatch({ type: "SET_LOGIN", payload: true })
           dispatch({ type: "SET_NAME", payload: username })
           props.history.push("/game")
-        }
+        }else setError('Username or password is wrong')
       })
   }
 
@@ -53,6 +63,7 @@ function Registration(props) {
         <div className="boss-motion"></div>
         <div className="armor-motion"></div>
         <div className="login-form">
+          <div className="error-login">{error}</div>
           <div>
             <span className={isRegister ? "active-btn" : "login-btn"} onClick={() => setIsRegister(true)}>Register</span>
             <span className={isRegister ? "login-btn" : "active-btn"} onClick={() => setIsRegister(false)}>Login</span>
