@@ -62,6 +62,9 @@ function Registration(props) {
         <div className="weapon-motion"></div>
         <div className="boss-motion"></div>
         <div className="armor-motion"></div>
+        <span className="task1">2 + 2 = ?</span>
+        <span className="task2">12 : 4 + 2 = ?</span>
+        <span className="task3">(9 - x) * 3 = 6</span>
         <div className="login-form">
           <div className="error-login">{error}</div>
           <div>

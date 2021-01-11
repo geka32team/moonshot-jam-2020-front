@@ -134,8 +134,8 @@ button:focus {
   background: url(./assets/img/weapon-gold.png)  no-repeat;
   background-size: contain;
   z-index: -1;
-  top: 15vh;
-  left: 70vw;
+  top: calc(98vh - 270px);
+  left: calc(98vw - 200px);
   animation: charReverseAnime 42s infinite linear;
   transform: rotate(0deg);
 }
@@ -155,7 +155,7 @@ button:focus {
 
 .armor-motion {
   position: absolute;
-  top: 15vh;
+  top: calc(98vh - 270px);
   left: 5vw;
   width: 150px;
   height: 230px;
@@ -164,6 +164,42 @@ button:focus {
   z-index: -1;
   animation: charAnime 55s infinite linear;
   transform: rotate(0deg);
+}
+
+.task1 {
+  color: yellow;
+  text-shadow: 2px 2px 10px red;
+  font-size: 60px;
+  position: absolute;
+  top: calc(78vh - 270px);
+  left: 40vw;
+  z-index: -1;
+  animation: charAnime 35s infinite linear;
+  transform: rotate(-30deg);
+}
+
+.task2 {
+  color: rgb(65, 212, 65);
+  text-shadow: 2px 2px 10px rgb(230, 25, 25);
+  font-size: 52px;
+  position: absolute;
+  top: calc(38vh - 270px);
+  left: 70vw;
+  z-index: -1;
+  animation: charReverseAnime 38s infinite linear;
+  transform: rotate(-5deg);
+}
+
+.task3 {
+  color: rgb(243, 225, 144);
+  text-shadow: 2px 2px 10px rgb(230, 25, 25);
+  font-size: 48px;
+  position: absolute;
+  top: calc(98vh - 270px);
+  left: 60vw;
+  z-index: -1;
+  animation: charAnime 96s infinite linear;
+  transform: rotate(10deg);
 }
 
 @keyframes charAnime {
@@ -183,13 +219,7 @@ button:focus {
     left: calc(90vw - 300px);
   }
   85% {
-    transform: rotate(-15deg);
-    
-  }
-  100% {
-    transform: rotate(0deg);
-    top: calc(15vh);
-    left: calc(5vw);
+    transform: rotate(-15deg);    
   }
 }
 
@@ -210,13 +240,7 @@ button:focus {
     left: calc(25vw);
   }
   85% {
-    transform: rotate(-15deg);
-    
-  }
-  100% {
-    transform: rotate(0deg);
-    top: calc(15vh);
-    left: calc(70vw);
+    transform: rotate(-15deg);    
   }
 }
 
