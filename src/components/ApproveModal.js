@@ -30,7 +30,7 @@ const StyledField = styled.div`
   left: 0;
   right: 0;
   z-index: 200;
-  color: yellow;
+  color: var(--main);
 }
 
 .modal {
@@ -38,7 +38,6 @@ const StyledField = styled.div`
   border-radius: 10px;
   padding: 20px;
   width: 160px;
-  height: 100px;
   background-color: grey;
   left: 50%;
   transform: translateX(-50%);
@@ -51,8 +50,8 @@ const StyledField = styled.div`
 }
 
 .modal button {
-  color: yellow;
-  width: 60px;
+  color: var(--main);
+  width: 40px;
   padding: 3px 6px;
   background-color: #555;
   border-radius: 3px;

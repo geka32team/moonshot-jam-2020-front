@@ -10,9 +10,9 @@ export default function Header(props) {
       <header>
         <audio src={moon_sound} autoPlay loop />
         <div className="header-wrapper">
-          <div className="nick-name"><span className='lvl'>{props.info.lvl}</span>{props.info.name}</div>
+          <div className="nick-name"><span className='lvl'>{props.info.lvl}</span>{props.info.name}Bairaka</div>
           <div className="game-name">MoonnyMathics</div>
-          <div onClick={props.logoutHandler} className="logout">{props.info.name ? 'logout' : null}</div>
+          <div onClick={props.logoutHandler} className="logout">{props.info.name ? 'logout' : null}logout</div>
         </div>
       </header>
     </StyledField>
@@ -22,7 +22,7 @@ export default function Header(props) {
 const StyledField = styled.div`
 
 .header-wrapper {
-    width: 1180px;
+    max-width: 1180px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -44,6 +44,13 @@ const StyledField = styled.div`
 
 .logout {
   cursor: pointer;
+  margin: 0 15px;
+}
+
+@media (max-width: 960px) {
+  .game-name {
+    display: none;
+  }
 }
 
 

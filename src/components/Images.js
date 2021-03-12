@@ -45,6 +45,9 @@ import default_b from "../assets/img/default_b.png"
 
 
 import weapon_alt from "../assets/img/weapon.png"
+import weapon_gold from "../assets/img/weapon-gold.png"
+import main_animate from "../assets/img/main-animate.png"
+import armor_platinum from "../assets/img/armor-platinum.png"
 
 import background from "../assets/img/moon-surface.jpg"
 import moon from "../assets/img/moon.png"
@@ -104,6 +107,9 @@ const Images = {
     bag,
     weapon_alt,
     bot_1,
+    weapon_gold,
+    main_animate,
+    armor_platinum
 }
 
 

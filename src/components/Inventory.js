@@ -69,15 +69,12 @@ const StyledField = styled.div`
   z-index: 100;
   overflow-y: auto;
   font-weight: normal;
-  color: yellow;
+  color: var(--main);
 }
 
 .bag-item {
   position: relative;
-  font-size: 40px;
   text-align: center;
-  width: 40px;
-  height: 40px;
   margin: 2px;
   cursor: pointer;
 }
@@ -107,7 +104,7 @@ const StyledField = styled.div`
 }
 
 .bag-name {
-  width: 300px;
+  width: 100%;
   height: 20px;
   text-align: center;
   position: relative;
@@ -120,6 +117,7 @@ const StyledField = styled.div`
   display: inline-block;
   position: absolute;
   right: 10px;
+  top: 5px;
   cursor: pointer;  
   border-radius: 50%;
   background-color: red;

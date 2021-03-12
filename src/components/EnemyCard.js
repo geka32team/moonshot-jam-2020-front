@@ -75,20 +75,22 @@ const StyledField = styled.div`
 
 .dmg-taken {
   position: absolute;
-  left: -70px;
-  top: 200px;
-  color: yellow;
+  left: 75px;
+  top: 220px;
+  color: var(--secondary);
   font-size: 34px;
   animation: hide 5s forwards;
+  z-index: 1;
 }
 
 .crit-taken {
   position: absolute;
-  left: -70px;
-  top: 200px;
+  left: 70px;
+  top: 220px;
   color: red;
   font-size: 34px;
   animation: hideCrit 5s forwards;
+  z-index: 1;
 }
 
 .enemy_task_wrapper {
@@ -98,12 +100,12 @@ const StyledField = styled.div`
 
 .enemy_char img {
   width: 200px;
-  height: 300px;
+  height: 298px;
   object-fit: cover;
   transform: rotateY(180deg);
 }
 
-.weapon {
+.weapon>img {
   transform: rotateY(180deg);
 }
 

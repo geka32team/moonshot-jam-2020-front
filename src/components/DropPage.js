@@ -31,6 +31,13 @@ export default function DropPage(props) {
 }
 
 const StyledField = styled.div`
+position: absolute;
+background-color: #000c;
+left: 0;
+right:0;
+top:0;
+bottom:0;
+z-index: 50;
 
 .drop-modal {
   position: absolute;
@@ -47,7 +54,7 @@ const StyledField = styled.div`
   z-index: 100;
   overflow-y: auto;
   font-weight: normal;
-  color: yellow;
+  color: var(--main);
   top: 100px;
   justify-content: center;
 }
@@ -60,10 +67,7 @@ const StyledField = styled.div`
 
 .bag-item {
   position: relative;
-  font-size: 40px;
   text-align: center;
-  width: 40px;
-  height: 40px;
   margin: 2px;
   cursor: pointer;
 }
@@ -74,7 +78,7 @@ const StyledField = styled.div`
 }
 
 .bag-name {
-  width: 180px;
+  width: 100%;
   height: 20px;
   text-align: center;
   position: relative;
@@ -83,7 +87,7 @@ const StyledField = styled.div`
 .drop-modal button {
   margin-top: 30px;
   margin-bottom: 10px;
-  color: yellow;
+  color: var(--main);
   width: 60px;
   padding: 3px 6px;
   background-color: #555;

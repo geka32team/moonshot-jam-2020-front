@@ -59,10 +59,10 @@ export default function CharCard(props) {
           {returnItem(weapon, "weapon")}
 
           <div className="stats">
-            <div data-tip="Strength affects the chance of crit and damage to you" data-type="info">strength: {data.str}{data.freeStats ? <span onClick={updateStats('srtn')} className="add_stats">+</span> : null}</div>
-            <div data-tip="Vitality affects the power of crit and your HP" data-type="info">vitality: {data.vit}{data.freeStats ? <span onClick={updateStats('vit')} className="add_stats">+</span> : null}</div>
-            <div data-tip="Dextirity affects the power of crit and the chance to dodge a blow" data-type="info">dextirity: {data.dex}{data.freeStats ? <span onClick={updateStats('dex')} className="add_stats">+</span> : null}</div>
-            <div data-tip="Accuracy affects the chance of crit and the chance to hit the enemy" data-type="info">accuracy: {data.acc}{data.freeStats ? <span onClick={updateStats('acc')} className="add_stats">+</span> : null}</div>
+            <div data-tip="Strength affects the chance of crit and damage to you" data-type="info">strength: {data.str}{data.freeStats ? <button onClick={updateStats('srtn')} className="add_stats">+</button> : null}</div>
+            <div data-tip="Vitality affects the power of crit and your HP" data-type="info">vitality: {data.vit}{data.freeStats ? <button onClick={updateStats('vit')} className="add_stats">+</button> : null}</div>
+            <div data-tip="Dextirity affects the power of crit and the chance to dodge a blow" data-type="info">dextirity: {data.dex}{data.freeStats ? <button onClick={updateStats('dex')} className="add_stats">+</button> : null}</div>
+            <div data-tip="Accuracy affects the chance of crit and the chance to hit the enemy" data-type="info">accuracy: {data.acc}{data.freeStats ? <button onClick={updateStats('acc')} className="add_stats">+</button> : null}</div>
             <div data-tip="Your Dmg" data-type="info">weapon dmg: {data.dmg}</div>
           </div>
         </div>
@@ -80,17 +80,17 @@ const StyledField = styled.div`
 
 .dmg-taken {
   position: absolute;
-  right: -70px;
-  top: 200px;
-  color: yellow;
+  right: 75px;
+  top: 220px;
+  color: var(--secondary);
   font-size: 34px;
   animation: hide 5s forwards;
 }
 
 .crit-taken {
   position: absolute;
-  right: -70px;
-  top: 200px;
+  right: 70px;
+  top: 220px;
   color: red;
   font-size: 34px;
   animation: hideCrit 5s forwards;
@@ -98,15 +98,22 @@ const StyledField = styled.div`
 
 .char img {
   width: 200px;
-  height: 300px;
+  height: 298px;
   object-fit: cover;
 }
 
 .add_stats {
-  border: 1px solid black;
   cursor: pointer;
   display: inline-block;
   width: 15px;
+  font-weight: 700;
+  transform: translate(4px, -2px);
+  background-color: inherit;
+  color: var(--secondary);
+
+  &:hover {
+    transform: translate(4px, -2px) scale(1.5);
+  }
 }
 
 
