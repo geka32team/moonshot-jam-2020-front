@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import {post} from './_api/Requests'
-import { useDispatch } from "react-redux"
 import { Row, Col} from 'antd'
-import styled from "styled-components";
-import Images from "./Images";
+import styled from "styled-components"
+import Images from "./Images"
+import { useSelector, useDispatch } from "react-redux"
+import { useTranslation } from 'react-i18next'
 
 function Registration(props) {
 
-  const dispatch = useDispatch();
+  const [ t ] = useTranslation()
 
+  const dispatch = useDispatch()
 
   const [isRegister, setIsRegister] = useState(false)
   const [username, setUsername] = useState('')
@@ -25,11 +27,11 @@ function Registration(props) {
 
   const registerHandler = () => {
     if(username.length < 4) {
-      setError('Username should be at least 4 characters')
+      setError(t('error_name_length'))
       return
     } 
     if(password.length < 8) {
-      setError('Password should be at least 8 characters')
+      setError(t('error_pass_length'))
       return
     } 
     if (password === confPassword) {
@@ -37,7 +39,7 @@ function Registration(props) {
       .then(res => {
         if (res.status === 200) setIsRegister(false)
       })
-    }else setError('Confirm the password')
+    }else setError(t('enter_pass'))
   }
   
   const loginHandler = () => {
@@ -74,37 +76,37 @@ function Registration(props) {
         <div className="login-form">
           <div className="error-login">{error}</div>
           <div>
-            <span className={isRegister ? "active-btn" : "login-btn"} onClick={() => setIsRegister(true)}>Register</span>
-            <span className={isRegister ? "login-btn" : "active-btn"} onClick={() => setIsRegister(false)}>Login</span>
+            <span className={isRegister ? "active-btn" : "login-btn"} onClick={() => setIsRegister(true)}>{t('register')}</span>
+            <span className={isRegister ? "login-btn" : "active-btn"} onClick={() => setIsRegister(false)}>{t('login')}</span>
           </div>
           {
             isRegister ?
               <form>
                 <div className="login">
-                  <span>Login</span>
-                  <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Enter character name" className="username" name="username" />
+                  <span>{t('login')}</span>
+                  <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder={t('enter_name')} className="username" name="username" />
                 </div>
                 <div className="pass">
-                  <span>Password</span>
-                  <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Enter your password" className="password" name="password" />
+                  <span>{t('password')}</span>
+                  <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder={t('enter_pass')} className="password" name="password" />
                 </div>
                 <div className="pass">
-                  <span>Confirm</span>
-                  <input onChange={e => setConfPassword(e.target.value)} value={confPassword} type="password" placeholder="Enter your password" className="password" name="password" />
+                  <span>{t('confirm')}</span>
+                  <input onChange={e => setConfPassword(e.target.value)} value={confPassword} type="password" placeholder={t('enter_pass')} className="password" name="password" />
                 </div>
-                <span className="login-btn" onClick={registerHandler}>Register</span>
+                <span className="login-btn" onClick={registerHandler}>{t('register')}</span>
               </form>
               :
               <form>
                 <div className="login">
-                  <span>Login</span>
-                  <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Enter character name" className="username" name="username" />
+                  <span>{t('login')}</span>
+                  <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder={t('enter_name')} className="username" name="username" />
                 </div>
                 <div className="pass">
-                  <span>Password</span>
-                  <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Enter your password" className="password" name="password" />
+                  <span>{t('password')}</span>
+                  <input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder={t('enter_pass')} className="password" name="password" />
                 </div>
-                <span className="login-btn mt-5" onClick={loginHandler}>Login</span>
+                <span className="login-btn mt-5" onClick={loginHandler}>{t('login')}</span>
               </form>
           }
         </div>
@@ -130,7 +132,7 @@ const StyledField = styled.div`
   top: 15vh;
   left: 70vw;
   animation: charReverseAnime 63s infinite linear;
-  transform: rotate(0deg);
+  transform: rotate(0deg) translate(0, 0);
 }
 
 .weapon-motion {
@@ -140,10 +142,10 @@ const StyledField = styled.div`
   background: url(${Images.weapon_gold})  no-repeat;
   background-size: contain;
   z-index: -1;
-  top: calc(98vh - 70px);
-  left: calc(98vw - 20px);
+  top: calc(98vh);
+  left: calc(98vw);
   animation: charReverseAnime 42s infinite linear;
-  transform: rotate(0deg);
+  transform: rotate(0deg) translate(-110%, -120%);
 }
 
 .char-motion {
@@ -156,12 +158,12 @@ const StyledField = styled.div`
   background-size: contain;
   z-index: -1;
   animation: charAnime 79s infinite linear;
-  transform: rotate(0deg);
+  transform: rotate(0deg) translate(0, 0);
 }
 
 .armor-motion {
   position: absolute;
-  top: calc(98vh - 100px);
+  top: calc(98vh);
   left: 5vw;
   width: 150px;
   height: 230px;
@@ -169,14 +171,14 @@ const StyledField = styled.div`
   background-size: contain;
   z-index: -1;
   animation: charAnime 55s infinite linear;
-  transform: rotate(0deg);
+  transform: rotate(0deg) translate(0, -110%);
 }
 
 .task1 {
   color: var(--main);
   font-size: 60px;
   position: absolute;
-  top: calc(78vh - 100px);
+  top: calc(78vh);
   left: 40vw;
   z-index: -1;
   animation: charAnime 35s infinite linear;
@@ -198,11 +200,11 @@ const StyledField = styled.div`
   color: var(--warning);
   font-size: 48px;
   position: absolute;
-  top: calc(98vh - 70px);
+  top: calc(98vh);
   left: 60vw;
   z-index: -1;
   animation: charAnime 96s infinite linear;
-  transform: rotate(10deg);
+  transform: rotate(10deg) translate(0, -110%);
 }
 
 .task1, .task2, .task3 {
