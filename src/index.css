@@ -8,6 +8,7 @@
   --main: rgb(207, 241, 9);
   --secondary: rgb(10, 60, 82);
   --warning: #f79696;
+  --success: rgb(27, 204, 27);
 }
 
 body {

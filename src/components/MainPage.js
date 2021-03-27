@@ -5,47 +5,53 @@ import CharCard from "./CharCard";
 import Inventory from "./Inventory";
 import BattlePage from "./BattlePage";
 import Header from "./Header";
-import CharInfo from "./_defaultData/CharInfo";
-import EnemyInfo from "./_defaultData/EnemyInfo";
 import { useSelector, useDispatch } from "react-redux";
 
 import Images from "./Images";
 import DropPage from "./DropPage";
-import io from "socket.io-client";
-import { postNoData } from "./_api/Requests";
+// import io from "socket.io-client";
+import { postNoData, get_char_info, get_bot_info } from "./_api/Requests";
 
 require("dotenv").config();
 
-const url = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000/api";
+// const url = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000/api";
 
 export default function MainPage(props) {
-  const user = useSelector((state) => state.user);
+  const character = useSelector((state) => state.character);
+  const lvl = useSelector((state) => state.character.lvl);
+  const nickname = useSelector((state) => state.character.nickname);
   const dispatch = useDispatch();
 
   const [bagOpen, setBagOpen] = useState(false);
   const [isBattle, setIsBattle] = useState(false);
   const [drop, setDrop] = useState(false);
-  const [botLvl, setBotlvl] = useState(1);
-  const [charData, setCharData] = useState(CharInfo);
-  const [enemyData, setEnemyData] = useState(EnemyInfo);
-  const [userName, setUserName] = useState("");
+  const [botLvl, setBotLvl] = useState(1);
+  const [botDiff, setBotDiff] = useState(1);
 
-  const socket = io(url);
+  // const socket = io(url);
 
   useEffect(() => {
-    // if(!user.login) props.history.push('/')
-    // else setUserName(user.name)
-    // setCharData(data)
+    getCharacterInfo();
   }, []);
 
-  useEffect(() => {
-    socket.emit("echo", { msg: "hello" }, (data) => {
-      console.log("data", data);
+  const getCharacterInfo = () => {
+    get_char_info(character.nickname).then((data) => {
+      dispatch({ type: "SET_CHARACTER", payload: data[0] });
     });
-    socket.emit("getCharacterInfo", null, (data) => {
-      console.log("data", data);
+  };
+
+  const getBotInfo = () => {
+    get_bot_info(character.nickname).then((data) => {
+      dispatch({ type: "SET_BOT", payload: data[0] });
     });
-  }, []);
+  };
+
+  const onBattleStart = (diff) => {
+    setBotDiff(diff);
+    setIsBattle(true);
+    getCharacterInfo();
+    getBotInfo()
+  };
 
   const bossItem = (count) => {
     let elements = [];
@@ -55,14 +61,14 @@ export default function MainPage(props) {
           <img
             data-tip="If you lose the fight vs boss you have a chance 5% to drop a wearing item. Exp and drop increased"
             className={`boss_${i} ${
-              charData.bosses_defeated >= i ? "defeated-boss" : null
+              character.bosses_defeated >= i ? "defeated-boss" : null
             }`}
             src={Images[`boss_${(i % 2) + 1}`]}
             alt={`boss_${i}`}
           />
           <div
             className={`area_${i} ${
-              charData.bosses_defeated >= i ? "defeated-area" : null
+              character.bosses_defeated >= i ? "defeated-area" : null
             }`}
           ></div>
         </React.Fragment>
@@ -81,8 +87,8 @@ export default function MainPage(props) {
   };
 
   const changeBotLvl = (sign) => {
-    if (sign === "+" && botLvl < charData.lvl + 5) setBotlvl((b) => b + 1);
-    else if (sign === "-" && botLvl > 1) setBotlvl((b) => b - 1);
+    if (sign === "+" && botLvl < character.lvl + 5) setBotLvl((b) => b + 1);
+    else if (sign === "-" && botLvl > 1) setBotLvl((b) => b - 1);
   };
 
   const itemsDescription = (item, description) => {
@@ -108,10 +114,6 @@ export default function MainPage(props) {
     });
   };
 
-  const upStatsHandler = (stat) => {
-    fetch();
-  };
-
   return (
     <StyledField>
       <ReactTooltip
@@ -120,33 +122,39 @@ export default function MainPage(props) {
         delayShow={200}
         className="tooltip"
       />
-      <Header
-        logoutHandler={logoutHandler}
-        info={{ lvl: charData.lvl, name: userName }}
-      />
+      <Header logoutHandler={logoutHandler} charInfo={{ lvl, nickname }} />
       <div className="container">
         <div className="game">
           {bagOpen ? (
             <Inventory
               onBagClose={onBagClick}
               itemsDescription={itemsDescription}
-              charData={charData}
+              charData={character}
             />
           ) : null}
           <div className="champs-wrapper">
             <CharCard
               onBagClick={onBagClick}
               itemsDescription={itemsDescription}
-              charData={charData}
+              defaultDmg={false}
+              getCharacterInfo={getCharacterInfo}
             />
 
             {isBattle ? (
-              <BattlePage onDrop={onDrop} enemyData={enemyData} time={10} />
+              <BattlePage
+                setIsBattle={setIsBattle}
+                getCharacterInfo={getCharacterInfo}
+                getBotInfo={getBotInfo}
+                onDrop={onDrop}
+                time={10}
+                botLvl={botLvl}
+                botDiff={botDiff}
+              />
             ) : (
               <div className="battles">
                 <div className="duel">
                   <p>Duel</p>
-                  <span onClick={() => setIsBattle(true)}>
+                  <span onClick={() => onBattleStart(0)}>
                     <img src={Images.duel} alt="fight" />
                   </span>
                 </div>
@@ -157,7 +165,7 @@ export default function MainPage(props) {
                     <div data-tip="exp 100%" className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
-                    <span onClick={() => setIsBattle(true)}>
+                    <span onClick={() => onBattleStart(0)}>
                       <button className="attack">attack</button>
                     </span>
                   </div>
@@ -167,7 +175,7 @@ export default function MainPage(props) {
                     <div data-tip="exp 120%" className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
-                    <span onClick={() => setIsBattle(true)}>
+                    <span onClick={() => onBattleStart(1)}>
                       <button className="attack">attack</button>
                     </span>
                   </div>
@@ -177,7 +185,7 @@ export default function MainPage(props) {
                     <div data-tip="exp 150%" className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
-                    <span onClick={() => setIsBattle(true)}>
+                    <span onClick={() => onBattleStart(2)}>
                       <button className="attack">attack</button>
                     </span>
                   </div>
@@ -187,7 +195,7 @@ export default function MainPage(props) {
                     <div data-tip="exp 250%" className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
-                    <span onClick={() => setIsBattle(true)}>
+                    <span onClick={() => onBattleStart(3)}>
                       <button className="attack">attack</button>
                     </span>
                   </div>
@@ -214,7 +222,7 @@ export default function MainPage(props) {
         {drop ? (
           <DropPage
             onDrop={onDrop}
-            characterInfo={charData}
+            characterInfo={character}
             itemsDescription={itemsDescription}
           />
         ) : null}
@@ -370,7 +378,8 @@ const StyledField = styled.div`
     text-align: center;
   }
 
-  .enemy p, .duel p {
+  .enemy p,
+  .duel p {
     color: var(--main);
     font-size: 20px;
     background-color: rgb(10, 60, 82, 0.6);
@@ -679,67 +688,67 @@ const StyledField = styled.div`
   }
 
   @media (max-width: 960px) {
-  .champs-wrapper {
-    flex-direction: column;
-    align-items:center;
-  }
+    .champs-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
 
-  .moon {
-    width: 300px;
-    height: 300px;
+    .moon {
+      width: 300px;
+      height: 300px;
 
-    & .area_2 {
-      top: -69px;
-      left: 114px;
-    }
-    & .area_6 {
-      top: 59px;
-      left: 77px;
-    }
-    & .area_5 {
-      top: 144px;
-      left: 88px;
-    }
-    & .area_4 {
-      top: 2px;
-      left: 222px;
-    }
-    & .area_3 {
-      top: 96px;
-      left: -61px;
-    }
-    & > img {
-      width: 40px;
-      height: 50px;
-    }
-    & .defeated-boss {
-      width: 50px;
-      height: 65px;
-    }
-    & .boss_1 {
-      top: 50px;
-      left: 60px;
-    }
-    & .boss_2 {
-      top: 7px;
-      left: 157px;
-    }
-    & .boss_3 {
-      top: 165px;
-      left: 28px;
-    }
-    & .boss_4 {
-      top: 131px;
-      left: 249px;
-    }
-    & .boss_5 {
-      top: 221px;
-      left: 125px;
-    }
-    & .boss_6 {
-      top: 122px;
-      left: 154px;
+      & .area_2 {
+        top: -69px;
+        left: 114px;
+      }
+      & .area_6 {
+        top: 59px;
+        left: 77px;
+      }
+      & .area_5 {
+        top: 144px;
+        left: 88px;
+      }
+      & .area_4 {
+        top: 2px;
+        left: 222px;
+      }
+      & .area_3 {
+        top: 96px;
+        left: -61px;
+      }
+      & > img {
+        width: 40px;
+        height: 50px;
+      }
+      & .defeated-boss {
+        width: 50px;
+        height: 65px;
+      }
+      & .boss_1 {
+        top: 50px;
+        left: 60px;
+      }
+      & .boss_2 {
+        top: 7px;
+        left: 157px;
+      }
+      & .boss_3 {
+        top: 165px;
+        left: 28px;
+      }
+      & .boss_4 {
+        top: 131px;
+        left: 249px;
+      }
+      & .boss_5 {
+        top: 221px;
+        left: 125px;
+      }
+      & .boss_6 {
+        top: 122px;
+        left: 154px;
+      }
     }
   }
-}
 `;

@@ -4,6 +4,7 @@ import {post} from './_api/Requests'
 import { Row, Col} from 'antd'
 import styled from "styled-components"
 import Images from "./Images"
+// eslint-disable-next-line no-unused-vars
 import { useSelector, useDispatch } from "react-redux"
 import { useTranslation } from 'react-i18next'
 

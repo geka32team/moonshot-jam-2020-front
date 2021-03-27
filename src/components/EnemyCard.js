@@ -1,9 +1,31 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import Images from './Images'
+import { useSelector } from "react-redux"
 
-export default function EnemyCard(props) {
-  const data = props.enemyData
+
+export default function EnemyCard() {
+
+  const data = useSelector((state) => state.bot);
+  const current_hp = useSelector((state) => state.character.current_hp);
+  const isHideDmg = useSelector((state) => state.user.hideDmg);
+  const hit = useSelector((state) => state.fight_info.char_hit);
+  const is_crit = useSelector((state) => state.fight_info.is_char_crit);
+
+  const [showHit, setShowHit] = useState(null)
+
+  useEffect(() => {
+    is_crit ?
+    setShowHit(<div className="crit-taken">{hit ? hit : 'miss'}</div>) :
+    setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
+    return () => setShowHit(null)
+  }, [hit, is_crit])
+
+  useEffect(() => {
+    if(isHideDmg) setShowHit(null)
+  }, [isHideDmg])
+
+
   const weapon = data.items.filter(item => item.type === 'weapon' && item.is_weared)[0]
   const armor = data.items.filter(item => item.type === 'armor' && item.is_weared)[0]
   const helm = data.items.filter(item => item.type === 'helm' && item.is_weared)[0]
@@ -27,17 +49,15 @@ export default function EnemyCard(props) {
 
       <div className="character">
       {
-          isCrit ?
-            <div className="crit-taken">63</div> :
-            <div className="dmg-taken">29</div>
+         showHit        
         }
         <div className="char-middle">
           <div className="char-left">
             {returnItem(helm, "helm")}
             {returnItem(boots, "boots")}
 
-            <div data-tip="Enemy HP" data-type="info" data-for="battleField" className="hp">{data.current_hp}
-              <div style={{ height: `${data.current_hp / data.hp * 150}px` }}></div>
+            <div data-tip="Enemy HP" data-type="info" data-for="battleField" className="hp">{current_hp}
+              <div style={{ height: `${current_hp / data.hp * 150}px` }}></div>
             </div>
           </div>
 

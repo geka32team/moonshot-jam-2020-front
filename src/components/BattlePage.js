@@ -4,12 +4,19 @@ import ReactTooltip from "react-tooltip";
 
 import shot from "../assets/audio/shot.mp3";
 import EnemyCard from "./EnemyCard";
+import { get_task, get_answer, battle_result } from "./_api/Requests";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function BattlePage(props) {
+  const dispatch = useDispatch();
+  const character = useSelector(state => state.character)
+
   const [isAttack, setIsAttack] = useState(false);
   const [answer, setAnswer] = useState("");
   const [timeWidth, setTimeWidth] = useState(100);
   const [timer, setTimer] = useState(null);
+  const [taskVal, setTask] = useState(null);
+  const [answerLen, setAnswerLen] = useState(1);
 
   const task = useRef(null);
 
@@ -22,19 +29,32 @@ export default function BattlePage(props) {
   };
 
   useEffect(() => {
-    if (answer.length > 1) {
+    if (answer.length >= answerLen) {
       window.onkeyup = null;
-      props.onDrop(true);
-      setIsAttack(false);
-      setAnswer("");
-      playShot();
+
+      get_answer(answer, character.nickname)
+      .then(res => {
+        if ( res.char_hit ) {
+          playShot();
+        }
+        dispatch({type: "SET_FIGHT", payload: res})
+        dispatch({type: 'HIDE_DMG', payload: false})
+        props.getCharacterInfo()
+        props.getBotInfo()
+        if(res.is_end) {
+          props.setIsBattle(false)
+          battle_result(character.nickname)
+        } 
+        setIsAttack(false);
+        setAnswer("");
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answer, playShot]);
+  }, [answer]);
 
   useEffect(() => {
     if (isAttack) {
-      startTime(10);
+      startTime(character.time);
     } else {
       clearInterval(timer);
       setTimeWidth(100);
@@ -43,7 +63,6 @@ export default function BattlePage(props) {
   }, [isAttack]);
 
   const startTime = (time) => {
-    console.log("time", time);
     setTimer(
       setInterval(() => {
         if (timeWidth > 0) setTimeWidth((t) => t - 0.5);
@@ -52,9 +71,17 @@ export default function BattlePage(props) {
   };
 
   const onStartFight = () => {
-    setIsAttack(true);
-    window.onkeyup = writeAnswer;
-    task.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    get_task(props.botLvl, props.botDiff, character.nickname).then(data => {
+
+      setTask(data[0])
+      setAnswerLen(data[1])
+      
+      setIsAttack(true);
+      window.onkeyup = writeAnswer;
+      task.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      dispatch({type: 'HIDE_DMG', payload: true})
+
+    })
   };
 
   const writeAnswer = (e) => {
@@ -75,7 +102,7 @@ export default function BattlePage(props) {
       <div className="task-field" ref={task}>
         {isAttack ? (
           <div className="task">
-            <p>12 - x + 6 - 4 + 7 = 5</p>
+            <p>{taskVal}</p>
             <p className="ask-answer">x = ?</p>
             <p className="answer">{answer}</p>
             <div className="timelane">
@@ -106,7 +133,7 @@ export default function BattlePage(props) {
           </div>
         )}
       </div>
-      <EnemyCard enemyData={props.enemyData} />
+      <EnemyCard />
     </>
   );
 }

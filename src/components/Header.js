@@ -9,14 +9,14 @@ export default function Header(props) {
   return (
     <StyledField>
       <header>
-        <audio src={moon_sound} autoPlay loop />
+        {/* <audio src={moon_sound} autoPlay loop /> */}
         <div className="header-wrapper">
           <div className="nick-name">
-            <span className="lvl">{props.info.lvl}</span>
-            {props.info.name}Bairaka
+            <span className="lvl">{props.charInfo?.lvl}</span>
+            {props.charInfo?.nickname}
           </div>
           <div className="game-name">MoonnyMathics</div>
-          <div onClick={props.logoutHandler} className="logout">
+          <div className="logout">
             <div className="lang-wrapper">
               <span
                 className={i18n.language === "en" ? "selected-lng" : null}
@@ -32,8 +32,7 @@ export default function Header(props) {
                 Ukr{" "}
               </span>
             </div>
-            {props.info.name ? t("logout") : null}
-            {t("logout")}
+            <span onClick={props.logoutHandler}>{props.charInfo?.nickname ? t("logout") : null}</span>
           </div>
         </div>
       </header>
