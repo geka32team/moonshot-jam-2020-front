@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Images from "./Images";
 import DropPage from "./DropPage";
 // import io from "socket.io-client";
-import { postNoData, get_char_info, get_bot_info } from "./_api/Requests";
+import { postNoData, get_char_info, get_bot_info, setBot, get_exp } from "./_api/Requests";
 
 require("dotenv").config();
 
@@ -24,9 +24,12 @@ export default function MainPage(props) {
 
   const [bagOpen, setBagOpen] = useState(false);
   const [isBattle, setIsBattle] = useState(false);
+  const [isAttack, setIsAttack] = useState(false);
   const [drop, setDrop] = useState(false);
   const [botLvl, setBotLvl] = useState(1);
   const [botDiff, setBotDiff] = useState(1);
+  const [showExp, setShowExp] = useState(1);
+  console.log('showExp', showExp)
 
   // const socket = io(url);
 
@@ -50,7 +53,9 @@ export default function MainPage(props) {
     setBotDiff(diff);
     setIsBattle(true);
     getCharacterInfo();
-    getBotInfo()
+    setBot(botLvl, diff, nickname)
+    .then(res => getBotInfo())
+    
   };
 
   const bossItem = (count) => {
@@ -81,15 +86,23 @@ export default function MainPage(props) {
     setBagOpen(e);
   };
 
-  const onDrop = (e) => {
+  const onDrop = (e, confirm) => {
     setDrop(e);
+    setIsAttack(false)
     window.scrollTo(0, 0);
+    confirm && setIsBattle(false)
+    // getCharacterInfo()
   };
 
   const changeBotLvl = (sign) => {
     if (sign === "+" && botLvl < character.lvl + 5) setBotLvl((b) => b + 1);
     else if (sign === "-" && botLvl > 1) setBotLvl((b) => b - 1);
   };
+
+  const onGetExp = diff => {
+    get_exp(lvl, botLvl, diff)
+    .then(res => setShowExp(res[0]))
+  }
 
   const itemsDescription = (item, description) => {
     return item
@@ -121,9 +134,17 @@ export default function MainPage(props) {
         aria-haspopup="true"
         delayShow={200}
         className="tooltip"
+        id="exp"
+        getContent={() => 'Exp: ' + showExp}
+      />
+      <ReactTooltip
+        multiline={true}
+        aria-haspopup="true"
+        delayShow={200}
+        className="tooltip"
       />
       <Header logoutHandler={logoutHandler} charInfo={{ lvl, nickname }} />
-      <div className="container">
+      <div className="container">{showExp}
         <div className="game">
           {bagOpen ? (
             <Inventory
@@ -142,13 +163,15 @@ export default function MainPage(props) {
 
             {isBattle ? (
               <BattlePage
-                setIsBattle={setIsBattle}
                 getCharacterInfo={getCharacterInfo}
                 getBotInfo={getBotInfo}
                 onDrop={onDrop}
                 time={10}
                 botLvl={botLvl}
                 botDiff={botDiff}
+                setIsAttack={setIsAttack}
+                isAttack={isAttack}
+                isBattle={isBattle}
               />
             ) : (
               <div className="battles">
@@ -162,7 +185,7 @@ export default function MainPage(props) {
                 <div className="enemy">
                   <div className="bot easy">
                     <p>Easy</p>
-                    <div data-tip="exp 100%" className="bot-img">
+                    <div onMouseEnter={() => onGetExp(0)} data-for="exp" data-tip className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(0)}>
@@ -172,7 +195,7 @@ export default function MainPage(props) {
 
                   <div className="bot normal">
                     <p>Normal</p>
-                    <div data-tip="exp 120%" className="bot-img">
+                    <div onMouseEnter={() => onGetExp(1)} data-for="exp" data-tip={"exp 120% :" + showExp} className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(1)}>
@@ -182,7 +205,7 @@ export default function MainPage(props) {
 
                   <div className="bot hard">
                     <p>Hard</p>
-                    <div data-tip="exp 150%" className="bot-img">
+                    <div onMouseEnter={() => onGetExp(2)} data-for="exp" data-tip={"exp 150% :" + showExp} className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(2)}>
@@ -192,7 +215,7 @@ export default function MainPage(props) {
 
                   <div className="bot extremal">
                     <p>Hell</p>
-                    <div data-tip="exp 250%" className="bot-img">
+                    <div onMouseEnter={() => onGetExp(3)} data-for="exp" data-tip={"exp 250% :" + showExp} className="bot-img">
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(3)}>
@@ -223,7 +246,7 @@ export default function MainPage(props) {
           <DropPage
             onDrop={onDrop}
             characterInfo={character}
-            itemsDescription={itemsDescription}
+            itemsDescription={itemsDescription}          
           />
         ) : null}
       </div>

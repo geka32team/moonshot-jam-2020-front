@@ -9,7 +9,7 @@ export default function Header(props) {
   return (
     <StyledField>
       <header>
-        {/* <audio src={moon_sound} autoPlay loop /> */}
+        <audio src={moon_sound} autoPlay loop />
         <div className="header-wrapper">
           <div className="nick-name">
             <span className="lvl">{props.charInfo?.lvl}</span>

@@ -7,8 +7,8 @@ import { useSelector } from "react-redux"
 export default function EnemyCard() {
 
   const data = useSelector((state) => state.bot);
-  const current_hp = useSelector((state) => state.character.current_hp);
-  const isHideDmg = useSelector((state) => state.user.hideDmg);
+  const hp = useSelector((state) => state.bot.hp);
+  const current_hp = useSelector((state) => state.bot.current_hp);
   const hit = useSelector((state) => state.fight_info.char_hit);
   const is_crit = useSelector((state) => state.fight_info.is_char_crit);
 
@@ -20,11 +20,6 @@ export default function EnemyCard() {
     setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
     return () => setShowHit(null)
   }, [hit, is_crit])
-
-  useEffect(() => {
-    if(isHideDmg) setShowHit(null)
-  }, [isHideDmg])
-
 
   const weapon = data.items.filter(item => item.type === 'weapon' && item.is_weared)[0]
   const armor = data.items.filter(item => item.type === 'armor' && item.is_weared)[0]
@@ -56,8 +51,9 @@ export default function EnemyCard() {
             {returnItem(helm, "helm")}
             {returnItem(boots, "boots")}
 
-            <div data-tip="Enemy HP" data-type="info" data-for="battleField" className="hp">{current_hp}
-              <div style={{ height: `${current_hp / data.hp * 150}px` }}></div>
+            <div data-tip="Enemy HP" data-type="info" data-for="battleField" className="hp">
+              <div style={{ height: `${(current_hp / hp * 150) > 0 ? current_hp / hp * 150 : 0}px` }}></div>
+              <span>{current_hp}</span>
             </div>
           </div>
 
@@ -139,6 +135,10 @@ const StyledField = styled.div`
   left: 25px;
   z-index: 1;
   border-radius: 3px;
+}
+
+.hp span {
+  position: relative;
 }
 
 `

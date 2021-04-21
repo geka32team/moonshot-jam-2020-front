@@ -10,8 +10,6 @@ export default function CharCard(props) {
   
   const hit = useSelector((state) => state.fight_info.enemy_hit);
   const is_crit = useSelector((state) => state.fight_info.is_enemy_crit);
-  const [showHit, setShowHit] = useState(null)
-  const isHideDmg = useSelector((state) => state.user.hideDmg);
   const items = useSelector((state) => state.character.items);
   const current_hp = useSelector((state) => state.character.current_hp);
   const hp = useSelector((state) => state.character.hp);
@@ -25,6 +23,7 @@ export default function CharCard(props) {
   const freeStats = useSelector((state) => state.character.free_stats);
   const nickname = useSelector((state) => state.character.nickname);
   
+  const [showHit, setShowHit] = useState(null);
 
   const weapon = items.filter(item => item.type === 'weapon' && item.is_weared)[0]
   const armor = items.filter(item => item.type === 'armor' && item.is_weared)[0]
@@ -48,10 +47,6 @@ export default function CharCard(props) {
     return () => setShowHit(null)
   }, [hit, is_crit])
 
-  useEffect(() => {
-    if(isHideDmg) setShowHit(null)
-  }, [isHideDmg])
-
   const updateStats = stat => {
     up_stats(nickname, stat)
     .then((res) => {
@@ -64,7 +59,7 @@ export default function CharCard(props) {
 
       <div className="character">
         {
-         showHit        
+         showHit
         }
         <div className="char-middle">
           <div className="char-left">
@@ -84,7 +79,7 @@ export default function CharCard(props) {
             {returnItem(armor, "armor")}
             {returnItem(gloves, "gloves")}
             <div data-tip="Char HP" data-type="info" className="hp">
-              <div style={{ height: `${current_hp / hp * 150}px` }}></div>
+              <div style={{ height: `${(current_hp / hp * 150) > 0 ? current_hp / hp * 150 : 0}px` }}></div>
               <span>{current_hp}</span>
             </div>
           </div>
