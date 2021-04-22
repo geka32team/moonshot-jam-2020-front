@@ -168,7 +168,7 @@ app.get("/answer", (req, res) => {
         if (value != result) char_hit = 0;
         let hp_left = char.current_hp - enemy_hit;
         let enemy_hp_left = enemy.current_hp - char_hit;
-        is_end = hp_left < 1 || enemy_hp_left < 1;
+        let is_end = hp_left < 1 || enemy_hp_left < 1;
 
         let result_fight = null;
         if (is_end)
