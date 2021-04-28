@@ -1,20 +1,16 @@
 function bot_generator(lvl, diff, attacker_nickname, nickname) {
-  let rand = () => Math.random();
+  let rand = () => Math.random()
 
-  console.log("diff", diff);
-  console.log("lvl", lvl);
-
-  let stats = lvl * (8 + diff);
-  console.log("stats", stats);
-  let items = 1 + diff;
-  let rarity = diff;
+  let stats = lvl * (8 + diff)
+  let items = 1 + diff
+  let rarity = diff
 
   // diff >= 4 = boss
 
   if (diff > 3) {
-    stats = Math.round((stats * 1.5 * lvl) / 4);
-    items = 5;
-    rarity = diff - 4;
+    stats = Math.round((stats * 1.5 * lvl) / 4)
+    items = 5
+    rarity = diff - 4
   }
 
   let bot = {
@@ -31,32 +27,32 @@ function bot_generator(lvl, diff, attacker_nickname, nickname) {
     nickname,
     diff,
     // items: [],
-  };
+  }
 
   //   for (let i = items; i > 0; i--) {
   //     bot.items.push(getItem(lvl, rarity));
   //   }
 
   for (let i = stats; i > 0; i--) {
-    let res = Math.floor(rand() * 6);
+    let res = Math.floor(rand() * 6)
     switch (res) {
       case 0:
-        bot.vit += 1;
-        break;
+        bot.vit += 1
+        break
       case 1:
-        bot.str += 1;
-        break;
+        bot.str += 1
+        break
       case 2:
-        bot.dex += 1;
-        break;
+        bot.dex += 1
+        break
       case 3:
-        bot.acc += 1;
-        break;
+        bot.acc += 1
+        break
     }
   }
-  bot.hp = bot.current_hp = bot.hp + 4 * bot.vit;
+  bot.hp = bot.current_hp = bot.hp + 4 * bot.vit
 
-  return bot;
+  return bot
 }
 
-exports.bot = bot_generator;
+exports.bot = bot_generator

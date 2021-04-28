@@ -29,7 +29,7 @@ let exp_dictionary = {
   28: 1000000,
   29: 2000000,
   30: 5000000,
-};
+}
 
 let exp_for_easy_bots = {
   1: 10,
@@ -62,28 +62,28 @@ let exp_for_easy_bots = {
   28: 390,
   29: 420,
   30: 500,
-};
+}
 
 function get_level_exp(lvl) {
-  return exp_dictionary[lvl];
+  return exp_dictionary[lvl]
 }
 
 function get_real_exp(your_lvl, bot_lvl, diff) {
-  const increaser_exr = [1, 1.2, 1.5, 2.5, 7, 35];
-  let exp = exp_for_easy_bots[bot_lvl] * increaser_exr[diff];
-  let res = exp;
+  const increaser_exr = [1, 1.2, 1.5, 2.5, 7, 35]
+  let exp = exp_for_easy_bots[bot_lvl] * increaser_exr[diff]
+  let res = exp
   if (your_lvl > bot_lvl) {
     res = Math.round(
       exp * (0.9 - 0.03 * (your_lvl - bot_lvl) * (your_lvl - bot_lvl))
-    );
+    )
   } else {
-    return exp;
+    return exp
   }
 
-  if (res < 0) res = 0;
+  if (res < 0) res = 0
 
-  return res;
+  return res
 }
 
-exports.get_real_exp = get_real_exp;
-exports.get_level_exp = get_level_exp;
+exports.get_real_exp = get_real_exp
+exports.get_level_exp = get_level_exp
