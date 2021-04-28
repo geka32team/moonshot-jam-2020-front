@@ -8,13 +8,21 @@ const get_headers = {
     }
 }
 
+// export const post = (endPoint, data = {}) => fetch(url + endPoint, {
+//     method: 'POST',
+//     body: JSON.stringify(data),
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     credentials: "include"
+// })
+
 export const post = (endPoint, data = {}) => fetch(url + endPoint, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
         'Content-Type': 'application/json'
-    },
-    credentials: "include"
+    }
 })
 
 export const postNoData = (endPoint) => fetch(url + endPoint, {

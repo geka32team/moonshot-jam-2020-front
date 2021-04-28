@@ -6,10 +6,12 @@ const query = require('./query')
 const battle_calc = require('./battle_calc')
 const exp_calc = require('./exp_calc')
 const bot_generator = require('./bot_generator')
+const bodyParser = require('body-parser')
 
 const port = 9000
 const app = express()
 app.use(cors())
+app.use(bodyParser.json())
 
 // const client = new Client({
 //   user: "postgres",
@@ -31,6 +33,34 @@ const pool = new Pool({
 app.get('/character/:name', (req, res) => {
   pool.query(query.get_char_info, [req.params.name], (err, response) => {
     res.send(response.rows)
+  })
+})
+
+app.post('/register', (req, res) => {
+  pool.query(query.check_character, [req.body.username], (error, response) => {
+    if (response.rows[0].count === '0') {
+      pool.query(
+        query.create_character,
+        [req.body.username, req.body.password],
+        (err, response) => {
+          pool.query(query.create_bot, [
+            req.body.username + 'Bot',
+            req.body.username,
+          ])
+          res.sendStatus(200)
+        }
+      )
+    } else {
+      res.sendStatus(401)
+    }
+  })
+})
+
+app.post('/signin', (req, res) => {
+  const { username, password } = req.body
+  pool.query(query.check_auth, [username, password], (err, response) => {
+    if (response.rows[0].count === '1') res.sendStatus(200)
+    else res.sendStatus(401)
   })
 })
 
@@ -206,14 +236,13 @@ app.get('/answer', (req, res) => {
             hp_left,
             set_exp,
             set_current_exp,
-            'Sodiicc',
+            nickname,
           ],
           (err, response) => {
             pool.query(
               query.set_bot_hp,
-              [enemy_hp_left, 'Sodiicc'],
+              [enemy_hp_left, nickname],
               (err, response) => {
-                console.log('err', err)
                 res.send(ret)
               }
             )

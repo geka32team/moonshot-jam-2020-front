@@ -24,6 +24,7 @@ require('dotenv').config()
 
 export default function MainPage(props) {
   const character = useSelector((state) => state.character)
+  const user = useSelector((state) => state.user)
   const lvl = useSelector((state) => state.character.lvl)
   const nickname = useSelector((state) => state.character.nickname)
   const dispatch = useDispatch()
@@ -35,7 +36,6 @@ export default function MainPage(props) {
   const [botLvl, setBotLvl] = useState(1)
   const [botDiff, setBotDiff] = useState(1)
   const [showExp, setShowExp] = useState(1)
-  console.log('showExp', showExp)
 
   // const socket = io(url);
 
@@ -44,7 +44,7 @@ export default function MainPage(props) {
   }, [])
 
   const getCharacterInfo = () => {
-    get_char_info(character.nickname).then((data) => {
+    get_char_info(user.name).then((data) => {
       dispatch({ type: 'SET_CHARACTER', payload: data[0] })
     })
   }

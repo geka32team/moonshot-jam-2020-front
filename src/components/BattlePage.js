@@ -27,7 +27,6 @@ export default function BattlePage(props) {
 
   useEffect(() => {
     if (answer.length >= answerLen) {
-      console.log('answer', answer)
       window.onkeyup = null
 
       get_answer(answer, character.nickname).then((res) => {

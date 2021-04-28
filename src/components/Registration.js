@@ -30,19 +30,19 @@ function Registration(props) {
       setError(t('error_name_length'))
       return
     }
-    if (password.length < 8) {
+    if (password.length < 6) {
       setError(t('error_pass_length'))
       return
     }
     if (password === confPassword) {
-      post('/register', { username, password }).then((res) => {
+      post('register', { username, password }).then((res) => {
         if (res.status === 200) setIsRegister(false)
       })
     } else setError(t('enter_pass'))
   }
 
   const loginHandler = () => {
-    post('/signin', { username, password }).then((res) => {
+    post('signin', { username, password }).then((res) => {
       if (res.status === 200) {
         window.onkeypress = null
         dispatch({ type: 'SET_LOGIN', payload: true })

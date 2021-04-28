@@ -1,6 +1,12 @@
 exports.create_task =
   'INSERT INTO public.tasks(value, result, character_nickname, created) VALUES ($1, $2, $3, $4)'
 
+exports.create_bot =
+  'INSERT INTO public.bot( nickname, lvl, hp, current_hp, str, vit, dex, acc, dmg, date, attacker_nickname, diff) VALUES ($1, 1, 1, 1, 1, 1, 1, 1, 1, 1, $2, 1);'
+
+exports.create_character =
+  'INSERT INTO public.character( nickname, exp, lvl, hp, current_hp, str, vit, dex, acc, dmg, current_exp, free_stats, bosses_defeated, time, password) VALUES ($1, 100, 1, 80, 80, 7, 7, 7, 7, 30, 0, 5, 0, 10, $2);'
+
 exports.set_character =
   'UPDATE public.character SET lvl =$1, free_stats = $2, current_hp = $3, exp = $4, current_exp = $5 WHERE nickname = $6;'
 
@@ -41,3 +47,9 @@ exports.get_current_bot_info =
 
 exports.get_result =
   'SELECT result, created FROM public.tasks WHERE character_nickname = ($1) ORDER BY created DESC LIMIT 1;'
+
+exports.check_character =
+  'SELECT COUNT(nickname) FROM public.character WHERE nickname = $1;'
+
+exports.check_auth =
+  'SELECT COUNT(nickname) FROM public.character WHERE nickname = $1 AND password = $2;'
