@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import moon_sound from "../assets/audio/moon_sound.wav";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import styled from 'styled-components'
+import moon_sound from '../assets/audio/moon_sound.wav'
+import { useTranslation } from 'react-i18next'
 
 export default function Header(props) {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
   return (
     <StyledField>
@@ -19,25 +19,27 @@ export default function Header(props) {
           <div className="logout">
             <div className="lang-wrapper">
               <span
-                className={i18n.language === "en" ? "selected-lng" : null}
-                onClick={() => i18n.changeLanguage("en")}
+                className={i18n.language === 'en' ? 'selected-lng' : null}
+                onClick={() => i18n.changeLanguage('en')}
               >
                 En
               </span>
               <span className="selected-lng"> / </span>
               <span
-                className={i18n.language === "ukr" ? "selected-lng" : null}
-                onClick={() => i18n.changeLanguage("ukr")}
+                className={i18n.language === 'ukr' ? 'selected-lng' : null}
+                onClick={() => i18n.changeLanguage('ukr')}
               >
-                Ukr{" "}
+                Ukr{' '}
               </span>
             </div>
-            <span onClick={props.logoutHandler}>{props.charInfo?.nickname ? t("logout") : null}</span>
+            <span onClick={props.logoutHandler}>
+              {props.charInfo?.nickname ? t('logout') : null}
+            </span>
           </div>
         </div>
       </header>
     </StyledField>
-  );
+  )
 }
 
 const StyledField = styled.div`
@@ -84,4 +86,4 @@ const StyledField = styled.div`
       display: none;
     }
   }
-`;
+`

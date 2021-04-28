@@ -1,107 +1,110 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
-import CharCard from "./CharCard";
-import Inventory from "./Inventory";
-import BattlePage from "./BattlePage";
-import Header from "./Header";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import ReactTooltip from 'react-tooltip'
+import CharCard from './CharCard'
+import Inventory from './Inventory'
+import BattlePage from './BattlePage'
+import Header from './Header'
+import { useSelector, useDispatch } from 'react-redux'
 
-import Images from "./Images";
-import DropPage from "./DropPage";
+import Images from './Images'
+import DropPage from './DropPage'
 // import io from "socket.io-client";
-import { postNoData, get_char_info, get_bot_info, setBot, get_exp } from "./_api/Requests";
+import {
+  postNoData,
+  get_char_info,
+  get_bot_info,
+  setBot,
+  get_exp,
+} from './_api/Requests'
 
-require("dotenv").config();
+require('dotenv').config()
 
 // const url = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000/api";
 
 export default function MainPage(props) {
-  const character = useSelector((state) => state.character);
-  const lvl = useSelector((state) => state.character.lvl);
-  const nickname = useSelector((state) => state.character.nickname);
-  const dispatch = useDispatch();
+  const character = useSelector((state) => state.character)
+  const lvl = useSelector((state) => state.character.lvl)
+  const nickname = useSelector((state) => state.character.nickname)
+  const dispatch = useDispatch()
 
-  const [bagOpen, setBagOpen] = useState(false);
-  const [isBattle, setIsBattle] = useState(false);
-  const [isAttack, setIsAttack] = useState(false);
-  const [drop, setDrop] = useState(false);
-  const [botLvl, setBotLvl] = useState(1);
-  const [botDiff, setBotDiff] = useState(1);
-  const [showExp, setShowExp] = useState(1);
+  const [bagOpen, setBagOpen] = useState(false)
+  const [isBattle, setIsBattle] = useState(false)
+  const [isAttack, setIsAttack] = useState(false)
+  const [drop, setDrop] = useState(false)
+  const [botLvl, setBotLvl] = useState(1)
+  const [botDiff, setBotDiff] = useState(1)
+  const [showExp, setShowExp] = useState(1)
   console.log('showExp', showExp)
 
   // const socket = io(url);
 
   useEffect(() => {
-    getCharacterInfo();
-  }, []);
+    getCharacterInfo()
+  }, [])
 
   const getCharacterInfo = () => {
     get_char_info(character.nickname).then((data) => {
-      dispatch({ type: "SET_CHARACTER", payload: data[0] });
-    });
-  };
+      dispatch({ type: 'SET_CHARACTER', payload: data[0] })
+    })
+  }
 
   const getBotInfo = () => {
     get_bot_info(character.nickname).then((data) => {
-      dispatch({ type: "SET_BOT", payload: data[0] });
-    });
-  };
+      dispatch({ type: 'SET_BOT', payload: data[0] })
+    })
+  }
 
   const onBattleStart = (diff) => {
-    setBotDiff(diff);
-    setIsBattle(true);
-    getCharacterInfo();
-    setBot(botLvl, diff, nickname)
-    .then(res => getBotInfo())
-    
-  };
+    setBotDiff(diff)
+    setIsBattle(true)
+    getCharacterInfo()
+    setBot(botLvl, diff, nickname).then((res) => getBotInfo())
+  }
 
   const bossItem = (count) => {
-    let elements = [];
+    let elements = []
     for (let i = 1; i <= count; i++) {
       elements.push(
         <React.Fragment key={i}>
           <img
             data-tip="If you lose the fight vs boss you have a chance 5% to drop a wearing item. Exp and drop increased"
             className={`boss_${i} ${
-              character.bosses_defeated >= i ? "defeated-boss" : null
+              character.bosses_defeated >= i ? 'defeated-boss' : null
             }`}
             src={Images[`boss_${(i % 2) + 1}`]}
             alt={`boss_${i}`}
           />
           <div
             className={`area_${i} ${
-              character.bosses_defeated >= i ? "defeated-area" : null
+              character.bosses_defeated >= i ? 'defeated-area' : null
             }`}
           ></div>
         </React.Fragment>
-      );
+      )
     }
-    return elements;
-  };
+    return elements
+  }
 
   const onBagClick = (e) => {
-    setBagOpen(e);
-  };
+    setBagOpen(e)
+  }
 
   const onDrop = (e, confirm) => {
-    setDrop(e);
+    setDrop(e)
     setIsAttack(false)
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
     confirm && setIsBattle(false)
     // getCharacterInfo()
-  };
+  }
 
   const changeBotLvl = (sign) => {
-    if (sign === "+" && botLvl < character.lvl + 5) setBotLvl((b) => b + 1);
-    else if (sign === "-" && botLvl > 1) setBotLvl((b) => b - 1);
-  };
+    if (sign === '+' && botLvl < character.lvl + 5) setBotLvl((b) => b + 1)
+    else if (sign === '-' && botLvl > 1) setBotLvl((b) => b - 1)
+  }
 
-  const onGetExp = diff => {
-    get_exp(lvl, botLvl, diff)
-    .then(res => setShowExp(res[0]))
+  const onGetExp = (diff) => {
+    get_exp(lvl, botLvl, diff).then((res) => setShowExp(res[0]))
   }
 
   const itemsDescription = (item, description) => {
@@ -109,23 +112,23 @@ export default function MainPage(props) {
       ? `${item.name}<br />Set: ${item.set_name}<br />Rarity: ${
           item.rar
         }<br />Main Bonus: ${Object.keys(item.main_bonus).map(
-          (key) => "<br/>" + key + ": " + item.main_bonus[key]
+          (key) => '<br/>' + key + ': ' + item.main_bonus[key]
         )}<br />Bonus for 2 items: ${Object.keys(item.set_bonus[0]).map(
-          (key) => "<br/>" + key + ": " + item.set_bonus[0][key]
+          (key) => '<br/>' + key + ': ' + item.set_bonus[0][key]
         )}<br />Bonus for 5 items: ${Object.keys(item.set_bonus[1]).map(
-          (key) => "<br/>" + key + ": " + item.set_bonus[1][key]
+          (key) => '<br/>' + key + ': ' + item.set_bonus[1][key]
         )}`
-      : "Find " + description;
-  };
+      : 'Find ' + description
+  }
 
   const logoutHandler = () => {
-    postNoData("/signout").then((res) => {
+    postNoData('/signout').then((res) => {
       if (res.status === 200) {
-        dispatch({ type: "SET_LOGIN", payload: false });
-        props.history.push("/");
+        dispatch({ type: 'SET_LOGIN', payload: false })
+        props.history.push('/')
       }
-    });
-  };
+    })
+  }
 
   return (
     <StyledField>
@@ -144,7 +147,8 @@ export default function MainPage(props) {
         className="tooltip"
       />
       <Header logoutHandler={logoutHandler} charInfo={{ lvl, nickname }} />
-      <div className="container">{showExp}
+      <div className="container">
+        {showExp}
         <div className="game">
           {bagOpen ? (
             <Inventory
@@ -185,7 +189,12 @@ export default function MainPage(props) {
                 <div className="enemy">
                   <div className="bot easy">
                     <p>Easy</p>
-                    <div onMouseEnter={() => onGetExp(0)} data-for="exp" data-tip className="bot-img">
+                    <div
+                      onMouseEnter={() => onGetExp(0)}
+                      data-for="exp"
+                      data-tip
+                      className="bot-img"
+                    >
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(0)}>
@@ -195,7 +204,12 @@ export default function MainPage(props) {
 
                   <div className="bot normal">
                     <p>Normal</p>
-                    <div onMouseEnter={() => onGetExp(1)} data-for="exp" data-tip={"exp 120% :" + showExp} className="bot-img">
+                    <div
+                      onMouseEnter={() => onGetExp(1)}
+                      data-for="exp"
+                      data-tip={'exp 120% :' + showExp}
+                      className="bot-img"
+                    >
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(1)}>
@@ -205,7 +219,12 @@ export default function MainPage(props) {
 
                   <div className="bot hard">
                     <p>Hard</p>
-                    <div onMouseEnter={() => onGetExp(2)} data-for="exp" data-tip={"exp 150% :" + showExp} className="bot-img">
+                    <div
+                      onMouseEnter={() => onGetExp(2)}
+                      data-for="exp"
+                      data-tip={'exp 150% :' + showExp}
+                      className="bot-img"
+                    >
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(2)}>
@@ -215,7 +234,12 @@ export default function MainPage(props) {
 
                   <div className="bot extremal">
                     <p>Hell</p>
-                    <div onMouseEnter={() => onGetExp(3)} data-for="exp" data-tip={"exp 250% :" + showExp} className="bot-img">
+                    <div
+                      onMouseEnter={() => onGetExp(3)}
+                      data-for="exp"
+                      data-tip={'exp 250% :' + showExp}
+                      className="bot-img"
+                    >
                       <img src={Images.bot_1} alt="Bot" />
                     </div>
                     <span onClick={() => onBattleStart(3)}>
@@ -233,9 +257,9 @@ export default function MainPage(props) {
               className="bot-lvl"
             >
               <span className="text-shadow">Bot level</span>
-              <button onClick={() => changeBotLvl("-")}>-</button>
+              <button onClick={() => changeBotLvl('-')}>-</button>
               <span className="text-shadow">{botLvl}</span>
-              <button onClick={() => changeBotLvl("+")}>+</button>
+              <button onClick={() => changeBotLvl('+')}>+</button>
             </div>
           )}
           <div className="moon" onClick={() => setIsBattle(false)}>
@@ -246,12 +270,12 @@ export default function MainPage(props) {
           <DropPage
             onDrop={onDrop}
             characterInfo={character}
-            itemsDescription={itemsDescription}          
+            itemsDescription={itemsDescription}
           />
         ) : null}
       </div>
     </StyledField>
-  );
+  )
 }
 
 const StyledField = styled.div`
@@ -432,7 +456,7 @@ const StyledField = styled.div`
   }
 
   .bot-img::after {
-    content: "";
+    content: '';
     display: block;
     width: 150px;
     height: 250px;
@@ -774,4 +798,4 @@ const StyledField = styled.div`
       }
     }
   }
-`;
+`

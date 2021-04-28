@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import Images from "./Images";
-import ReactTooltip from "react-tooltip";
-import { useSelector } from "react-redux";
+import React from 'react'
+import styled from 'styled-components'
+import Images from './Images'
+import ReactTooltip from 'react-tooltip'
+import { useSelector } from 'react-redux'
 
 export default function DropPage(props) {
-  const exp = useSelector((state) => state.fight_info.exp);
-  const result = useSelector((state) => state.fight_info.result_fight);
+  const exp = useSelector((state) => state.fight_info.exp)
+  const result = useSelector((state) => state.fight_info.result_fight)
 
   return (
     <StyledField>
@@ -18,14 +18,14 @@ export default function DropPage(props) {
         id="drop"
       />
       <div className="drop-modal">
-          <div
-            className={
-              result === "win" ? "win" : result === "lose" ? "lose" : "draw"
-            }
-          >
-            {result}
-          </div>
-          {exp ? <div>Exp earned: {exp}</div> : null}
+        <div
+          className={
+            result === 'win' ? 'win' : result === 'lose' ? 'lose' : 'draw'
+          }
+        >
+          {result}
+        </div>
+        {exp ? <div>Exp earned: {exp}</div> : null}
         <div className="drop">
           <div className="bag-name">Drop List</div>
           {props.characterInfo.items.map((item, i) => (
@@ -39,12 +39,12 @@ export default function DropPage(props) {
               <img src={Images[item.url]} alt={item.name} />
             </div>
           ))}
-          <div className="gold-earned" >Gold earned: 13</div>
+          <div className="gold-earned">Gold earned: 13</div>
         </div>
         <button onClick={() => props.onDrop(false, true)}>Ok</button>
       </div>
     </StyledField>
-  );
+  )
 }
 
 const StyledField = styled.div`
@@ -133,4 +133,4 @@ const StyledField = styled.div`
     width: 100%;
     text-align: center;
   }
-`;
+`
