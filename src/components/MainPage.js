@@ -24,7 +24,11 @@ require('dotenv').config()
 
 export default function MainPage(props) {
   const character = useSelector((state) => state.character)
-  const user = useSelector((state) => state.user)
+  const user =
+    useSelector((state) => state.user.name) || localStorage.getItem('username')
+  const token =
+    useSelector((state) => state.user.token) || localStorage.getItem('token')
+  console.log('token ', token)
   const lvl = useSelector((state) => state.character.lvl)
   const nickname = useSelector((state) => state.character.nickname)
   const dispatch = useDispatch()
@@ -40,11 +44,17 @@ export default function MainPage(props) {
   // const socket = io(url);
 
   useEffect(() => {
+    if (!user) {
+      props.history.push('/')
+      return
+    }
     getCharacterInfo()
-  }, [])
+  }, [user])
 
   const getCharacterInfo = () => {
-    get_char_info(user.name).then((data) => {
+    get_char_info(user, token).then((data) => {
+      if (data.message) props.history.push('/')
+      setBotLvl(data[0].lvl)
       dispatch({ type: 'SET_CHARACTER', payload: data[0] })
     })
   }
@@ -122,12 +132,15 @@ export default function MainPage(props) {
   }
 
   const logoutHandler = () => {
-    postNoData('/signout').then((res) => {
-      if (res.status === 200) {
-        dispatch({ type: 'SET_LOGIN', payload: false })
-        props.history.push('/')
-      }
-    })
+    // localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    props.history.push('/')
+    // postNoData('/signout').then((res) => {
+    //   if (res.status === 200) {
+    //     dispatch({ type: 'SET_LOGIN', payload: false })
+    //     props.history.push('/')
+    //   }
+    // })
   }
 
   return (

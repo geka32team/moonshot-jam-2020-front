@@ -12,7 +12,7 @@ const CharInfo = {
   current_exp: 175,
   basic_dmg: 30,
   free_stats: 0,
-  nickname: "Sodiicc",
+  nickname: "",
   bosses_defeated: 2,
   time: 10,
   items:

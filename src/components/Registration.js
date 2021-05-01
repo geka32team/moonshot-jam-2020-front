@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import { post } from './_api/Requests'
+import { post, login } from './_api/Requests'
 import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import Images from './Images'
@@ -42,11 +42,14 @@ function Registration(props) {
   }
 
   const loginHandler = () => {
-    post('signin', { username, password }).then((res) => {
-      if (res.status === 200) {
+    login({ username, password }).then((res) => {
+      if (res.token) {
         window.onkeypress = null
         dispatch({ type: 'SET_LOGIN', payload: true })
         dispatch({ type: 'SET_NAME', payload: username })
+        dispatch({ type: 'SET_TOKEN', payload: res.token })
+        localStorage.setItem('username', res.username)
+        localStorage.setItem('token', res.token)
         props.history.push('/game')
       } else setError('Username or password is wrong')
     })
