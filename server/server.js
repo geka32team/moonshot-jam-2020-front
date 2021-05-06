@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const { Pool } = require('pg')
@@ -6,20 +7,19 @@ const query = require('./query')
 const battle_calc = require('./battle_calc')
 const exp_calc = require('./exp_calc')
 const bot_generator = require('./bot_generator')
-const bodyParser = require('body-parser')
+const { request } = require('express')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const authMiddleware = require('./authMiddleware')
 
-const port = 9000
+const port = process.env.PORT || 9000
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
-
-// const client = new Client({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "MoonnyMathics",
-//   password: "12345678",
-//   port: 5432,
-// });
+app.use(express.json())
+app.use(authMiddleware)
+app.use(express.urlencoded({
+  extended: true
+}))
 
 const pool = new Pool({
   user: 'postgres',
@@ -58,8 +58,9 @@ app.post('/register', (req, res) => {
 
 app.post('/signin', (req, res) => {
   const { username, password } = req.body
+  const token = jwt.sign({username}, process.env.SECRET_KEY, {expiresIn: '24h'})
   pool.query(query.check_auth, [username, password], (err, response) => {
-    if (response.rows[0].count === '1') res.sendStatus(200)
+    if (response.rows[0].count === '1') res.status(200).json({token, username})
     else res.sendStatus(401)
   })
 })
@@ -70,6 +71,17 @@ app.get('/getexp', (req, res) => {
   const diff = req.query.diff
   const exp = exp_calc.get_real_exp(lvl, bot_lvl, diff) + ''
   res.send([exp])
+})
+
+app.get('/getallbotexp', (req, res) => {
+  const lvl = req.query.lvl
+  const bot_lvl = req.query.botlvl
+  const resultExp = []
+  for(let i = 0; i < 6; i++) {
+    const exp = exp_calc.get_real_exp(lvl, bot_lvl, i) + ''
+    resultExp.push(exp)
+  }
+  res.send(resultExp)
 })
 
 app.get('/bot/:name', (req, res) => {

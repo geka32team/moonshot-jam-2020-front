@@ -77,12 +77,12 @@ function get_real_exp(your_lvl, bot_lvl, diff) {
       exp * (0.9 - 0.03 * (your_lvl - bot_lvl) * (your_lvl - bot_lvl))
     )
   } else {
-    return exp
+    return Math.round(exp)
   }
 
   if (res < 0) res = 0
 
-  return res
+  return Math.round(res)
 }
 
 exports.get_real_exp = get_real_exp

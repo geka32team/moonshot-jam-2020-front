@@ -9,6 +9,8 @@ export default function EnemyCard() {
   const current_hp = useSelector((state) => state.bot.current_hp)
   const hit = useSelector((state) => state.fight_info.char_hit)
   const is_crit = useSelector((state) => state.fight_info.is_char_crit)
+  const hideDmg = useSelector(state => state.gameplay.hideDmg)
+
 
   const [showHit, setShowHit] = useState(null)
 
@@ -18,6 +20,10 @@ export default function EnemyCard() {
       : setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
     return () => setShowHit(null)
   }, [hit, is_crit])
+  
+  useEffect(() => {
+    if (hideDmg) setShowHit(null)
+  }, [hideDmg])
 
   const weapon = data.items.filter(
     (item) => item.type === 'weapon' && item.is_weared
@@ -55,7 +61,7 @@ export default function EnemyCard() {
     return (
       <div
         data-tip={itemsDescription(item)}
-        data-type="info"
+        
         data-for="battleField"
         className={description + ' char-item'}
       >
@@ -78,7 +84,7 @@ export default function EnemyCard() {
 
             <div
               data-tip="Enemy HP"
-              data-type="info"
+              
               data-for="battleField"
               className="hp"
             >
@@ -95,7 +101,7 @@ export default function EnemyCard() {
 
           <div
             data-tip="Enemy FACE"
-            data-type="info"
+            
             data-for="battleField"
             className="icon enemy_char"
           >
@@ -111,7 +117,7 @@ export default function EnemyCard() {
             {returnItem(gloves, 'gloves')}
             <div
               data-tip="Enemy Difficulty"
-              data-type="info"
+              
               data-for="battleField"
               className="exp"
             >
@@ -126,35 +132,35 @@ export default function EnemyCard() {
           <div className="stats">
             <div
               data-tip="Enemy Strength"
-              data-type="info"
+              
               data-for="battleField"
             >
               strength: {data.str}
             </div>
             <div
               data-tip="Enemy Vetality"
-              data-type="info"
+              
               data-for="battleField"
             >
               vitality: {data.vit}
             </div>
             <div
               data-tip="Enemy Dextirity"
-              data-type="info"
+              
               data-for="battleField"
             >
               dextirity: {data.dex}
             </div>
             <div
               data-tip="Enemy Accuracy"
-              data-type="info"
+              
               data-for="battleField"
             >
               accuracy: {data.acc}
             </div>
             <div
               data-tip="Enemy Damage"
-              data-type="info"
+              
               data-for="battleField"
             >
               weapon dmg: {data.dmg}

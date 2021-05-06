@@ -20,6 +20,7 @@ export default function CharCard(props) {
   const dmg = useSelector((state) => state.character.dmg)
   const freeStats = useSelector((state) => state.character.free_stats)
   const nickname = useSelector((state) => state.character.nickname)
+  const hideDmg = useSelector(state => state.gameplay.hideDmg)
 
   const [showHit, setShowHit] = useState(null)
 
@@ -41,7 +42,6 @@ export default function CharCard(props) {
     return (
       <div
         data-tip={props.itemsDescription(item, description)}
-        data-type="info"
         className={description + ' char-item'}
       >
         <img
@@ -59,6 +59,10 @@ export default function CharCard(props) {
     return () => setShowHit(null)
   }, [hit, is_crit])
 
+  useEffect(() => {
+    if (hideDmg) setShowHit(null)
+  }, [hideDmg])
+
   const updateStats = (stat) => {
     up_stats(nickname, stat).then((res) => {
       if (res[0] === 200) props.getCharacterInfo()
@@ -72,7 +76,7 @@ export default function CharCard(props) {
           <div className="char-left">
             {returnItem(helm, 'helm')}
             {returnItem(boots, 'boots')}
-            <div data-tip="Your Exp" data-type="info" className="exp">
+            <div data-tip="Your Exp"  className="exp">
               <div
                 style={{
                   height: `${(current_exp / exp) * 150}px`,
@@ -84,7 +88,7 @@ export default function CharCard(props) {
 
           <div
             data-tip="Its you - a handsome UFO )))"
-            data-type="info"
+            
             className="icon char"
           >
             <img src={Images.char} alt="img" />
@@ -93,7 +97,7 @@ export default function CharCard(props) {
           <div className="char-right">
             {returnItem(armor, 'armor')}
             {returnItem(gloves, 'gloves')}
-            <div data-tip="Char HP" data-type="info" className="hp">
+            <div data-tip="Char HP"  className="hp">
               <div
                 style={{
                   height: `${
@@ -116,7 +120,7 @@ export default function CharCard(props) {
           <div className="stats">
             <div
               data-tip="Strength affects the chance of crit and damage to you"
-              data-type="info"
+              
             >
               strength: {str}
               {freeStats ? (
@@ -130,7 +134,7 @@ export default function CharCard(props) {
             </div>
             <div
               data-tip="Vitality affects the power of crit and your HP"
-              data-type="info"
+              
             >
               vitality: {vit}
               {freeStats ? (
@@ -144,7 +148,7 @@ export default function CharCard(props) {
             </div>
             <div
               data-tip="Dextirity affects the power of crit and the chance to dodge a blow"
-              data-type="info"
+              
             >
               dextirity: {dex}
               {freeStats ? (
@@ -158,7 +162,7 @@ export default function CharCard(props) {
             </div>
             <div
               data-tip="Accuracy affects the chance of crit and the chance to hit the enemy"
-              data-type="info"
+              
             >
               accuracy: {acc}
               {freeStats ? (
@@ -170,7 +174,7 @@ export default function CharCard(props) {
                 </button>
               ) : null}
             </div>
-            <div data-tip="Your Dmg" data-type="info">
+            <div data-tip="Your Dmg" >
               weapon dmg: {dmg}
             </div>
           </div>
@@ -178,7 +182,7 @@ export default function CharCard(props) {
 
         <div
           data-tip="Your inventory"
-          data-type="info"
+          
           className="bag"
           onClick={() => props.onBagClick(true)}
         ></div>

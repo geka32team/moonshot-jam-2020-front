@@ -1,12 +1,14 @@
 require('dotenv').config()
 
 let url = process.env.REACT_APP_API_URL || 'http://127.0.0.1:9000/'
-const get_headers = {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  },
+const get_headers = (token = localStorage.getItem('token')) => {
+  return {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
 }
 const post_headers = (data) => {
   return {
@@ -46,24 +48,24 @@ export const postNoData = (endPoint) =>
   })
 
 export const get = (endPoint) =>
-  fetch(url + endPoint, get_headers).then((res) => res.json())
+  fetch(url + endPoint, get_headers()).then((res) => res.json())
 
 export const setBot = (lvl, diff, nickname) =>
   fetch(
     `${url}newbot?lvl=${lvl}&diff=${diff}&nickname=${nickname}`,
-    get_headers
+    get_headers()
   ).then((res) => res.json())
 
 export const get_task = (lvl, diff, nickname) =>
   fetch(
     `${url}task?lvl=${lvl}&diff=${diff}&nickname=${nickname}`,
-    get_headers
+    get_headers()
   ).then((res) => res.json())
 
 export const get_answer = (value, nickname) =>
   fetch(
     `${url}answer?value=${value}&nickname=${nickname}`,
-    get_headers
+    get_headers()
   ).then((res) => res.json())
 
 export const get_char_info = (user, token) =>
@@ -76,21 +78,27 @@ export const get_char_info = (user, token) =>
   }).then((res) => res.json())
 
 export const get_bot_info = (user) =>
-  fetch(`${url}bot/${user}`, get_headers).then((res) => res.json())
+  fetch(`${url}bot/${user}`, get_headers()).then((res) => res.json())
 
 export const battle_result = (user) =>
-  fetch(`${url}battleresult/${user}`, get_headers).then((res) => res.json())
+  fetch(`${url}battleresult/${user}`, get_headers()).then((res) => res.json())
 
 export const up_stats = (nickname, stat) =>
   fetch(
     `${url}stats?nickname=${nickname}&stat=${stat}`,
-    get_headers
+    get_headers()
   ).then((res) => res.json())
 
-export const get_exp = (lvl, bot_lvl, diff) =>
+export const get_exp = (lvl, bot_lvl, diff, token) =>
   fetch(
     `${url}getexp?lvl=${lvl}&botlvl=${bot_lvl}&diff=${diff}`,
-    get_headers
+    get_headers(token)
+  ).then((res) => res.json())
+
+export const get_all_bot_exp = (lvl, bot_lvl) =>
+  fetch(
+    `${url}getallbotexp?lvl=${lvl}&botlvl=${bot_lvl}`,
+    get_headers()
   ).then((res) => res.json())
 
 export const login = (data) =>

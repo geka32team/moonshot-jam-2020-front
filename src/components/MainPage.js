@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'antd'
 import CharCard from './CharCard'
 import Inventory from './Inventory'
 import BattlePage from './BattlePage'
@@ -16,7 +17,9 @@ import {
   get_bot_info,
   setBot,
   get_exp,
+  get_all_bot_exp,
 } from './_api/Requests'
+import Bot from './Bot'
 
 require('dotenv').config()
 
@@ -28,7 +31,6 @@ export default function MainPage(props) {
     useSelector((state) => state.user.name) || localStorage.getItem('username')
   const token =
     useSelector((state) => state.user.token) || localStorage.getItem('token')
-  console.log('token ', token)
   const lvl = useSelector((state) => state.character.lvl)
   const nickname = useSelector((state) => state.character.nickname)
   const dispatch = useDispatch()
@@ -40,6 +42,7 @@ export default function MainPage(props) {
   const [botLvl, setBotLvl] = useState(1)
   const [botDiff, setBotDiff] = useState(1)
   const [showExp, setShowExp] = useState(1)
+  const [botExp, setBotExp] = useState([null, null, null, null])
 
   // const socket = io(url);
 
@@ -48,14 +51,29 @@ export default function MainPage(props) {
       props.history.push('/')
       return
     }
-    getCharacterInfo()
+    getCharacterInfo(true)
   }, [user])
 
-  const getCharacterInfo = () => {
+  useEffect(() => {
+    updateBotExp(lvl, botLvl)
+    console.log('lvl ', lvl)
+    console.log('botLvl ', botLvl)
+  }, [lvl, botLvl])
+
+  const getCharacterInfo = (isFirstUpdate = false) => {
     get_char_info(user, token).then((data) => {
       if (data.message) props.history.push('/')
-      setBotLvl(data[0].lvl)
+      if (isFirstUpdate) {
+        setBotLvl(data[0].lvl)
+        updateBotExp(data[0].lvl, data[0].lvl)
+      }
       dispatch({ type: 'SET_CHARACTER', payload: data[0] })
+    })
+  }
+
+  const updateBotExp = (lvl, bot_lvl) => {
+    get_all_bot_exp(lvl, bot_lvl).then((data) => {
+      setBotExp(data)
     })
   }
 
@@ -114,7 +132,7 @@ export default function MainPage(props) {
   }
 
   const onGetExp = (diff) => {
-    get_exp(lvl, botLvl, diff).then((res) => setShowExp(res[0]))
+    get_exp(lvl, botLvl, diff, token).then((res) => setShowExp(res[0]))
   }
 
   const itemsDescription = (item, description) => {
@@ -145,14 +163,6 @@ export default function MainPage(props) {
 
   return (
     <StyledField>
-      <ReactTooltip
-        multiline={true}
-        aria-haspopup="true"
-        delayShow={200}
-        className="tooltip"
-        id="exp"
-        getContent={() => 'Exp: ' + showExp}
-      />
       <ReactTooltip
         multiline={true}
         aria-haspopup="true"
@@ -200,76 +210,50 @@ export default function MainPage(props) {
                 </div>
 
                 <div className="enemy">
-                  <div className="bot easy">
-                    <p>Easy</p>
-                    <div
-                      onMouseEnter={() => onGetExp(0)}
-                      data-for="exp"
-                      data-tip
-                      className="bot-img"
-                    >
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => onBattleStart(0)}>
-                      <button className="attack">attack</button>
-                    </span>
-                  </div>
-
-                  <div className="bot normal">
-                    <p>Normal</p>
-                    <div
-                      onMouseEnter={() => onGetExp(1)}
-                      data-for="exp"
-                      data-tip={'exp 120% :' + showExp}
-                      className="bot-img"
-                    >
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => onBattleStart(1)}>
-                      <button className="attack">attack</button>
-                    </span>
-                  </div>
-
-                  <div className="bot hard">
-                    <p>Hard</p>
-                    <div
-                      onMouseEnter={() => onGetExp(2)}
-                      data-for="exp"
-                      data-tip={'exp 150% :' + showExp}
-                      className="bot-img"
-                    >
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => onBattleStart(2)}>
-                      <button className="attack">attack</button>
-                    </span>
-                  </div>
-
-                  <div className="bot extremal">
-                    <p>Hell</p>
-                    <div
-                      onMouseEnter={() => onGetExp(3)}
-                      data-for="exp"
-                      data-tip={'exp 250% :' + showExp}
-                      className="bot-img"
-                    >
-                      <img src={Images.bot_1} alt="Bot" />
-                    </div>
-                    <span onClick={() => onBattleStart(3)}>
-                      <button className="attack">attack</button>
-                    </span>
-                  </div>
+                  <Bot
+                    diff="Easy"
+                    exp={botExp[0]}
+                    img={Images.bot_1}
+                    onClick={onBattleStart}
+                    numberDifficulty={0}
+                  />
+                  <Bot
+                    diff="Normal"
+                    exp={botExp[1]}
+                    img={Images.bot_1}
+                    onClick={onBattleStart}
+                    numberDifficulty={1}
+                  />
+                  <Bot
+                    diff="Hard"
+                    exp={botExp[2]}
+                    img={Images.bot_1}
+                    onClick={onBattleStart}
+                    numberDifficulty={2}
+                  />
+                  <Bot
+                    diff="Hell"
+                    exp={botExp[3]}
+                    img={Images.bot_1}
+                    onClick={onBattleStart}
+                    numberDifficulty={3}
+                  />
                 </div>
               </div>
             )}
           </div>
 
           {isBattle ? null : (
-            <div
-              data-tip="If bot level is lower than your - the expiriance will decreased"
-              className="bot-lvl"
-            >
-              <span className="text-shadow">Bot level</span>
+            <div className="bot-lvl">
+              <Tooltip
+                getPopupContainer={(trigger) => {
+                  console.log(trigger)
+                  return trigger
+                }}
+                title="If bot level is lower than your - the expiriance will decreased"
+              >
+                <span className="text-shadow">Bot level</span>
+              </Tooltip>
               <button onClick={() => changeBotLvl('-')}>-</button>
               <span className="text-shadow">{botLvl}</span>
               <button onClick={() => changeBotLvl('+')}>+</button>
@@ -810,5 +794,8 @@ const StyledField = styled.div`
         left: 154px;
       }
     }
+  }
+  .ant-tooltip-inner {
+    color: var(--main);
   }
 `

@@ -43,7 +43,7 @@ export default function Inventory(props) {
           <div
             data-tip={props.itemsDescription(item, item.type)}
             data-for="inventory"
-            data-type="info"
+            
             key={item.name + i}
             className={`${item.rar} ${
               item.is_weared ? 'weared bag-item' : 'not_weared bag-item'

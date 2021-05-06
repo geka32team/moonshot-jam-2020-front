@@ -2,11 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import Images from './Images'
 import ReactTooltip from 'react-tooltip'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function DropPage(props) {
+  const dispatch = useDispatch()
   const exp = useSelector((state) => state.fight_info.exp)
   const result = useSelector((state) => state.fight_info.result_fight)
+
+  const onSubmit = () => {
+    dispatch({ type: 'HIDE_DMG', payload: true })
+    props.onDrop(false, true)
+  }
 
   return (
     <StyledField>
@@ -31,7 +37,7 @@ export default function DropPage(props) {
           {props.characterInfo.items.map((item, i) => (
             <div
               data-tip={props.itemsDescription(item, item.type)}
-              data-type="info"
+              
               data-for="drop"
               key={item.name + i}
               className="bag-item"
@@ -41,7 +47,7 @@ export default function DropPage(props) {
           ))}
           <div className="gold-earned">Gold earned: 13</div>
         </div>
-        <button onClick={() => props.onDrop(false, true)}>Ok</button>
+        <button onClick={onSubmit}>Ok</button>
       </div>
     </StyledField>
   )
