@@ -31,6 +31,9 @@ exports.set_dex =
 exports.set_acc =
   'UPDATE public.character SET acc = acc + 1, free_stats = free_stats - 1 WHERE nickname = ($1);'
 
+exports.set_fullhp =
+  'UPDATE public.character SET current_hp = hp WHERE nickname = ($1);'
+
 exports.get_stat =
   'SELECT free_stats FROM public.character WHERE nickname = ($1);'
 

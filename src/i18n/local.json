@@ -9,7 +9,8 @@
     "enter_name": "Enter character name",
     "error_name_length": "Username should be at least 4 characters",
     "error_pass_length": "Password should be at least 6 characters",
-    "logout": "Logout"
+    "logout": "Logout",
+    "moonnymathics": "MoonnyMathics"
   },
   "ukr": {
     "login": "Увійти",
@@ -21,6 +22,7 @@
     "enter_name": "Введіть ім'я персонажа",
     "error_name_length": "Ім'я персонажа мінімум 4 літери",
     "error_pass_length": "Пароль мінімум 6 літер",
-    "logout": "Вийти"
+    "logout": "Вийти",
+    "moonnymathics": "Місячна Математика"
   }
 }

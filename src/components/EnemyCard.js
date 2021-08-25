@@ -15,15 +15,14 @@ export default function EnemyCard() {
   const [showHit, setShowHit] = useState(null)
 
   useEffect(() => {
-    is_crit
-      ? setShowHit(<div className="crit-taken">{hit ? hit : 'miss'}</div>)
-      : setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
-    return () => setShowHit(null)
-  }, [hit, is_crit])
-  
-  useEffect(() => {
     if (hideDmg) setShowHit(null)
-  }, [hideDmg])
+    else {
+      is_crit
+        ? setShowHit(<div className="crit-taken">{hit ? hit : 'miss'}</div>)
+        : setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
+    }
+    return () => setShowHit(null)
+  }, [hit, is_crit, hideDmg])
 
   const weapon = data.items.filter(
     (item) => item.type === 'weapon' && item.is_weared

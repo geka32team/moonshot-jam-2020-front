@@ -53,15 +53,14 @@ export default function CharCard(props) {
   }
 
   useEffect(() => {
-    is_crit
-      ? setShowHit(<div className="crit-taken">{hit ? hit : 'miss'}</div>)
-      : setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
-    return () => setShowHit(null)
-  }, [hit, is_crit])
-
-  useEffect(() => {
     if (hideDmg) setShowHit(null)
-  }, [hideDmg])
+    else {
+      is_crit
+        ? setShowHit(<div className="crit-taken">{hit ? hit : 'miss'}</div>)
+        : setShowHit(<div className="dmg-taken">{hit ? hit : 'miss'}</div>)
+    }
+    return () => setShowHit(null)
+  }, [hit, is_crit, hideDmg])
 
   const updateStats = (stat) => {
     up_stats(nickname, stat).then((res) => {

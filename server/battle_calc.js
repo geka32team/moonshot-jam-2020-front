@@ -1,5 +1,5 @@
 const is_hit = (dex, e_acc) => {
-  console.log('missChance', 0.25 * ((4 + e_acc) / (4 + dex)))
+  // console.log('missChance', 0.25 * ((4 + e_acc) / (4 + dex)))
   return Math.random() > 0.25 * ((4 + e_acc) / (4 + dex))
 }
 
@@ -33,12 +33,13 @@ function calc(
     return [0, false]
 
   let is_crit = crit_chance(str, acc, lvl) > Math.random()
+//  console.log("crit_chance ", crit_chance(str, acc, lvl));
 
   let damage =
     dmg_char(dmg, e_str, e_lvl) * (is_crit ? crit_power(vit, dex, lvl) : 1)
 
   if (is_char) damage = 3 * damage * (1 - answer_time / interval)
-  console.log('damage', damage)
+  // console.log('damage', damage)
 
   return [Math.round(damage), is_crit]
 }

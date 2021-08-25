@@ -56,8 +56,6 @@ export default function MainPage(props) {
 
   useEffect(() => {
     updateBotExp(lvl, botLvl)
-    console.log('lvl ', lvl)
-    console.log('botLvl ', botLvl)
   }, [lvl, botLvl])
 
   const getCharacterInfo = (isFirstUpdate = false) => {
@@ -86,8 +84,10 @@ export default function MainPage(props) {
   const onBattleStart = (diff) => {
     setBotDiff(diff)
     setIsBattle(true)
-    getCharacterInfo()
-    setBot(botLvl, diff, nickname).then((res) => getBotInfo())
+    setBot(botLvl, diff, nickname).then((res) => {
+      getBotInfo()
+      getCharacterInfo()
+    })
   }
 
   const bossItem = (count) => {
@@ -108,6 +108,7 @@ export default function MainPage(props) {
               character.bosses_defeated >= i ? 'defeated-area' : null
             }`}
           ></div>
+          <div className={`boss_${i} comming-coon`}>Comming soon</div>
         </React.Fragment>
       )
     }
@@ -247,7 +248,6 @@ export default function MainPage(props) {
             <div className="bot-lvl">
               <Tooltip
                 getPopupContainer={(trigger) => {
-                  console.log(trigger)
                   return trigger
                 }}
                 title="If bot level is lower than your - the expiriance will decreased"
@@ -797,5 +797,17 @@ const StyledField = styled.div`
   }
   .ant-tooltip-inner {
     color: var(--main);
+  }
+  div.comming-coon {
+    background-color: initial;
+    color: var(--warning);
+    font-size: 15px;
+    transform: translate(-17px, 28px);
+  }
+  @media (max-width: 960px) {
+    div.comming-coon {
+    font-size: 13px;
+    transform: translate(-17px, 28px);
+  }
   }
 `

@@ -3,8 +3,8 @@ const rand_range = (min, max) =>
 
 const get_limits_summ = (lvl) => {
   const fib = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-  let min = 3
-  let max = 6
+  let min = 1
+  let max = 3
 
   let deca = Math.floor(lvl / 10)
 
@@ -151,8 +151,8 @@ function level_3_challenge(level) {
 }
 
 function level_4_challenge(level) {
-  let randomizer = rand_range(0, 3)
-  let brackets_randomizer = rand_range(0, 1)
+  let randomizer = rand_range(0, 1)
+  let side_randomizer = rand_range(0, 1)
   let x_place_randomizer = rand_range(0, 2)
   let limits = get_limits_summ(level)
   let min = limits[0]
@@ -162,30 +162,19 @@ function level_4_challenge(level) {
   let b = rand_range(min, max)
   let c = rand_range(min, max)
 
-  let sign1 = '+'
+  let sign1 = '-'
   let sign2 = '+'
-  let d = a + b + c
+  let d = a - b + c
+  if (d < 0) {
+    [d, b] = [b, -d]
+    sign1 = '+'
+  }
 
   if (randomizer == 1) {
     sign2 = '-'
-    d = a + b - c
-    if (d < 0) {
-      ;[d, c] = [c, -d]
-      sign2 = '+'
-    }
-  } else if (randomizer == 2) {
-    sign1 = '-'
-    d = a - b + c
-    if (d < 0) {
-      ;[d, b] = [b, -d]
-      sign1 = '+'
-    }
-  } else {
-    sign1 = '-'
-    sign2 = '-'
     d = a - b - c
     if (d < 0) {
-      ;[d, b] = [b, -d]
+      [d, b] = [b, -d]
       sign1 = '+'
     }
   }
@@ -194,21 +183,22 @@ function level_4_challenge(level) {
   let a_mod = 'x'
   let b_mod = b
   let c_mod = c
-
-  if (x_place_randomizer == 1) {
+  
+  if (x_place_randomizer === 1) {
     x = b
     a_mod = a
     b_mod = 'x'
-    c_mod = c
-  } else {
+  } else if ( x_place_randomizer === 2) {
     x = c
     a_mod = a
-    b_mod = b
     c_mod = 'x'
   }
 
-  return brackets_randomizer
-    ? [`(${a_mod} ${sign1} ${b_mod}) ${sign2} ${c_mod} = ${d}`, x + '']
+  if (sign1 == '-' && sign2 == '+') sign2 = '-'
+  else if (sign1 == '-' && sign2 == '-') sign2 = '+'
+
+  return side_randomizer
+    ? [`${d} = ${a_mod} ${sign1} (${b_mod} ${sign2} ${c_mod})`, x + '']
     : [`${a_mod} ${sign1} (${b_mod} ${sign2} ${c_mod}) = ${d}`, x + '']
 }
 

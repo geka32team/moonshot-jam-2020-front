@@ -124,6 +124,8 @@ app.get('/newbot', (req, res) => {
     gen_bot.attacker_nickname,
   ]
 
+  pool.query(query.set_fullhp, [nickname])
+
   pool.query(query.set_bot, params, () => {
     res.send([200])
   })
@@ -134,6 +136,8 @@ app.get('/task', (req, res) => {
   const bot_lvl = req.query.lvl
   const nickname = req.query.nickname
   const [value, result] = tasks.difficulty[diff](bot_lvl)
+  console.log("value ", value);
+  console.log("result ", result);
 
   pool.query(query.create_task, [value, result, nickname, Date.now()])
 

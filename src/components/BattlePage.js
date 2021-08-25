@@ -45,7 +45,6 @@ export default function BattlePage(props) {
         props.setIsAttack(false)
       })
     }
-    return () => props.getCharacterInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answer])
 
